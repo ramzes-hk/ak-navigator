@@ -70,11 +70,3 @@ export default async function Page({ params }: { params: { id: string } }) {
     </>
   );
 }
-
-export async function getStaticPaths() {
-  const paths = getAllOpIds();
-  return {
-    paths,
-    fallback: false,
-  };
-}
