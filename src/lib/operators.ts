@@ -2,14 +2,14 @@ import path from "path";
 import fs from "fs";
 
 type AllOpNames = {
-    id: string;
-    name: string;
-  }[];
+  id: string;
+  name: string;
+}[];
 
 interface OpNames {
   [key: string]: {
     name: string;
-  } 
+  };
 }
 
 export async function getAllOpNames(): Promise<AllOpNames> {
@@ -25,7 +25,7 @@ export async function getAllOpNames(): Promise<AllOpNames> {
     if (!key.includes("char_")) {
       continue;
     }
-    names.push({ id: key, name: contents[key]['name'] }); 
+    names.push({ id: key, name: contents[key]["name"] });
   }
   return names;
 }
@@ -69,14 +69,14 @@ export interface Trait {
       key: string;
       value: number;
     }[];
-  }[]
+  }[];
 }
 
 interface Operators {
   [key: string]: {
     name: string;
     description: string;
-    rarity: string;  
+    rarity: string;
     profession: string;
     subProfessionId: string;
     trait: Trait | null;
@@ -94,9 +94,22 @@ interface Skills {
   };
 }
 
-interface Level {
+export interface Level {
   name: string;
+  rangeId: string | null;
   description: string;
+  skillType: string;
+  durationType: string;
+  spData: {
+    spType: string;
+    spCost: string;
+    initSp: string;
+  };
+  duration: number;
+  blackboard: {
+    key: string;
+    value: number;
+  }[];
 }
 
 export interface OpData {
@@ -106,7 +119,7 @@ export interface OpData {
   profession: string;
   subProfessionId: string;
   trait: Trait | null;
-  skills: Level[];
+  skills: Level[][];
 }
 
 export async function getOpData(id: string): Promise<OpData> {
@@ -117,7 +130,7 @@ export async function getOpData(id: string): Promise<OpData> {
   fileName = path.join(process.cwd(), "operators", "skill_table.json");
   rawFile = fs.readFileSync(fileName, "utf8");
   const skillsContent = JSON.parse(rawFile) as Skills;
-  const skillDescription: Level[] = [];
+  const skillDescription: Level[][] = [];
   let opName: string = "";
   let description: string = "";
   let rarity: string = "";
@@ -131,19 +144,20 @@ export async function getOpData(id: string): Promise<OpData> {
     rarity = operators[operatorId]["rarity"];
     profession = operators[operatorId]["profession"];
     subProfessionId = operators[operatorId]["subProfessionId"];
-    trait = operators[operatorId]["trait"]; 
+    trait = operators[operatorId]["trait"];
+
     for (let skill of operators[operatorId]["skills"]) {
-      skillDescription.push(skillsContent[skill.skillId]["levels"][0]);
+      skillDescription.push(skillsContent[skill.skillId]["levels"]);
     }
     break;
   }
-  return { 
-    opName: opName, 
+  return {
+    opName: opName,
     description: description,
     rarity: rarity,
     profession: profession,
     subProfessionId: subProfessionId,
     trait: trait,
-    skills: skillDescription 
+    skills: skillDescription,
   };
 }
