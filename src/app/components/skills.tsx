@@ -1,18 +1,20 @@
-import { Level } from "@/components/lib/operators";
+import { Level } from "../../lib/operators";
 
 interface skillProps {
   levels: Level[];
 }
 
 const tagsReplacement: { [key: string]: string } = {
-  "<@ba.vup>": "<span class='text-sky-400'>",
-  "<@ba.vdown>": "<span class='text-red-400'>",
+  "<@ba.vup>": "<span class='text-[#0098DC]'>",
+  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
   "</>": "</span>",
-  "<@ba.rem>": "<br /><span class='text-orange-400'>",
+  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
   "<\\$ba.camou>": "",
   "<\\$ba.charged>": "<br />",
   "<\\$ba.barrier>": "",
   "<\\$ba.protect>": "",
+  "<\\$ba.stun>": "",
+  "<\\$ba.dt.element>": "",
 };
 
 function escapeRegExp(input: string) {

@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { getOpData, Trait, getAllOpIds } from "@/components/lib/operators";
 import Skill from "../../components/skills";
-
+import { Level, getOpData, getAllOpIds, Trait } from "../../../lib/operators";
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
 }
 
 function replaceTags(input: string, traits: Trait | null): string {
   const trait = input
-    .replace(/<@ba.kw>/g, '<span class="text-sky-400">')
+    .replace(/<@ba.kw>/g, '<span class="text-[#00B0FF]">')
     .replace(/<\/>/g, "</span>");
   if (!input.includes("{")) {
     return trait;
@@ -38,6 +37,10 @@ function replaceTags(input: string, traits: Trait | null): string {
   return table;
 }
 
+export async function generateStaticParams() {
+  return  getAllOpIds();
+} 
+
 export default async function Page({ params }: { params: { id: string } }) {
   const opData = await getOpData("char_" + params.id);
   return (
@@ -52,7 +55,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       ></h2>
       <br />
       <div>
-        {opData.skills.map((skill, i) => {
+        {opData.skills.map((skill: Level[], i: number) => {
           return (
             <>
               <h2>

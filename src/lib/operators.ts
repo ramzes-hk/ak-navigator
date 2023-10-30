@@ -35,9 +35,7 @@ interface Ids {
 }
 
 interface IdsToReturn {
-  params: {
-    id: string;
-  };
+  id: string;
 }
 
 export function getAllOpIds(): IdsToReturn[] {
@@ -55,9 +53,7 @@ export function getAllOpIds(): IdsToReturn[] {
       continue;
     }
     ids.push({
-      params: {
         id: key.replace(/^char_/, ""),
-      },
     });
   }
   return ids;

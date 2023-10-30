@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllOpNames } from "@/components/lib/operators";
+import { getAllOpNames } from "../../lib/operators";
 
 async function Menu() {
   const ids = await getAllOpNames();
