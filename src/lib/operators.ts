@@ -76,6 +76,7 @@ interface Operators {
     profession: string;
     subProfessionId: string;
     trait: Trait | null;
+    phases: Phase[];
     skills: SkillIds[];
   };
 }
@@ -109,13 +110,43 @@ export interface Level {
 }
 
 export interface OpData {
-  opName: string;
+  name: string;
   description: string;
   rarity: string;
   profession: string;
   subProfessionId: string;
   trait: Trait | null;
+  phases: Phase[];
   skills: Level[][];
+}
+
+interface opReader {
+  name: string;
+  description: string;
+  rarity: string;
+  profession: string;
+  subProfessionId: string;
+  trait: Trait | null;
+  phases: Phase[];
+}
+
+export interface Phase {
+  rangeId: string;
+  attributesKeyFrames: attributesKeyFrame[];
+}
+
+export interface attributesKeyFrame {
+  level: number;
+  data: {
+   maxHp: number;
+   atk: number;
+   def: number;
+   magicResistance: number;
+   cost: number;
+   blockCnt: number;
+   baseAttackTime: number;
+   respawnTime: number;
+  }
 }
 
 export async function getOpData(id: string): Promise<OpData> {
@@ -127,33 +158,19 @@ export async function getOpData(id: string): Promise<OpData> {
   rawFile = fs.readFileSync(fileName, "utf8");
   const skillsContent = JSON.parse(rawFile) as Skills;
   const skillDescription: Level[][] = [];
-  let opName: string = "";
-  let description: string = "";
-  let rarity: string = "";
-  let profession: string = "";
-  let subProfessionId: string = "";
-  let trait: Trait | null = null;
+  let opReader: opReader;
+
   for (const operatorId in operators) {
     if (operatorId !== id) continue;
-    opName = operators[operatorId]["name"];
-    description = operators[operatorId]["description"];
-    rarity = operators[operatorId]["rarity"];
-    profession = operators[operatorId]["profession"];
-    subProfessionId = operators[operatorId]["subProfessionId"];
-    trait = operators[operatorId]["trait"];
-
+    opReader = operators[operatorId]; 
+    
     for (let skill of operators[operatorId]["skills"]) {
       skillDescription.push(skillsContent[skill.skillId]["levels"]);
     }
     break;
   }
   return {
-    opName: opName,
-    description: description,
-    rarity: rarity,
-    profession: profession,
-    subProfessionId: subProfessionId,
-    trait: trait,
+    ...opReader, 
     skills: skillDescription,
   };
 }

@@ -1,4 +1,4 @@
-import { Level } from "../../lib/operators";
+import { Level } from "@/components/lib/operators";
 
 interface skillProps {
   levels: Level[];

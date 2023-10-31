@@ -1,13 +1,15 @@
-import { Phase } from "../../lib/operators";
+import { Phase, attributesKeyFrame } from "@/components/lib/operators";
 
 interface statsProps {
   phases: Phase[];
 }
 
+type keyAttr = keyof attributesKeyFrame["data"];
+
 interface statsRowProps {
   phases: Phase[];
   name: string;
-  keyAttr: string;
+  keyAttr: keyAttr;
 }
 
 function StatsRow({ phases, name, keyAttr }: statsRowProps) {
@@ -24,7 +26,7 @@ function StatsRow({ phases, name, keyAttr }: statsRowProps) {
 }
 
 function BaseStats({ phases }: statsProps) {
-  function checkIfEquals(keyAttr: string): boolean {
+  function checkIfEquals(keyAttr: keyAttr): boolean {
     const values = phases.map((phase) => phase.attributesKeyFrames[0].data[keyAttr]);
     let temp: number = values[0];
     for (let value of values) {
@@ -35,7 +37,7 @@ function BaseStats({ phases }: statsProps) {
     return true;
   }
 
-  function getChangingStat(keyAttr: string): string {
+  function getChangingStat(keyAttr: keyAttr): string {
     if (checkIfEquals(keyAttr)) {
       return String(phases[0].attributesKeyFrames[0].data[keyAttr]);
     } 

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import Skill from "../../components/skills";
-import { Level, getOpData, getAllOpIds, Trait } from "../../../lib/operators";
+import Skill from "@/components/app/components/skills";
+import Stats from "@/components/app/components/stats";
+import { Level, getOpData, getAllOpIds, Trait } from "@/components/lib/operators";
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
 }
@@ -46,13 +47,15 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <h1>
-        {opData.opName} - {convertRarity(opData.rarity)}
+        {opData.name} - {convertRarity(opData.rarity)}
       </h1>
       <h2
         dangerouslySetInnerHTML={{
           __html: replaceTags(opData.description, opData.trait),
         }}
       ></h2>
+      <br />
+      <Stats phases={opData.phases} />
       <br />
       <div>
         {opData.skills.map((skill: Level[], i: number) => {
