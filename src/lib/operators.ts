@@ -158,16 +158,10 @@ export async function getOpData(id: string): Promise<OpData> {
   rawFile = fs.readFileSync(fileName, "utf8");
   const skillsContent = JSON.parse(rawFile) as Skills;
   const skillDescription: Level[][] = [];
-  let opReader: opReader;
-
-  for (const operatorId in operators) {
-    if (operatorId !== id) continue;
-    opReader = operators[operatorId]; 
-    
-    for (let skill of operators[operatorId]["skills"]) {
-      skillDescription.push(skillsContent[skill.skillId]["levels"]);
-    }
-    break;
+ 
+  const opReader = operators[id] as opReader;
+  for (let skill of operators[id].skills) {
+    skillDescription.push(skillsContent[skill.skillId].levels);
   }
   return {
     ...opReader, 
