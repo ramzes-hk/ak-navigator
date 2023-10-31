@@ -1,10 +1,10 @@
-import { Phase, attributesKeyFrame } from "@/components/lib/operators";
+import { Phase, AttributesKeyFrame } from "@/components/lib/operators";
 
 interface statsProps {
   phases: Phase[];
 }
 
-type keyAttr = keyof attributesKeyFrame["data"];
+type keyAttr = keyof AttributesKeyFrame["data"];
 
 interface statsRowProps {
   phases: Phase[];

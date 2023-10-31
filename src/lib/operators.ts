@@ -78,6 +78,7 @@ interface Operators {
     trait: Trait | null;
     phases: Phase[];
     skills: SkillIds[];
+    talents: Talent[];
   };
 }
 
@@ -118,9 +119,10 @@ export interface OpData {
   trait: Trait | null;
   phases: Phase[];
   skills: Level[][];
+  talents: Talent[];
 }
 
-interface opReader {
+interface OpReader {
   name: string;
   description: string;
   rarity: string;
@@ -128,14 +130,15 @@ interface opReader {
   subProfessionId: string;
   trait: Trait | null;
   phases: Phase[];
+  talents: Talent[];
 }
 
 export interface Phase {
   rangeId: string;
-  attributesKeyFrames: attributesKeyFrame[];
+  attributesKeyFrames: AttributesKeyFrame[];
 }
 
-export interface attributesKeyFrame {
+export interface AttributesKeyFrame {
   level: number;
   data: {
    maxHp: number;
@@ -149,6 +152,22 @@ export interface attributesKeyFrame {
   }
 }
 
+export interface Talent {
+  candidates: {
+    unlockCondition: {
+      phase: string;
+    }
+    requiredPotentialRank: number;
+    prefabKey: string;
+    name: string;
+    description: string;
+    blackboard: {
+      key: string;
+      value: number;
+    }[];
+  }[];
+}
+
 export async function getOpData(id: string): Promise<OpData> {
   let fileName = path.join(process.cwd(), "operators", "character_table.json");
   let rawFile = fs.readFileSync(fileName, "utf8");
@@ -159,7 +178,7 @@ export async function getOpData(id: string): Promise<OpData> {
   const skillsContent = JSON.parse(rawFile) as Skills;
   const skillDescription: Level[][] = [];
  
-  const opReader = operators[id] as opReader;
+  const opReader = operators[id] as OpReader;
   for (let skill of operators[id].skills) {
     skillDescription.push(skillsContent[skill.skillId].levels);
   }
