@@ -3,6 +3,7 @@ import Skill from "@/components/app/components/skills";
 import Stats from "@/components/app/components/stats";
 import Talents from "@/components/app/components/talents";
 import { Level, getOpData, getAllOpIds, Trait } from "@/components/lib/operators";
+import React from 'react';
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
 }
@@ -50,26 +51,28 @@ export default async function Page({ params }: { params: { id: string } }) {
       <h1>
         {opData.name} - {convertRarity(opData.rarity)}
       </h1>
+      <div>
       <h2
         dangerouslySetInnerHTML={{
           __html: replaceTags(opData.description, opData.trait),
         }}
       ></h2>
+      </div>
       <br />
       <Stats phases={opData.phases} />
       <br />
-      <Talents talents={opData.talents} />
+      {opData.talents && <Talents talents={opData.talents} />}
       <br />
       <div>
         {opData.skills.map((skill: Level[], i: number) => {
           return (
-            <>
+            <React.Fragment key={i}>
               <h2>
                 <b>{skill[0].name}</b>
               </h2>
               <Skill key={`skill-${i + 1}`} levels={skill} />
               <br />
-            </>
+            </React.Fragment>
           );
         })}
       </div>
