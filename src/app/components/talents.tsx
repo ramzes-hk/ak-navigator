@@ -1,4 +1,4 @@
-import { Talent } from "@/components/lib/operators";
+import { Talent, parseDescription } from "@/components/lib/operators";
 
 interface talentsProps {
   talents: Talent[];
@@ -38,10 +38,12 @@ function Talents({ talents }: talentsProps) {
                   rowSpan={candidate.candidates.length}
                 >{`${talent.name}`}</td>
               )}
-              <td>
+              <td
+                 className="border border-black"
+                  >
                 {"E" + getPromotion(talent.unlockCondition.phase) + potential}
               </td>
-              <td>{talent.description}</td>
+              <td dangerouslySetInnerHTML={{ __html: parseDescription(talent.description, talent.blackboard)}}></td>
             </tr>
           );
         }),

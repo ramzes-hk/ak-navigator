@@ -78,7 +78,7 @@ interface Operators {
     trait: Trait | null;
     phases: Phase[];
     skills: SkillIds[];
-    talents: Talent[];
+    talents: Talent[] | null;
   };
 }
 
@@ -119,7 +119,7 @@ export interface OpData {
   trait: Trait | null;
   phases: Phase[];
   skills: Level[][];
-  talents: Talent[];
+  talents: Talent[] | null;
 }
 
 interface OpReader {
@@ -130,7 +130,7 @@ interface OpReader {
   subProfessionId: string;
   trait: Trait | null;
   phases: Phase[];
-  talents: Talent[];
+  talents: Talent[] | null;
 }
 
 export interface Phase {
@@ -186,4 +186,54 @@ export async function getOpData(id: string): Promise<OpData> {
     ...opReader, 
     skills: skillDescription,
   };
+}
+
+const tagsReplacement: { [key: string]: string } = {
+  "<@ba.vup>": "<span class='text-[#0098DC]'>",
+  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
+  "</>": "</span>",
+  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
+  "<\\$ba.camou>": "",
+  "<\\$ba.charged>": "<br />",
+  "<\\$ba.barrier>": "",
+  "<\\$ba.protect>": "",
+  "<\\$ba.stun>": "",
+  "<\\$ba.dt.element>": "",
+  "<@ba.talpu>": "<span class='text-[#0098DC]'>",
+};
+
+function escapeRegExp(input: string) {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+}
+
+interface Blackboard {
+  key: string;
+  value: number;
+}
+
+export function parseDescription(description: string, blackboard: Blackboard[], duration?: number ): string {
+  let desc = description;
+  for (const key in tagsReplacement) {
+    desc = desc.replace(RegExp(key, "g"), tagsReplacement[key]);
+  }
+  blackboard.forEach((placeholder) => {
+    let value = Math.abs(placeholder.value);
+    let pattern = RegExp(
+      `\{(-*)${escapeRegExp(placeholder.key)}([^}]*)\}`,
+      "gi",
+    );
+    let match = pattern.exec(desc);
+    if (match === null) {
+      pattern = RegExp(`\{${placeholder.key}\}`, "i");
+      desc = desc.replace(pattern, String(value));
+    } else {
+      if (match[0].includes("%")) {
+        desc = desc.replace(match[0], Math.round(value * 100).toString() + "%");
+      } else {
+        desc = desc.replace(match[0], String(value));
+      }
+    }
+  });
+  desc = duration ? desc.replace(/{duration}/, String(duration)) : desc;
+  return desc;
 }

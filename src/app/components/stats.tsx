@@ -14,7 +14,7 @@ interface statsRowProps {
 
 function StatsRow({ phases, name, keyAttr }: statsRowProps) {
   return (
-    <tr className="divide-x divide-black">
+    <tr className="divide-x divide-y divide-black">
       <th>{name}</th>
       {phases.map((phase: Phase, i: number) => {
         return phase.attributesKeyFrames.map((keyFrame, j) => {

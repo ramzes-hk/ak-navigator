@@ -1,51 +1,7 @@
-import { Level } from "@/components/lib/operators";
+import { Level, parseDescription } from "@/components/lib/operators";
 
 interface skillProps {
   levels: Level[];
-}
-
-const tagsReplacement: { [key: string]: string } = {
-  "<@ba.vup>": "<span class='text-[#0098DC]'>",
-  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
-  "</>": "</span>",
-  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
-  "<\\$ba.camou>": "",
-  "<\\$ba.charged>": "<br />",
-  "<\\$ba.barrier>": "",
-  "<\\$ba.protect>": "",
-  "<\\$ba.stun>": "",
-  "<\\$ba.dt.element>": "",
-};
-
-function escapeRegExp(input: string) {
-  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-}
-
-function parseDescription(level: Level): string {
-  let desc = level.description;
-  for (const key in tagsReplacement) {
-    desc = desc.replace(RegExp(key, "g"), tagsReplacement[key]);
-  }
-  level.blackboard.forEach((placeholder) => {
-    let value = Math.abs(placeholder.value);
-    let pattern = RegExp(
-      `\{(-*)${escapeRegExp(placeholder.key)}([^}]*)\}`,
-      "gi",
-    );
-    let match = pattern.exec(desc);
-    if (match === null) {
-      pattern = RegExp(`\{${placeholder.key}\}`, "i");
-      desc = desc.replace(pattern, String(value));
-    } else {
-      if (match[0].includes("%")) {
-        desc = desc.replace(match[0], Math.round(value * 100).toString() + "%");
-      } else {
-        desc = desc.replace(match[0], String(value));
-      }
-    }
-  });
-  desc = desc.replace(/{duration}/, String(level.duration));
-  return desc;
 }
 
 function Skill({ levels }: skillProps) {
@@ -68,7 +24,7 @@ function Skill({ levels }: skillProps) {
             <tr className="divide-x divide-black" key={`level-${i}`}>
               <td>{i + 1}</td>
               <td
-                dangerouslySetInnerHTML={{ __html: parseDescription(level) }}
+                dangerouslySetInnerHTML={{ __html: parseDescription(level.description, level.blackboard, level.duration) }}
               ></td>
               <td>{level.skillType}</td>
               <td>{level.spData.spType}</td>
