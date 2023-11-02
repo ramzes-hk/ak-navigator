@@ -53,7 +53,7 @@ export function getAllOpIds(): IdsToReturn[] {
       continue;
     }
     ids.push({
-        id: key.replace(/^char_/, ""),
+      id: key.replace(/^char_/, ""),
     });
   }
   return ids;
@@ -79,6 +79,8 @@ interface Operators {
     phases: Phase[];
     skills: SkillIds[];
     talents: Talent[] | null;
+    potentialRanks: PotentialRank[];
+    favorKeyFrames: FavorKeyFrame[];
   };
 }
 
@@ -120,6 +122,8 @@ export interface OpData {
   phases: Phase[];
   skills: Level[][];
   talents: Talent[] | null;
+  potentialRanks: PotentialRank[];
+  favorKeyFrames: FavorKeyFrame[];
 }
 
 interface OpReader {
@@ -131,6 +135,8 @@ interface OpReader {
   trait: Trait | null;
   phases: Phase[];
   talents: Talent[] | null;
+  potentialRanks: PotentialRank[];
+  favorKeyFrames: FavorKeyFrame[];
 }
 
 export interface Phase {
@@ -140,23 +146,14 @@ export interface Phase {
 
 export interface AttributesKeyFrame {
   level: number;
-  data: {
-   maxHp: number;
-   atk: number;
-   def: number;
-   magicResistance: number;
-   cost: number;
-   blockCnt: number;
-   baseAttackTime: number;
-   respawnTime: number;
-  }
+  data: Data;
 }
 
 export interface Talent {
   candidates: {
     unlockCondition: {
       phase: string;
-    }
+    };
     requiredPotentialRank: number;
     prefabKey: string;
     name: string;
@@ -168,6 +165,25 @@ export interface Talent {
   }[];
 }
 
+export interface PotentialRank {
+  description: string;
+}
+
+export interface FavorKeyFrame {
+  data: Data;
+}
+
+export interface Data {
+  maxHp: number;
+  atk: number;
+  def: number;
+  magicResistance: number;
+  cost: number;
+  blockCnt: number;
+  baseAttackTime: number;
+  respawnTime: number;
+}
+
 export async function getOpData(id: string): Promise<OpData> {
   let fileName = path.join(process.cwd(), "operators", "character_table.json");
   let rawFile = fs.readFileSync(fileName, "utf8");
@@ -177,18 +193,22 @@ export async function getOpData(id: string): Promise<OpData> {
   rawFile = fs.readFileSync(fileName, "utf8");
   const skillsContent = JSON.parse(rawFile) as Skills;
   const skillDescription: Level[][] = [];
- 
+
   const opReader = operators[id] as OpReader;
   for (let skill of operators[id].skills) {
     skillDescription.push(skillsContent[skill.skillId].levels);
   }
   return {
-    ...opReader, 
+    ...opReader,
     skills: skillDescription,
   };
 }
 
-const tagsReplacement: { [key: string]: string } = {
+export interface TagsReplacement {
+  [key: string]: string;
+}
+
+export const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",
   "<@ba.vdown>": "<span class='text-[#FF6237]'>",
   "</>": "</span>",
@@ -200,10 +220,11 @@ const tagsReplacement: { [key: string]: string } = {
   "<\\$ba.stun>": "",
   "<\\$ba.dt.element>": "",
   "<@ba.talpu>": "<span class='text-[#0098DC]'>",
+  "<\\$ba.sluggish>": "",
 };
 
 function escapeRegExp(input: string) {
-  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 interface Blackboard {
@@ -211,11 +232,26 @@ interface Blackboard {
   value: number;
 }
 
-export function parseDescription(description: string, blackboard: Blackboard[], duration?: number ): string {
+export function parseDescription(
+  description: string,
+  blackboard: Blackboard[],
+  tagsReplacement: TagsReplacement,
+  duration?: number,
+): string {
   let desc = description;
   for (const key in tagsReplacement) {
     desc = desc.replace(RegExp(key, "g"), tagsReplacement[key]);
   }
+  desc = replaceValues(desc, blackboard);
+  desc = duration ? desc.replace(/{duration}/, String(duration)) : desc;
+  return desc;
+}
+
+export function replaceValues(
+  description: string,
+  blackboard: Blackboard[],
+): string {
+  let desc = description;
   blackboard.forEach((placeholder) => {
     let value = Math.abs(placeholder.value);
     let pattern = RegExp(
@@ -234,6 +270,5 @@ export function parseDescription(description: string, blackboard: Blackboard[], 
       }
     }
   });
-  desc = duration ? desc.replace(/{duration}/, String(duration)) : desc;
   return desc;
 }

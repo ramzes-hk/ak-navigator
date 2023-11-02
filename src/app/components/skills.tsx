@@ -1,4 +1,23 @@
-import { Level, parseDescription } from "@/components/lib/operators";
+import {
+  Level,
+  parseDescription,
+  TagsReplacement,
+} from "@/components/lib/operators";
+
+const tagsReplacement: TagsReplacement = {
+  "<@ba.vup>": "<span class='text-[#0098DC]'>",
+  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
+  "</>": "</span>",
+  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
+  "<\\$ba.camou>": "",
+  "<\\$ba.charged>": "<br />",
+  "<\\$ba.barrier>": "",
+  "<\\$ba.protect>": "",
+  "<\\$ba.stun>": "",
+  "<\\$ba.dt.element>": "",
+  "<@ba.talpu>": "<span class='text-[#0098DC]'>",
+  "<\\$ba.sluggish>": "",
+};
 
 interface skillProps {
   levels: Level[];
@@ -24,7 +43,14 @@ function Skill({ levels }: skillProps) {
             <tr className="divide-x divide-black" key={`level-${i}`}>
               <td>{i + 1}</td>
               <td
-                dangerouslySetInnerHTML={{ __html: parseDescription(level.description, level.blackboard, level.duration) }}
+                dangerouslySetInnerHTML={{
+                  __html: parseDescription(
+                    level.description,
+                    level.blackboard,
+                    tagsReplacement,
+                    level.duration,
+                  ),
+                }}
               ></td>
               <td>{level.skillType}</td>
               <td>{level.spData.spType}</td>
