@@ -1,4 +1,4 @@
-import { PotentialRank } from "@/components/lib/operators";
+import { PotentialRank } from "@/lib/operators";
 
 interface PotentialsProps {
   potentitalRanks: PotentialRank[];

@@ -2,7 +2,7 @@ import {
   Talent,
   parseDescription,
   TagsReplacement,
-} from "@/components/lib/operators";
+} from "@/lib/operators";
 
 const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",

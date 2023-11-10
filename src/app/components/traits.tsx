@@ -1,4 +1,4 @@
-import { Trait, replaceValues } from "@/components/lib/operators";
+import { Trait, replaceValues } from "@/lib/operators";
 
 interface traitHeaderProps {
   dangerousHTML: string;

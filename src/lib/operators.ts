@@ -260,13 +260,13 @@ export function replaceValues(
     );
     let match = pattern.exec(desc);
     if (match === null) {
-      pattern = RegExp(`\{${placeholder.key}\}`, "i");
-      desc = desc.replace(pattern, String(value));
+      pattern = RegExp(`\{${placeholder.key}\}`, "gi");
+      desc = desc.replaceAll(pattern, String(value));
     } else {
       if (match[0].includes("%")) {
-        desc = desc.replace(match[0], Math.round(value * 100).toString() + "%");
+        desc = desc.replaceAll(match[0], Math.round(value * 100).toString() + "%");
       } else {
-        desc = desc.replace(match[0], String(value));
+        desc = desc.replaceAll(match[0], String(value));
       }
     }
   });

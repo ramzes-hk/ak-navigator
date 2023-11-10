@@ -1,4 +1,4 @@
-import { Phase, FavorKeyFrame, Data } from "@/components/lib/operators";
+import { Phase, FavorKeyFrame, Data } from "@/lib/operators";
 
 interface statsProps {
   phases: Phase[];

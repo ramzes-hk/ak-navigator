@@ -1,13 +1,13 @@
 import Link from "next/link";
-import Skill from "@/components/app/components/skills";
-import Stats from "@/components/app/components/stats";
-import Talents from "@/components/app/components/talents";
-import Potentials from "@/components/app/components/potentials";
-import Traits from "@/components/app/components/traits";
-import Modules from "@/components/app/components/modules";
-import { Level, getOpData, getAllOpIds } from "@/components/lib/operators";
+import Skill from "@/components/skills";
+import Stats from "@/components/stats";
+import Talents from "@/components/talents";
+import Potentials from "@/components/potentials";
+import Traits from "@/components/traits";
+import Modules from "@/components/modules";
+import { Level, getOpData, getAllOpIds } from "@/lib/operators";
 import React from "react";
-import { getModules } from "@/components/lib/modules_data";
+import { getModules } from "@/lib/modules_data";
 
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
