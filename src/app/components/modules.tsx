@@ -1,7 +1,7 @@
-import { Module } from "@/components/lib/modules";
+import { Module_ } from "@/components/lib/modules";
 import { Phase } from "@/components/lib/modules";
 import { parseDescription, TagsReplacement } from "@/components/lib/operators";
-type modulesProps = Module;
+type modulesProps = Module_;
 
 const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",
