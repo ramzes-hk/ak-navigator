@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { getAllOpNames, AllOpNames } from "@/lib/operators";
+import { AllOpNames } from "@/lib/operators";
 import { useEffect, useState } from "react"; 
 function Menu() {
   const [search, setSearch] = useState<string>("");

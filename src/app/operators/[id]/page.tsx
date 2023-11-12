@@ -1,12 +1,12 @@
 import Link from "next/link";
-import Skill from "@/components/skills";
 import Stats from "@/components/stats";
+import SkillTables from "@/components/skills";
 import Talents from "@/components/talents";
 import Potentials from "@/components/potentials";
 import Traits from "@/components/traits";
 import Modules from "@/components/modules";
-import { Level, getOpData, getAllOpIds } from "@/lib/operators";
-import React from "react";
+import Tags from "@/components/tags";
+import { getOpData, getAllOpIds } from "@/lib/operators";
 import { getModules } from "@/lib/modules_data";
 
 function convertRarity(rarity: string): string {
@@ -41,6 +41,8 @@ export default async function Page({ params }: pageProps) {
         />
       </div>
       <br />
+      <Tags position={opData.position} tagList={opData.tagList} />
+      <br />
       <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
       <br />
       {opData.talents && <Talents talents={opData.talents} />}
@@ -49,20 +51,17 @@ export default async function Page({ params }: pageProps) {
         <Potentials potentitalRanks={opData.potentialRanks} />
       )}
       <br />
-      <div>
-        {opData.skills.map((skill: Level[], i: number) => {
-          return (
-            <React.Fragment key={i}>
-              <h2>
-                <b>{skill[0].name}</b>
-              </h2>
-              <Skill key={`skill-${i + 1}`} levels={skill} />
-              <br />
-            </React.Fragment>
-          );
-        })}
-      </div>
-      {modules && modules.map((module, i) => <Modules key={`mod-${i}`} phases={module.phases} equipDict={module.equipDict} missions={module.missions} />)}
+      <SkillTables skills={opData.skills} />
+      <br />
+      {modules &&
+        modules.map((module, i) => (
+          <Modules
+            key={`mod-${i}`}
+            phases={module.phases}
+            equipDict={module.equipDict}
+            missions={module.missions}
+          />
+        ))}
       <Link className="m-2 p-2 border hover:bg-red-300" href={"/"}>
         Back
       </Link>

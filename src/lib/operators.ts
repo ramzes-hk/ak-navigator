@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-type AllOpNames = {
+export type AllOpNames = {
   id: string;
   name: string;
 }[];
@@ -12,7 +12,7 @@ interface OpNames {
   };
 }
 
-export async function getAllOpNames(): Promise<AllOpNames> {
+export function getAllOpNames(): AllOpNames {
   const fileName = path.join(
     process.cwd(),
     "operators",
@@ -69,19 +69,23 @@ export interface Trait {
 }
 
 interface Operators {
-  [key: string]: {
-    name: string;
-    description: string;
-    rarity: string;
-    profession: string;
-    subProfessionId: string;
-    trait: Trait | null;
-    phases: Phase[];
-    skills: SkillIds[];
-    talents: Talent[] | null;
-    potentialRanks: PotentialRank[];
-    favorKeyFrames: FavorKeyFrame[];
-  };
+  [key: string]: Operator<SkillIds[]>; 
+}
+
+interface Operator<T> {
+  name: string;
+  description: string;
+  position: "MELEE" | "RANGED";
+  tagList: string[];
+  rarity: string;
+  profession: string;
+  subProfessionId: string;
+  trait: Trait | null;
+  phases: Phase[];
+  skills: T;
+  talents: Talent[] | null;
+  potentialRanks: PotentialRank[];
+  favorKeyFrames: FavorKeyFrame[];
 }
 
 interface SkillIds {
@@ -101,7 +105,7 @@ export interface Level {
   skillType: string;
   durationType: string;
   spData: {
-    spType: string;
+    spType: string | number;
     spCost: string;
     initSp: string;
   };
@@ -110,33 +114,6 @@ export interface Level {
     key: string;
     value: number;
   }[];
-}
-
-export interface OpData {
-  name: string;
-  description: string;
-  rarity: string;
-  profession: string;
-  subProfessionId: string;
-  trait: Trait | null;
-  phases: Phase[];
-  skills: Level[][];
-  talents: Talent[] | null;
-  potentialRanks: PotentialRank[];
-  favorKeyFrames: FavorKeyFrame[];
-}
-
-interface OpReader {
-  name: string;
-  description: string;
-  rarity: string;
-  profession: string;
-  subProfessionId: string;
-  trait: Trait | null;
-  phases: Phase[];
-  talents: Talent[] | null;
-  potentialRanks: PotentialRank[];
-  favorKeyFrames: FavorKeyFrame[];
 }
 
 export interface Phase {
@@ -184,7 +161,7 @@ export interface Data {
   respawnTime: number;
 }
 
-export async function getOpData(id: string): Promise<OpData> {
+export async function getOpData(id: string): Promise<Operator<Level[][]>> {
   let fileName = path.join(process.cwd(), "operators", "character_table.json");
   let rawFile = fs.readFileSync(fileName, "utf8");
   const operators = JSON.parse(rawFile) as Operators;
@@ -194,7 +171,7 @@ export async function getOpData(id: string): Promise<OpData> {
   const skillsContent = JSON.parse(rawFile) as Skills;
   const skillDescription: Level[][] = [];
 
-  const opReader = operators[id] as OpReader;
+  const opReader = operators[id] as Operator<SkillIds[]>;
   for (let skill of operators[id].skills) {
     skillDescription.push(skillsContent[skill.skillId].levels);
   }
