@@ -18,11 +18,15 @@ function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
   return (
     <tr key={name} className="divide-x divide-y divide-black">
       <th>{name}</th>
-      {phases.map((phase: Phase, i: number) => {
-        return phase.attributesKeyFrames.map((keyFrame, j) => {
-          return <td key={`${keyAttr}-${i}-${j}`}>{keyFrame.data[keyAttr]}</td>;
-        });
-      })}
+      {phases
+        .filter((_, i) => ![1, 3].includes(i))
+        .map((phase: Phase, i: number) => {
+          return phase.attributesKeyFrames.map((keyFrame, j) => {
+            return (
+              <td key={`${keyAttr}-${i}-${j}`}>{keyFrame.data[keyAttr]}</td>
+            );
+          });
+        })}
       {lastKeyFrame && <td>{lastKeyFrame.data[keyAttr]}</td>}
     </tr>
   );
@@ -96,13 +100,15 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
         <thead>
           <tr className="divide-x divide-black">
             <th>Lvl</th>
-            {phases.map((phase: Phase, i: number) => {
-              return phase.attributesKeyFrames.map((keyFrame, j) => {
-                return (
-                  <th key={`names-${i}-${j}`}>{`E${i} ${keyFrame.level}`}</th>
-                );
-              });
-            })}
+            {phases
+              .map((phase: Phase, i: number) => {
+                return phase.attributesKeyFrames.map((keyFrame, j) => {
+                  return (
+                    <th key={`names-${i}-${j}`}>{`E${i} ${keyFrame.level}`}</th>
+                  );
+                });
+              })
+              .filter((_, i) => ![1, 3].includes(i))}
             <th>Trust</th>
           </tr>
         </thead>

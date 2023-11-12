@@ -1,8 +1,4 @@
-import {
-  Talent,
-  parseDescription,
-  TagsReplacement,
-} from "@/lib/operators";
+import { Talent, parseDescription, TagsReplacement } from "@/lib/operators";
 
 const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",
@@ -53,7 +49,7 @@ function Talents({ talents }: talentsProps) {
                 {j === 0 && (
                   <th
                     rowSpan={candidate.candidates.length}
-                  >{`Talent ${talent.prefabKey}`}</th>
+                  >{`${talent.prefabKey}`}</th>
                 )}
                 {j === 0 && (
                   <td

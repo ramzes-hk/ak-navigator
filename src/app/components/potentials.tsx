@@ -12,7 +12,7 @@ function Potentials({ potentitalRanks }: PotentialsProps) {
         {potentitalRanks.map((potential, i) => {
           return (
             <tr key={i} className="divide-x divide-y divide-black">
-              <th className="border border-black">{`P${i + 2}`}</th>
+              <th className="border border-black">{`${i + 2}`}</th>
               <td>{potential.description}</td>
             </tr>
           );

@@ -31,12 +31,16 @@ const blackBoardMapping: { [key: string]: string } = {
 
 function getDescription(phase: Phase, index: number = -1): string {
   if (phase.equipLevel === 1) {
-    const firstCandidate = phase.parts.at(0)?.overrideTraitDataBundle.candidates?.at(0);
+    const firstCandidate = phase.parts
+      .at(0)
+      ?.overrideTraitDataBundle.candidates?.at(0);
     const blackboard = firstCandidate?.blackboard;
     let desc = firstCandidate?.additionalDescription;
     desc = desc ? desc : firstCandidate?.overrideDescripton;
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>", desc);
-    return desc ? parseDescription(desc, blackboard ? blackboard : [], tagsReplacement) : "";
+    return desc
+      ? parseDescription(desc, blackboard ? blackboard : [], tagsReplacement)
+      : "";
   }
   if (Math.abs(index) === phase.parts.length) {
     return "";
