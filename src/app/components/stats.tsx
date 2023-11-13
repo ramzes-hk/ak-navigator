@@ -75,9 +75,9 @@ function BaseStats({ phases }: baseStatsProps) {
       <tbody>
         <tr className="divide-x divide-black">
           <td>{getChangingStat("cost")}</td>
-          <td>{data.respawnTime}</td>
+          <td>{data.respawnTime}s</td>
           <td>{getChangingStat("blockCnt")}</td>
-          <td>{data.baseAttackTime}</td>
+          <td>{data.baseAttackTime}s</td>
         </tr>
       </tbody>
     </table>
@@ -108,7 +108,11 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
                   );
                 });
               })
-              .filter((_, i) => ![1, 3].includes(i))}
+              .map((phase, i) =>
+                phase.filter(
+                  (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
+                ),
+              )}
             <th>Trust</th>
           </tr>
         </thead>

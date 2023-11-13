@@ -7,9 +7,12 @@ export async function POST(request: Request) {
   if (name === "") {
     return Response.json(names);
   }
-  return Response.json(names.filter((item) => item.name.toLowerCase().includes(name)));
+  return Response.json(
+    names.filter((item) => item.name.toLowerCase().includes(name)),
+  );
 }
 
 export async function GET() {
-  return new Response("salam");
+  const operators = getAllOpNames();
+  return Response.json(operators);
 }

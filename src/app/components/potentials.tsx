@@ -6,6 +6,7 @@ interface PotentialsProps {
 
 function Potentials({ potentitalRanks }: PotentialsProps) {
   return (
+    <>
     <table className="border border-collapse border-black">
       <caption>Potentials</caption>
       <tbody>
@@ -19,6 +20,8 @@ function Potentials({ potentitalRanks }: PotentialsProps) {
         })}
       </tbody>
     </table>
+      {potentitalRanks.length === 0 && <p>No potentials available</p>}
+    </>
   );
 }
 
