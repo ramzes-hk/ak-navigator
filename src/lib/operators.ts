@@ -69,7 +69,7 @@ export interface Trait {
 }
 
 interface Operators {
-  [key: string]: Operator<SkillIds[]>; 
+  [key: string]: Operator<SkillIds[]>;
 }
 
 interface Operator<T> {
@@ -241,7 +241,10 @@ export function replaceValues(
       desc = desc.replaceAll(pattern, String(value));
     } else {
       if (match[0].includes("%")) {
-        desc = desc.replaceAll(match[0], Math.round(value * 100).toString() + "%");
+        desc = desc.replaceAll(
+          match[0],
+          Math.round(value * 100).toString() + "%",
+        );
       } else {
         desc = desc.replaceAll(match[0], String(value));
       }

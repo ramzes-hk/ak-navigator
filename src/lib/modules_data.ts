@@ -55,7 +55,7 @@ interface Part {
   };
   addOrOverrideTalentDataBundle: {
     candidates: Candidate[] | null;
-  }
+  };
 }
 export interface Phase {
   equipLevel: number;

@@ -1,28 +1,18 @@
 "use client";
 import Link from "next/link";
 import { AllOpNames } from "@/lib/operators";
-import { useEffect, useState } from "react";
-function Menu() {
+import { useState } from "react";
+
+interface menuProps {
+  ids: AllOpNames;
+}
+
+function Menu({ ids }: menuProps) {
   const [search, setSearch] = useState<string>("");
-  const [ids, setIds] = useState<AllOpNames>([]);
-  const operators = search === "" ? ids : ids.filter((op) => op.name.toLowerCase().includes(search));
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("api/oplist", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setIds(data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    }
-    fetchData();
-  }, []);
+  const operators =
+    search === ""
+      ? ids
+      : ids.filter((op) => op.name.toLowerCase().includes(search));
 
   return (
     <>
