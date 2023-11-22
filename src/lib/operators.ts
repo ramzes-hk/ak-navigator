@@ -1,10 +1,14 @@
 import path from "path";
 import fs from "fs";
+import { db } from "@/db/db";
+import { operators } from "@/db/schema";
 
-export type AllOpNames = {
+export type AllOpNames = OpName[];
+
+export interface OpName {
   id: string;
   name: string;
-}[];
+}
 
 interface OpNames {
   [key: string]: {
@@ -72,7 +76,8 @@ interface Operators {
   [key: string]: Operator<SkillIds[]>;
 }
 
-interface Operator<T> {
+export interface Operator<T> {
+  id?: string;
   name: string;
   description: string;
   position: "MELEE" | "RANGED";
@@ -93,7 +98,7 @@ interface SkillIds {
 }
 
 interface Skills {
-  [key: string]: {
+  [skillId: string]: {
     levels: Level[];
   };
 }
@@ -161,24 +166,58 @@ export interface Data {
   respawnTime: number;
 }
 
-export async function getOpData(id: string): Promise<Operator<Level[][]>> {
-  let fileName = path.join(process.cwd(), "operators", "character_table.json");
-  let rawFile = fs.readFileSync(fileName, "utf8");
-  const operators = JSON.parse(rawFile) as Operators;
+export function readFileAs<T>(location: [string, ...string[]]): T {
+  const fileName = path.join(process.cwd(), ...location);
+  const rawFile = fs.readFileSync(fileName, "utf8");
+  return JSON.parse(rawFile) as T;
+}
 
-  fileName = path.join(process.cwd(), "operators", "skill_table.json");
-  rawFile = fs.readFileSync(fileName, "utf8");
-  const skillsContent = JSON.parse(rawFile) as Skills;
+export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
+  const operators = readFileAs<Operators>([
+    "operators",
+    "character_table.json",
+  ]);
+  const skillsContent = readFileAs<Skills>(["operators", "skill_table.json"]);
   const skillDescription: Level[][] = [];
 
-  const opReader = operators[id] as Operator<SkillIds[]>;
-  for (let skill of operators[id].skills) {
+  const opReader = operators[opId];
+  for (let skill of operators[opId].skills) {
     skillDescription.push(skillsContent[skill.skillId].levels);
   }
   return {
     ...opReader,
+    id: opId,
     skills: skillDescription,
   };
+}
+
+export async function getOpDataByClass(
+  className: string,
+): Promise<Operator<Level[][]>[]> {
+  throw "bye";
+}
+
+export interface MappedOps {
+  [key: string]: Operator<Level[][]>;
+}
+
+export async function getAllOpData(): Promise<Operator<Level[][]>[]> {
+  const ids = getAllOpIds();
+  const opPromise = ids.map((id) => getOpData("char_" + id.id));
+  return await Promise.all(opPromise);
+}
+
+export async function getMenuData() {
+  const result = await db
+    .select({
+      id: operators.id,
+      name: operators.name,
+      rarity: operators.rarity,
+      profession: operators.profession,
+      subProfessionId: operators.subProfessionId,
+    })
+    .from(operators);
+  return result;
 }
 
 export interface TagsReplacement {

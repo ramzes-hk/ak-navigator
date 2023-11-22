@@ -37,7 +37,6 @@ function getDescription(phase: Phase, index: number = -1): string {
     const blackboard = firstCandidate?.blackboard;
     let desc = firstCandidate?.additionalDescription;
     desc = desc ? desc : firstCandidate?.overrideDescripton;
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>", desc);
     return desc
       ? parseDescription(desc, blackboard ? blackboard : [], tagsReplacement)
       : "";

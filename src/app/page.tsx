@@ -1,11 +1,11 @@
 import Menu from "@/components/menu";
-import { getAllOpNames } from "@/lib/operators";
+import { getMenuData } from "@/lib/operators";
 
-export default function Home() {
-  const operators = getAllOpNames();
+export default async function Home() {
+  const operators = await getMenuData();
   return (
-    <div>
-      <Menu ids={operators}/>
+    <div className="pt-10">
+      <Menu ids={operators} />
     </div>
   );
 }

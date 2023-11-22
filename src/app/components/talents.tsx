@@ -23,6 +23,16 @@ function Talents({ talents }: talentsProps) {
   function getPromotion(phase: string) {
     return phase.replace(/PHASE_/, "");
   }
+
+  function isSameDesc(talent: Talent): boolean {
+    const firstDesc = talent.candidates.at(0)?.description;
+    for (let i = 1; i < talent.candidates.length; i++) {
+      if (talent.candidates[i].description !== firstDesc) {
+        return true;
+      }
+    }
+    return false;
+  }
   return (
     <table className="border border-collapse border-black divide-y divide-black">
       <caption>Talents</caption>
@@ -37,7 +47,8 @@ function Talents({ talents }: talentsProps) {
       <tbody>
         {talents.map((candidate, i) =>
           candidate.candidates.map((talent, j) => {
-            let potential =
+            const sameDesc = isSameDesc(candidate);
+            const potential =
               talent.requiredPotentialRank !== 0
                 ? " P" + talent.requiredPotentialRank.toString()
                 : "";
