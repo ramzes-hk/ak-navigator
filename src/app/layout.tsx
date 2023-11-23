@@ -15,12 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   let className = inter.className;
-  className += " bg-slate-400";
+  className += " min-h-screen bg-slate-400";
   return (
     <html lang="en">
       <body className={className}>
         <Navbar />
-        {children}
+        <div className="mt-10">{children}</div>
       </body>
     </html>
   );

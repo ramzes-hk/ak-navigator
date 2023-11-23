@@ -49,9 +49,11 @@ function Filter({ setVal, initialVal, names }: filterProps) {
 }
 
 function Menu({ ids }: menuProps) {
+  const pageSize = 25;
   const [search, setSearch] = useState<string>("");
   const [tier, setTier] = useState<string[]>([]);
   const [profession, setProfession] = useState<string[]>([]);
+  const [page, setPage] = useState<number>(1);
   let operators =
     search === ""
       ? ids
@@ -64,12 +66,15 @@ function Menu({ ids }: menuProps) {
     profession.length === 0
       ? operators
       : operators.filter((op) => profession.includes(op.profession));
+  const paginatedOperators = operators.filter(
+    (_, i) => i < page * pageSize && i >= Math.max((page - 1) * pageSize, 0),
+  );
 
   return (
     <div className="flex flex-initial">
       <div>
         <h2>Filters</h2>
-        <form className="ml-2">
+        <form className="ml-2" onClick={() => setPage(1)}>
           <div className="my-2 flex flex-col">
             <Filter
               setVal={setProfession}
@@ -106,37 +111,64 @@ function Menu({ ids }: menuProps) {
           {operators && <p>Hit(s) - {operators.length}</p>}
         </form>
       </div>
-      <table className="ml-2 w-1/2 h-1/2 border border-black table-fixed grow-0">
-        <caption>Operators</caption>
-        <thead>
-          <tr className="divide-x divide-y divide-black">
-            <th className="border border-black">Name</th>
-            <th>Class</th>
-            <th>Rarity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {operators.map((op) => {
-            return (
-              <tr
-                key={`op-${op.id}`}
-                className="divide-x divide-y divide-black max-h-8"
-              >
-                <td className="border border-black max-h-8">
-                  <Link
-                    href={`operators/${op.id.replace(/char_/, "")}`}
-                    type="button"
-                  >
-                    {op.name}
-                  </Link>
-                </td>
-                <td>{op.profession}</td>
-                <td>{op.rarity}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <form className="w-1/2 flex flex-row place-content-between">
+          <button
+            className="p-2 px-4 border border-black rounded-lg hover:bg-green-400"
+            onClick={(e) => {
+              e.preventDefault();
+              const nextPage = Math.max(page - 1, 1);
+              setPage(nextPage);
+            }}
+          >
+            Prev
+          </button>
+          <button
+            className="p-2 px-4 border border-black rounded-lg hover:bg-green-400"
+            onClick={(e) => {
+              e.preventDefault();
+              const nextPage = Math.min(
+                page + 1,
+                Math.ceil(operators.length / pageSize),
+              );
+              setPage(nextPage);
+            }}
+          >
+            Next
+          </button>
+        </form>
+        <table className="w-1/2 h-1/2 border border-black table-fixed">
+          <caption>Operators</caption>
+          <thead>
+            <tr className="divide-x divide-y divide-black">
+              <th className="w-1/2 border border-black">Name</th>
+              <th className="w-1/4">Class</th>
+              <th className="w-1/4">Rarity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedOperators.map((op) => {
+              return (
+                <tr
+                  key={`op-${op.id}`}
+                  className="divide-x divide-y divide-black"
+                >
+                  <td className="border border-black">
+                    <Link
+                      href={`operators/${op.id.replace(/char_/, "")}`}
+                      type="button"
+                    >
+                      {op.name}
+                    </Link>
+                  </td>
+                  <td>{op.profession}</td>
+                  <td>{op.rarity}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
