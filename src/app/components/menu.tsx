@@ -24,15 +24,17 @@ const professions = [
 ];
 
 const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
+const tierAllies = new Array(6).fill(null).map((_, i) => "\u2606".repeat(i + 1));
 
 interface filterProps {
   setVal: (val: string[]) => void;
   initialVal: string[];
   names: string[];
+  allias?: string[];
 }
 
-function Filter({ setVal, initialVal, names }: filterProps) {
-  return names.map((name) => (
+function Filter({ setVal, initialVal, names, allias }: filterProps) {
+  return names.map((name, i) => (
     <div key={name}>
       <input
         id={name}
@@ -43,7 +45,7 @@ function Filter({ setVal, initialVal, names }: filterProps) {
             : setVal(initialVal.concat(name));
         }}
       />
-      <label htmlFor={name}>{name}</label>
+      <label htmlFor={name}>{allias?.at(i) ?? name }</label>
     </div>
   ));
 }
@@ -71,20 +73,10 @@ function Menu({ ids }: menuProps) {
   );
 
   return (
-    <div className="flex flex-initial">
+    <div className="flex flex-initial flex-col sm:flex-row">
       <div>
         <h2>Filters</h2>
         <form className="ml-2" onClick={() => setPage(1)}>
-          <div className="my-2 flex flex-col">
-            <Filter
-              setVal={setProfession}
-              initialVal={profession}
-              names={professions}
-            />
-          </div>
-          <div className="my-2 flex flex-col">
-            <Filter setVal={setTier} initialVal={tier} names={tiers} />{" "}
-          </div>
           <div>
             <input
               type="search"
@@ -97,9 +89,21 @@ function Menu({ ids }: menuProps) {
               }}
             ></input>
           </div>
-          <div>
+ 
+          <div className="my-2 flex flex-col">
+            <Filter
+              setVal={setProfession}
+              initialVal={profession}
+              names={professions}
+            />
+          </div>
+          <div className="my-2 flex flex-col">
+            <Filter setVal={setTier} initialVal={tier} names={tiers} allias={tierAllies} />{" "}
+          </div>
+         <div>
             <button
               type="reset"
+              className="p-1 px-2 border border-black rounded-lg hover:bg-red-500"
               onClick={() => {
                 setProfession([]);
                 setTier([]);
@@ -112,7 +116,8 @@ function Menu({ ids }: menuProps) {
         </form>
       </div>
       <div>
-        <form className="w-1/2 flex flex-row place-content-between">
+        <div className="w-4/5 lg:w-1/2 lg:ml-20 m-auto lg:m-0">
+        <form className="w-full flex flex-row place-content-between">
           <button
             className="p-2 px-4 border border-black rounded-lg hover:bg-green-400"
             onClick={(e) => {
@@ -137,7 +142,7 @@ function Menu({ ids }: menuProps) {
             Next
           </button>
         </form>
-        <table className="w-1/2 h-1/2 border border-black table-fixed">
+        {operators.length !== 0 ? <table className="w-full h-1/2 border border-black table-fixed">
           <caption>Operators</caption>
           <thead>
             <tr className="divide-x divide-y divide-black">
@@ -162,12 +167,13 @@ function Menu({ ids }: menuProps) {
                     </Link>
                   </td>
                   <td>{op.profession}</td>
-                  <td>{op.rarity}</td>
+                  <td>{tierAllies[parseInt(op.rarity.replace(/TIER_/, "")) - 1]}</td>
                 </tr>
               );
             })}
           </tbody>
-        </table>
+        </table> : <h2>No Operators Found</h2>} 
+        </div>
       </div>
     </div>
   );
