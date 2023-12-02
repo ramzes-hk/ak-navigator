@@ -1,6 +1,19 @@
 "use client";
+
 import Link from "next/link";
 import React, { useState } from "react";
+import { Button } from "./button";
+import { Checkbox } from "./checkbox";
+import { Input } from "./input";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./table";
 
 interface menuProps {
   ids: {
@@ -24,7 +37,9 @@ const professions = [
 ];
 
 const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
-const tierAllies = new Array(6).fill(null).map((_, i) => "\u2606".repeat(i + 1));
+const tierAllies = new Array(6)
+  .fill(null)
+  .map((_, i) => "\u2606".repeat(i + 1));
 
 interface filterProps {
   setVal: (val: string[]) => void;
@@ -36,16 +51,15 @@ interface filterProps {
 function Filter({ setVal, initialVal, names, allias }: filterProps) {
   return names.map((name, i) => (
     <div key={name}>
-      <input
+      <Checkbox
         id={name}
-        type="checkbox"
         onClick={() => {
           initialVal.includes(name)
             ? setVal(initialVal.filter((item) => item !== name))
             : setVal(initialVal.concat(name));
         }}
       />
-      <label htmlFor={name}>{allias?.at(i) ?? name }</label>
+      <label htmlFor={name}>{allias?.at(i) ?? name}</label>
     </div>
   ));
 }
@@ -73,23 +87,21 @@ function Menu({ ids }: menuProps) {
   );
 
   return (
-    <div className="flex flex-initial flex-col sm:flex-row">
-      <div>
+    <div className="w-full flex flex-initial flex-col sm:flex-row">
+      <div className="w-1/6">
         <h2>Filters</h2>
         <form className="ml-2" onClick={() => setPage(1)}>
           <div>
-            <input
+            <Input
               type="search"
-              className="border border-black p-1 m-2"
               placeholder="Search..."
               value={search}
               onChange={(e) => {
                 e.preventDefault();
                 setSearch(e.target.value.toLowerCase());
               }}
-            ></input>
+            ></Input>
           </div>
- 
           <div className="my-2 flex flex-col">
             <Filter
               setVal={setProfession}
@@ -98,81 +110,91 @@ function Menu({ ids }: menuProps) {
             />
           </div>
           <div className="my-2 flex flex-col">
-            <Filter setVal={setTier} initialVal={tier} names={tiers} allias={tierAllies} />{" "}
+            <Filter
+              setVal={setTier}
+              initialVal={tier}
+              names={tiers}
+              allias={tierAllies}
+            />{" "}
           </div>
-         <div>
-            <button
+          <div>
+            <Button
               type="reset"
-              className="p-1 px-2 border border-black rounded-lg hover:bg-red-500"
+              variant="destructive"
               onClick={() => {
                 setProfession([]);
                 setTier([]);
               }}
             >
               Reset
-            </button>
+            </Button>
           </div>
           {operators && <p>Hit(s) - {operators.length}</p>}
         </form>
       </div>
-      <div>
+      <div className="w-3/4">
         <div className="w-4/5 lg:w-1/2 lg:ml-20 m-auto lg:m-0">
-        <form className="w-full flex flex-row place-content-between">
-          <button
-            className="p-2 px-4 border border-black rounded-lg hover:bg-green-400"
-            onClick={(e) => {
-              e.preventDefault();
-              const nextPage = Math.max(page - 1, 1);
-              setPage(nextPage);
-            }}
-          >
-            Prev
-          </button>
-          <button
-            className="p-2 px-4 border border-black rounded-lg hover:bg-green-400"
-            onClick={(e) => {
-              e.preventDefault();
-              const nextPage = Math.min(
-                page + 1,
-                Math.ceil(operators.length / pageSize),
-              );
-              setPage(nextPage);
-            }}
-          >
-            Next
-          </button>
-        </form>
-        {operators.length !== 0 ? <table className="w-full h-1/2 border border-black table-fixed">
-          <caption>Operators</caption>
-          <thead>
-            <tr className="divide-x divide-y divide-black">
-              <th className="w-1/2 border border-black">Name</th>
-              <th className="w-1/4">Class</th>
-              <th className="w-1/4">Rarity</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedOperators.map((op) => {
-              return (
-                <tr
-                  key={`op-${op.id}`}
-                  className="divide-x divide-y divide-black"
-                >
-                  <td className="border border-black">
-                    <Link
-                      href={`operators/${op.id.replace(/char_/, "")}`}
-                      type="button"
-                    >
-                      {op.name}
-                    </Link>
-                  </td>
-                  <td>{op.profession}</td>
-                  <td>{tierAllies[parseInt(op.rarity.replace(/TIER_/, "")) - 1]}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table> : <h2>No Operators Found</h2>} 
+          <form className="w-full flex flex-row place-content-between">
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                const nextPage = Math.max(page - 1, 1);
+                setPage(nextPage);
+              }}
+            >
+              Prev
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                const nextPage = Math.min(
+                  page + 1,
+                  Math.ceil(operators.length / pageSize),
+                );
+                setPage(nextPage);
+              }}
+            >
+              Next
+            </Button>
+          </form>
+          {operators.length !== 0 ? (
+            <Table className="w-full h-1/2 table-fixed">
+              <TableCaption>Operators</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-1/2">Name</TableHead>
+                  <TableHead className="w-1/4">Class</TableHead>
+                  <TableHead className="w-1/4">Rarity</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedOperators.map((op) => {
+                  return (
+                    <TableRow className="h-8" key={`op-${op.id}`}>
+                      <TableCell>
+                        <Link
+                          href={`operators/${op.id.replace(/char_/, "")}`}
+                          type="button"
+                        >
+                          {op.name}
+                        </Link>
+                      </TableCell>
+                      <TableCell>{op.profession}</TableCell>
+                      <TableCell>
+                        {
+                          tierAllies[
+                            parseInt(op.rarity.replace(/TIER_/, "")) - 1
+                          ]
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          ) : (
+            <h2>No Operators Found</h2>
+          )}
         </div>
       </div>
     </div>

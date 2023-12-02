@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Stats from "@/components/stats";
 import SkillTables from "@/components/skills";
 import Talents from "@/components/talents";
@@ -29,28 +28,31 @@ export default async function Page({ params }: pageProps) {
   const isSingleTrait =
     !opData.trait || (opData.trait && opData.trait.candidates.length === 1);
   return (
-    <>
-      <h1>
-        {opData.name} - {convertRarity(opData.rarity)}
-      </h1>
-      <div>
-        <Traits
-          input={opData.description}
-          traits={opData.trait}
-          isSingleTrait={isSingleTrait}
-        />
+    <div className="mx-16 mb-16">
+      <div className="flex flex-row">
+        <div>
+          <h1>
+            {opData.name} - {convertRarity(opData.rarity)}
+          </h1>
+          <div>
+            <Traits
+              input={opData.description}
+              traits={opData.trait}
+              isSingleTrait={isSingleTrait}
+            />
+          </div>
+          <br />
+          <Tags position={opData.position} tagList={opData.tagList} />
+        </div>
+        <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
+        <br />
+        {opData.talents && <Talents talents={opData.talents} />}
+        <br />
+        {opData.potentialRanks && (
+          <Potentials potentitalRanks={opData.potentialRanks} />
+        )}
+        <br />
       </div>
-      <br />
-      <Tags position={opData.position} tagList={opData.tagList} />
-      <br />
-      <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
-      <br />
-      {opData.talents && <Talents talents={opData.talents} />}
-      <br />
-      {opData.potentialRanks && (
-        <Potentials potentitalRanks={opData.potentialRanks} />
-      )}
-      <br />
       <SkillTables skills={opData.skills} />
       <br />
       {modules &&
@@ -62,9 +64,6 @@ export default async function Page({ params }: pageProps) {
             missions={module.missions}
           />
         ))}
-      <Link className="m-2 p-2 border hover:bg-red-300" href={"/"}>
-        Back
-      </Link>
-    </>
+    </div>
   );
 }

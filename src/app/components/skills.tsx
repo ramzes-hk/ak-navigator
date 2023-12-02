@@ -36,9 +36,9 @@ interface skillProps {
 function Skill({ levels }: skillProps) {
   return (
     <div>
-      <table className="border-x border-t border-collapse border-black">
+      <table className="border-x border-t border-collapse">
         <tbody>
-          <tr className="divide-x divide-black">
+          <tr className="divide-x">
             <th>{levels[0].name}</th>
             {levels[0].spData.spType !== 8 && (
               <th>{spRecovery[levels[0].spData.spType]}</th>
@@ -48,7 +48,7 @@ function Skill({ levels }: skillProps) {
         </tbody>
       </table>
 
-      <table className="border-collapse border border-black divide-y divide-black">
+      <table className="border-collapse border divide-y">
         <thead>
           <tr className="p-2 divide-x divide-black">
             <th>Lvl</th>
@@ -60,10 +60,10 @@ function Skill({ levels }: skillProps) {
             <th>SP</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-black">
+        <tbody className="divide-y">
           {levels.map((level, i) => {
             return (
-              <tr className="divide-x divide-black" key={`level-${i}`}>
+              <tr className="divide-x" key={`level-${i}`}>
                 <td>{i + 1}</td>
                 <td
                   dangerouslySetInnerHTML={{

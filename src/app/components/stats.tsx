@@ -16,17 +16,21 @@ interface statsRowProps {
 function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
   const lastKeyFrame = favorKeyFrames.at(-1);
   return (
-    <tr key={name} className="divide-x divide-y divide-black">
+    <tr key={name} className="divide-x divide-y">
       <th>{name}</th>
       {phases
-        .filter((_, i) => ![1, 3].includes(i))
         .map((phase: Phase, i: number) => {
           return phase.attributesKeyFrames.map((keyFrame, j) => {
             return (
               <td key={`${keyAttr}-${i}-${j}`}>{keyFrame.data[keyAttr]}</td>
             );
           });
-        })}
+        })
+        .map((phase, i) =>
+          phase.filter(
+            (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
+          ),
+        )}
       {lastKeyFrame && <td>{lastKeyFrame.data[keyAttr]}</td>}
     </tr>
   );
@@ -62,10 +66,10 @@ function BaseStats({ phases }: baseStatsProps) {
 
   const data = phases[0].attributesKeyFrames[0].data;
   return (
-    <table className="border border-collapse border-black divide-y divide-black">
+    <table className="border border-collapse divide-y">
       <caption>Base Stats</caption>
       <thead>
-        <tr className="divide-x divide-black">
+        <tr className="divide-x">
           <th>Cost</th>
           <th>Redeploy Time</th>
           <th>Block</th>
@@ -73,7 +77,7 @@ function BaseStats({ phases }: baseStatsProps) {
         </tr>
       </thead>
       <tbody>
-        <tr className="divide-x divide-black">
+        <tr className="divide-x">
           <td>{getChangingStat("cost")}</td>
           <td>{data.respawnTime}s</td>
           <td>{getChangingStat("blockCnt")}</td>
@@ -95,10 +99,10 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
   return (
     <div>
       <BaseStats phases={phases} />
-      <table className="border border-collapse border-black divide-y divide-black">
+      <table className="border border-collapse divide-y">
         <caption>Stats</caption>
         <thead>
-          <tr className="divide-x divide-black">
+          <tr className="divide-x">
             <th>Lvl</th>
             {phases
               .map((phase: Phase, i: number) => {
