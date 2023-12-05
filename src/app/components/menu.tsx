@@ -25,16 +25,16 @@ interface menuProps {
   }[];
 }
 
-const professions = [
-  "MEDIC",
-  "TANK",
-  "WARRIOR",
-  "CASTER",
-  "PIONEER",
-  "SNIPER",
-  "SUPPORT",
-  "SPECIAL",
-];
+const professions: {[key: string]: string} = {
+  "MEDIC": "Medic",
+  "TANK": "Defender",
+  "WARRIOR": "Guard",
+  "CASTER": "Caster",
+  "PIONEER": "Vanguard",
+  "SNIPER": "Sniper",
+  "SUPPORT": "Support",
+  "SPECIAL": "Specialist",
+};
 
 const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
 const tierAllies = new Array(6)
@@ -106,7 +106,7 @@ function Menu({ ids }: menuProps) {
             <Filter
               setVal={setProfession}
               initialVal={profession}
-              names={professions}
+              names={Object.keys(professions)}
             />
           </div>
           <div className="my-2 flex flex-col">
@@ -179,7 +179,7 @@ function Menu({ ids }: menuProps) {
                           {op.name}
                         </Link>
                       </TableCell>
-                      <TableCell>{op.profession}</TableCell>
+                      <TableCell>{professions[op.profession]}</TableCell>
                       <TableCell>
                         {
                           tierAllies[

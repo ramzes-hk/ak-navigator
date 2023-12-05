@@ -35,8 +35,8 @@ interface skillProps {
 
 function Skill({ levels }: skillProps) {
   return (
-    <div>
-      <table className="border-x border-t border-collapse">
+    <div className="w-full">
+      <table className="w-full border-x border-t border-collapse">
         <tbody>
           <tr className="divide-x">
             <th>{levels[0].name}</th>
@@ -48,23 +48,23 @@ function Skill({ levels }: skillProps) {
         </tbody>
       </table>
 
-      <table className="border-collapse border divide-y">
+      <table className="w-full border-collapse border divide-y">
         <thead>
-          <tr className="p-2 divide-x divide-black">
-            <th>Lvl</th>
+          <tr className="p-2 divide-x">
+            <th className="text-center w-12">Lvl</th>
             <th>Description</th>
             {(levels.at(0) ?? { duration: 0 }).duration > 1 && (
-              <th>Duration</th>
+              <th className="w-12 px-0.5 text-center">Duration</th>
             )}
-            <th>Init SP</th>
-            <th>SP</th>
+            <th className="w-12 px-0.5 text-center">Init SP</th>
+            <th className="w-12 px-0.5 text-center">SP</th>
           </tr>
         </thead>
         <tbody className="divide-y">
           {levels.map((level, i) => {
             return (
               <tr className="divide-x" key={`level-${i}`}>
-                <td>{i + 1}</td>
+                <td className="text-center">{i + 1}</td>
                 <td
                   dangerouslySetInnerHTML={{
                     __html: parseDescription(
@@ -75,9 +75,9 @@ function Skill({ levels }: skillProps) {
                     ),
                   }}
                 ></td>
-                {level.duration > 1 && <td>{level.duration}</td>}
-                <td>{level.spData.initSp}</td>
-                <td>{level.spData.spCost}</td>
+                {level.duration > 1 && <td className="text-center">{level.duration}</td>}
+                <td className="text-center">{level.spData.initSp}</td>
+                <td className="text-center">{level.spData.spCost}</td>
               </tr>
             );
           })}
@@ -93,7 +93,7 @@ interface skillTablesProps {
 
 function SkillTables({ skills }: skillTablesProps) {
   return (
-    <div>
+    <div className="w-3/4">
       {skills.map((skill: Level[], i: number) => {
         return (
           <>

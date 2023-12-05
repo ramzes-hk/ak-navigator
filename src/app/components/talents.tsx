@@ -34,7 +34,7 @@ function Talents({ talents }: talentsProps) {
     return false;
   }
   return (
-    <table className="border border-collapse divide-y">
+    <table className="w-1/2 text-center border border-collapse divide-y">
       <caption>Talents</caption>
       <thead>
         <tr key="headers" className="divide-x">

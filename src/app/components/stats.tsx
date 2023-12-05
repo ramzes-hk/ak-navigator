@@ -66,7 +66,7 @@ function BaseStats({ phases }: baseStatsProps) {
 
   const data = phases[0].attributesKeyFrames[0].data;
   return (
-    <table className="border border-collapse divide-y">
+    <table className="w-full border border-collapse divide-y">
       <caption>Base Stats</caption>
       <thead>
         <tr className="divide-x">
@@ -97,9 +97,9 @@ const StatsMapping: { [key: string]: keyof Data } = {
 
 function Stats({ phases, favorKeyFrames }: statsProps) {
   return (
-    <div>
+    <div className="w-1/2 text-center">
       <BaseStats phases={phases} />
-      <table className="border border-collapse divide-y">
+      <table className="w-full border border-collapse divide-y">
         <caption>Stats</caption>
         <thead>
           <tr className="divide-x">

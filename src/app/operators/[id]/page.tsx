@@ -29,7 +29,7 @@ export default async function Page({ params }: pageProps) {
     !opData.trait || (opData.trait && opData.trait.candidates.length === 1);
   return (
     <div className="mx-16 mb-16">
-      <div className="flex flex-row">
+      <div>
         <div>
           <h1>
             {opData.name} - {convertRarity(opData.rarity)}

@@ -60,11 +60,11 @@ function getDescription(phase: Phase, index: number = -1): string {
 
 function Modules({ phases, equipDict, missions }: modulesProps) {
   return (
-    <table className="border border-collapse">
+    <table className="w-3/4 border border-collapse">
       <caption>{equipDict.uniEquipName}</caption>
       <thead>
         <tr className="divide-x divide-y">
-          <th>Stage</th>
+          <th className="w-12 px-0.5">Stage</th>
           <th>Stats</th>
           <th>Description</th>
           <th>Missions</th>
@@ -74,8 +74,8 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
         {phases.map((phase) => {
           return (
             <tr key={phase.equipLevel} className="divide-x divide-y border">
-              <td>{phase.equipLevel}</td>
-              <td>
+              <td className="text-center">{phase.equipLevel}</td>
+              <td className="text-center">
                 <ul>
                   {phase.attributeBlackboard.map((blackboard, i) => (
                     <li key={`stats-${i}`}>
