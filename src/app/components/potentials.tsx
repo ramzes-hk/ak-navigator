@@ -7,7 +7,7 @@ interface PotentialsProps {
 function Potentials({ potentitalRanks }: PotentialsProps) {
   return (
     <>
-      <table className="w-1/2 border border-collapse">
+      <table className="w-full sm:w-1/2 border border-collapse">
         <caption>Potentials</caption>
         <tbody>
           {potentitalRanks.map((potential, i) => {

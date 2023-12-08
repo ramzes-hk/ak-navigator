@@ -97,7 +97,7 @@ const StatsMapping: { [key: string]: keyof Data } = {
 
 function Stats({ phases, favorKeyFrames }: statsProps) {
   return (
-    <div className="w-1/2 text-center">
+    <div className="sm:w-1/2 text-center">
       <BaseStats phases={phases} />
       <table className="w-full border border-collapse divide-y">
         <caption>Stats</caption>

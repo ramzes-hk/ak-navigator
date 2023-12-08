@@ -60,7 +60,7 @@ function getDescription(phase: Phase, index: number = -1): string {
 
 function Modules({ phases, equipDict, missions }: modulesProps) {
   return (
-    <table className="w-3/4 border border-collapse">
+    <table className="w-full sm:w-3/4 border border-collapse">
       <caption>{equipDict.uniEquipName}</caption>
       <thead>
         <tr className="divide-x divide-y">

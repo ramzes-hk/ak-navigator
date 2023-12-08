@@ -88,9 +88,9 @@ function Menu({ ids }: menuProps) {
 
   return (
     <div className="w-full flex flex-initial flex-col sm:flex-row">
-      <div className="w-1/6">
+      <div className="px-2 sm:w-1/6">
         <h2>Filters</h2>
-        <form className="ml-2" onClick={() => setPage(1)}>
+        <form onClick={() => setPage(1)}>
           <div>
             <Input
               type="search"
@@ -132,8 +132,8 @@ function Menu({ ids }: menuProps) {
           {operators && <p>Hit(s) - {operators.length}</p>}
         </form>
       </div>
-      <div className="w-3/4">
-        <div className="w-4/5 lg:w-1/2 lg:ml-20 m-auto lg:m-0">
+      <div className="w-full px-2 sm:w-3/4">
+        <div className="w-full sm:w-4/5 lg:w-1/2 lg:ml-20 m-auto lg:m-0">
           <form className="w-full flex flex-row place-content-between">
             <Button
               onClick={(e) => {

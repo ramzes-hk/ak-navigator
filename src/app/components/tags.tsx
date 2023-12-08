@@ -12,13 +12,11 @@ const positions = {
 
 function Tags({ position, tagList }: tagsProps) {
   return (
-    <div className="flex flex-col w-32">
+    <div className="flex flex-row w-full mb-4">
       <Badge>{positions[position]}</Badge>
-      <Badge className="flex flex-col">
-        {tagList.map((tag) => (
-          <p key={tag}>{tag}</p>
+      {tagList.map((tag) => (
+          <Badge key={tag}>{tag}</Badge>
         ))}
-      </Badge>
     </div>
   );
 }

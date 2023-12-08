@@ -28,7 +28,7 @@ export default async function Page({ params }: pageProps) {
   const isSingleTrait =
     !opData.trait || (opData.trait && opData.trait.candidates.length === 1);
   return (
-    <div className="mx-16 mb-16">
+    <div className="mx-2 mb-2 sm:mx-16 mb-16">
       <div>
         <div>
           <h1>

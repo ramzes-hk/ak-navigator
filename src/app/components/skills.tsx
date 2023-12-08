@@ -51,13 +51,13 @@ function Skill({ levels }: skillProps) {
       <table className="w-full border-collapse border divide-y">
         <thead>
           <tr className="p-2 divide-x">
-            <th className="text-center w-12">Lvl</th>
+            <th className="text-center w-8 sm:w-12">Lvl</th>
             <th>Description</th>
             {(levels.at(0) ?? { duration: 0 }).duration > 1 && (
-              <th className="w-12 px-0.5 text-center">Duration</th>
+              <th className="sm:w-12 px-0.5 text-center">Duration</th>
             )}
-            <th className="w-12 px-0.5 text-center">Init SP</th>
-            <th className="w-12 px-0.5 text-center">SP</th>
+            <th className="w-8 sm:w-12 px-0.5 text-center">Init SP</th>
+            <th className="w-8 sm:w-12 px-0.5 text-center">SP</th>
           </tr>
         </thead>
         <tbody className="divide-y">
@@ -93,10 +93,11 @@ interface skillTablesProps {
 
 function SkillTables({ skills }: skillTablesProps) {
   return (
-    <div className="w-3/4">
+    <div className="w-full sm:w-3/4">
       {skills.map((skill: Level[], i: number) => {
         return (
           <>
+            <h2><b>Skill {i + 1}</b></h2>
             <Skill key={i} levels={skill} />
             <br />
           </>
