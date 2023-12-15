@@ -5,6 +5,7 @@ import Potentials from "@/components/potentials";
 import Traits from "@/components/traits";
 import Modules from "@/components/modules";
 import Tags from "@/components/tags";
+import RangeGrid from "@/components/range";
 import { getOpData, getAllOpIds } from "@/lib/operators";
 import { getModules } from "@/lib/modules_data";
 
@@ -34,6 +35,7 @@ export default async function Page({ params }: pageProps) {
           <h1>
             {opData.name} - {convertRarity(opData.rarity)}
           </h1>
+          <RangeGrid phases={opData.phases}/>
           <div>
             <Traits
               input={opData.description}
