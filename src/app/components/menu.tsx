@@ -40,16 +40,20 @@ const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
 const tierAllies = new Array(6)
   .fill(null)
   .map((_, i) => "\u2606".repeat(i + 1));
+const mapperTiers = tiers.reduce((obj: {[key: string]: string}, key, i) => {
+  obj[key] = tierAllies[i];
+  return obj;
+}, {})
 
 interface filterProps {
   setVal: (val: string[]) => void;
   initialVal: string[];
   names: string[];
-  allias?: string[];
+  allias?: {[key: string]: string};
 }
 
 function Filter({ setVal, initialVal, names, allias }: filterProps) {
-  return names.map((name, i) => (
+  return names.map((name) => (
     <div key={name}>
       <Checkbox
         id={name}
@@ -59,7 +63,7 @@ function Filter({ setVal, initialVal, names, allias }: filterProps) {
             : setVal(initialVal.concat(name));
         }}
       />
-      <label htmlFor={name}>{allias?.at(i) ?? name}</label>
+      <label htmlFor={name}>{allias ? allias[name] : name}</label>
     </div>
   ));
 }
@@ -90,7 +94,9 @@ function Menu({ ids }: menuProps) {
     <div className="w-full flex flex-initial flex-col sm:flex-row">
       <div className="px-2 sm:w-1/6">
         <h2>Filters</h2>
-        <form onClick={() => setPage(1)}>
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          onClick={() => setPage(1)}>
           <div>
             <Input
               type="search"
@@ -107,6 +113,7 @@ function Menu({ ids }: menuProps) {
               setVal={setProfession}
               initialVal={profession}
               names={Object.keys(professions)}
+              allias={professions}
             />
           </div>
           <div className="my-2 flex flex-col">
@@ -114,7 +121,7 @@ function Menu({ ids }: menuProps) {
               setVal={setTier}
               initialVal={tier}
               names={tiers}
-              allias={tierAllies}
+              allias={mapperTiers}
             />{" "}
           </div>
           <div>
