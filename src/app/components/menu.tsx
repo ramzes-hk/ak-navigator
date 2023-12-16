@@ -25,31 +25,31 @@ interface menuProps {
   }[];
 }
 
-const professions: {[key: string]: string} = {
-  "MEDIC": "Medic",
-  "TANK": "Defender",
-  "WARRIOR": "Guard",
-  "CASTER": "Caster",
-  "PIONEER": "Vanguard",
-  "SNIPER": "Sniper",
-  "SUPPORT": "Support",
-  "SPECIAL": "Specialist",
+const professions: { [key: string]: string } = {
+  MEDIC: "Medic",
+  TANK: "Defender",
+  WARRIOR: "Guard",
+  CASTER: "Caster",
+  PIONEER: "Vanguard",
+  SNIPER: "Sniper",
+  SUPPORT: "Support",
+  SPECIAL: "Specialist",
 };
 
 const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
 const tierAllies = new Array(6)
   .fill(null)
   .map((_, i) => "\u2606".repeat(i + 1));
-const mapperTiers = tiers.reduce((obj: {[key: string]: string}, key, i) => {
+const mapperTiers = tiers.reduce((obj: { [key: string]: string }, key, i) => {
   obj[key] = tierAllies[i];
   return obj;
-}, {})
+}, {});
 
 interface filterProps {
   setVal: (val: string[]) => void;
   initialVal: string[];
   names: string[];
-  allias?: {[key: string]: string};
+  allias?: { [key: string]: string };
 }
 
 function Filter({ setVal, initialVal, names, allias }: filterProps) {
@@ -94,9 +94,7 @@ function Menu({ ids }: menuProps) {
     <div className="w-full flex flex-initial flex-col sm:flex-row">
       <div className="px-2 sm:w-1/6">
         <h2>Filters</h2>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          onClick={() => setPage(1)}>
+        <form onSubmit={(e) => e.preventDefault()} onClick={() => setPage(1)}>
           <div>
             <Input
               type="search"

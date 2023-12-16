@@ -254,7 +254,7 @@ export function parseDescription(
   tagsReplacement: TagsReplacement,
   duration?: number,
 ): string {
-  let desc = description;
+  let desc = description.replace("\n", "<br />");
   for (const key in tagsReplacement) {
     desc = desc.replace(RegExp(key, "g"), tagsReplacement[key]);
   }

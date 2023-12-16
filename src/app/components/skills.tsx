@@ -4,7 +4,7 @@ const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",
   "<@ba.vdown>": "<span class='text-[#FF6237]'>",
   "</>": "</span>",
-  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
+  "<@ba.rem>": "<span class='text-[#F49800]'>",
   "<\\$ba.camou>": "",
   "<\\$ba.charged>": "<br />",
   "<\\$ba.barrier>": "",
@@ -75,7 +75,9 @@ function Skill({ levels }: skillProps) {
                     ),
                   }}
                 ></td>
-                {level.duration > 1 && <td className="text-center">{level.duration}</td>}
+                {level.duration > 1 && (
+                  <td className="text-center">{level.duration}</td>
+                )}
                 <td className="text-center">{level.spData.initSp}</td>
                 <td className="text-center">{level.spData.spCost}</td>
               </tr>
@@ -97,7 +99,9 @@ function SkillTables({ skills }: skillTablesProps) {
       {skills.map((skill: Level[], i: number) => {
         return (
           <>
-            <h2><b>Skill {i + 1}</b></h2>
+            <h2>
+              <b>Skill {i + 1}</b>
+            </h2>
             <Skill key={i} levels={skill} />
             <br />
           </>

@@ -15,8 +15,8 @@ function Tags({ position, tagList }: tagsProps) {
     <div className="flex flex-row w-full mb-4">
       <Badge>{positions[position]}</Badge>
       {tagList.map((tag) => (
-          <Badge key={tag}>{tag}</Badge>
-        ))}
+        <Badge key={tag}>{tag}</Badge>
+      ))}
     </div>
   );
 }

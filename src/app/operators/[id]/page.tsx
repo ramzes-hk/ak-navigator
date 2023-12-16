@@ -35,7 +35,7 @@ export default async function Page({ params }: pageProps) {
           <h1>
             {opData.name} - {convertRarity(opData.rarity)}
           </h1>
-          <RangeGrid phases={opData.phases}/>
+          <RangeGrid phases={opData.phases} />
           <div>
             <Traits
               input={opData.description}

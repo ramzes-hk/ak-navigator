@@ -15,11 +15,7 @@ interface Ranges {
 }
 
 export async function getRange(id: string): Promise<Range> {
-  const fileName = path.join(
-    process.cwd(),
-    "operators",
-    "range_table.json",
-  ); 
+  const fileName = path.join(process.cwd(), "operators", "range_table.json");
   const rawFile = fs.readFileSync(fileName, "utf8");
   const contents = JSON.parse(rawFile) as Ranges;
   return contents[id];
