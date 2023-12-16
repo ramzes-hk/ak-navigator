@@ -3,15 +3,20 @@ import { useRef, useEffect } from "react";
 import { Range } from "@/lib/ranges";
 
 interface canvasRangeProps {
-  grid: Range["grids"];
-  sizes: number[];
+  range: Range;
 }
 
-function CanvasRange({ grid, sizes }: canvasRangeProps) {
-  const minW = sizes[0];
-  const minH = sizes[1];
-  const maxW = sizes[2];
-  const maxH = sizes[3];
+function CanvasRange({ range }: canvasRangeProps) {
+  let minW = 0;
+  let minH = 0;
+  let maxW = 0;
+  let maxH = 0;
+  range.grids.forEach((grid) => {
+    if (grid.col < minW) minW = grid.col;
+    if (grid.col > maxW) maxW = grid.col;
+    if (grid.row < minH) minH = grid.row;
+    if (grid.row > maxH) maxH = grid.row;
+  });
   const props = {
     width: (maxW - minW + 1) * 25,
     height: (maxH - minH + 1) * 25,
@@ -20,7 +25,7 @@ function CanvasRange({ grid, sizes }: canvasRangeProps) {
   const draw = (ctx: CanvasRenderingContext2D) => {
     ctx.strokeStyle = "#FFFFFF";
     ctx.fillStyle = "#FFFFFF";
-    grid.forEach((grid) => {
+    range.grids.forEach((grid) => {
       if (grid.col === 0 && grid.row === 0) {
         ctx.fillRect(
           (grid.col - minW) * 25,

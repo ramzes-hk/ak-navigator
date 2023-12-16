@@ -191,12 +191,6 @@ export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
   };
 }
 
-export async function getOpDataByClass(
-  className: string,
-): Promise<Operator<Level[][]>[]> {
-  throw "bye";
-}
-
 export interface MappedOps {
   [key: string]: Operator<Level[][]>;
 }
