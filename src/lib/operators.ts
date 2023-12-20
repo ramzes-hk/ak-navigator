@@ -222,7 +222,7 @@ export const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",
   "<@ba.vdown>": "<span class='text-[#FF6237]'>",
   "</>": "</span>",
-  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
+  "<@ba.rem>": "<span class='text-[#F49800]'>",
   "<\\$ba.camou>": "",
   "<\\$ba.charged>": "<br />",
   "<\\$ba.barrier>": "",
@@ -237,7 +237,7 @@ function escapeRegExp(input: string) {
   return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-interface Blackboard {
+export interface Blackboard {
   key: string;
   value: number;
 }
@@ -249,11 +249,11 @@ export function parseDescription(
   duration?: number,
 ): string {
   let desc = description.replace("\n", "<br />");
+  desc = replaceValues(desc, blackboard);
+  desc = duration ? desc.replace(/{duration}/, String(duration)) : desc;
   for (const key in tagsReplacement) {
     desc = desc.replace(RegExp(key, "g"), tagsReplacement[key]);
   }
-  desc = replaceValues(desc, blackboard);
-  desc = duration ? desc.replace(/{duration}/, String(duration)) : desc;
   return desc;
 }
 

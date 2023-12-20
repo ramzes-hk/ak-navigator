@@ -6,6 +6,7 @@ import Traits from "@/components/traits";
 import Modules from "@/components/modules";
 import Tags from "@/components/tags";
 import RangeGrid from "@/components/range";
+import File from "@/components/file";
 import { getOpData, getAllOpIds } from "@/lib/operators";
 import { getModules } from "@/lib/modules_data";
 
@@ -54,6 +55,7 @@ export default async function Page({ params }: pageProps) {
           <Potentials potentitalRanks={opData.potentialRanks} />
         )}
         <br />
+        <File charId={"char_" + params.id} />
       </div>
       <SkillTables skills={opData.skills} />
       <br />

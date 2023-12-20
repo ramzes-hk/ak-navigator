@@ -36,7 +36,9 @@ interface skillProps {
 }
 
 async function Skill({ levels }: skillProps) {
-  const rangeData = levels[0].rangeId ? await getRange(levels[0].rangeId) : null
+  const rangeData = levels[0].rangeId
+    ? await getRange(levels[0].rangeId)
+    : null;
   return (
     <div className="w-full">
       <table className="w-full border-x border-t border-collapse">
@@ -47,7 +49,11 @@ async function Skill({ levels }: skillProps) {
               <th>{spRecovery[levels[0].spData.spType]}</th>
             )}
             <th>{skillType[levels[0].skillType]}</th>
-            {rangeData && <th className="flex justify-center"><CanvasRange range={rangeData} /></th>}
+            {rangeData && (
+              <th className="flex justify-center">
+                <CanvasRange range={rangeData} />
+              </th>
+            )}
           </tr>
         </tbody>
       </table>

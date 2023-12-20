@@ -27,19 +27,9 @@ function CanvasRange({ range }: canvasRangeProps) {
     ctx.fillStyle = "#FFFFFF";
     range.grids.forEach((grid) => {
       if (grid.col === 0 && grid.row === 0) {
-        ctx.fillRect(
-          (grid.col - minW) * 25,
-          (grid.row - minH) * 25,
-          20,
-          20,
-        );
+        ctx.fillRect((grid.col - minW) * 25, (grid.row - minH) * 25, 20, 20);
       }
-      ctx.strokeRect(
-        (grid.col - minW) * 25,
-        (grid.row - minH) * 25,
-        20,
-        20,
-      );
+      ctx.strokeRect((grid.col - minW) * 25, (grid.row - minH) * 25, 20, 20);
     });
   };
   useEffect(() => {
