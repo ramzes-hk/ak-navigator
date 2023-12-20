@@ -32,7 +32,7 @@ async function File({ charId }: fileProps) {
         <thead>
           <tr className="divide-x divide-y">
             <th>Name</th>
-            <th className="px-0.5">Req</th>
+            <th className="px-0.5">Requirements</th>
             <th>Description</th>
           </tr>
         </thead>
@@ -44,7 +44,13 @@ async function File({ charId }: fileProps) {
                   {(bd as BrokenBuff).buff.buffName}
                 </td>
                 <td className="text-center">
-                  E{bd.cond.phase.replace(/PHASE_/, "")}
+                  E{bd.cond.phase.replace(/PHASE_/, "")}{" "}
+                  {bd.cond.level !== 1 && (
+                    <>
+                      <br />
+                      <span className="text-nowrap">Lvl {bd.cond.level}</span>
+                    </>
+                  )}
                 </td>
                 <td
                   dangerouslySetInnerHTML={{
