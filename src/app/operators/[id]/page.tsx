@@ -6,7 +6,7 @@ import Traits from "@/components/traits";
 import Modules from "@/components/modules";
 import Tags from "@/components/tags";
 import RangeGrid from "@/components/range";
-import File from "@/components/file";
+import BaseSkills from "@/components/base_skill";
 import { getOpData, getAllOpIds } from "@/lib/operators";
 import { getModules } from "@/lib/modules_data";
 
@@ -30,35 +30,26 @@ export default async function Page({ params }: pageProps) {
   const isSingleTrait =
     !opData.trait || (opData.trait && opData.trait.candidates.length === 1);
   return (
-    <div className="mx-2 mb-2 sm:mx-16 mb-16">
+    <div className="container flex flex-col flex-initial gap-6">
+      <h1 className="text-2xl">
+        {opData.name} - {convertRarity(opData.rarity)}
+      </h1>
       <div>
-        <div>
-          <h1>
-            {opData.name} - {convertRarity(opData.rarity)}
-          </h1>
-          <RangeGrid phases={opData.phases} />
-          <div>
-            <Traits
-              input={opData.description}
-              traits={opData.trait}
-              isSingleTrait={isSingleTrait}
-            />
-          </div>
-          <br />
-          <Tags position={opData.position} tagList={opData.tagList} />
-        </div>
-        <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
-        <br />
-        {opData.talents && <Talents talents={opData.talents} />}
-        <br />
-        {opData.potentialRanks && (
-          <Potentials potentitalRanks={opData.potentialRanks} />
-        )}
-        <br />
-        <File charId={"char_" + params.id} />
+        <RangeGrid phases={opData.phases} />
       </div>
+      <Traits
+        input={opData.description}
+        traits={opData.trait}
+        isSingleTrait={isSingleTrait}
+      />
+      <Tags position={opData.position} tagList={opData.tagList} />
+      <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
+      {opData.talents && <Talents talents={opData.talents} />}
+      {opData.potentialRanks && (
+        <Potentials potentitalRanks={opData.potentialRanks} />
+      )}
+      <BaseSkills charId={"char_" + params.id} />
       <SkillTables skills={opData.skills} />
-      <br />
       {modules &&
         modules.map((module, i) => (
           <Modules

@@ -79,7 +79,7 @@ function getParsedJSON<T>(filename: string): T {
 function getCharName(id: string): string {
   const start = id.lastIndexOf("_");
   if (start === -1) {
-    throw new Error(`No underscor in character id: ${id}`);
+    throw new Error(`No underscore in character id: ${id}`);
   }
   return id.substring(start + 1);
 }

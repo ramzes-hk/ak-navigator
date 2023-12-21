@@ -91,54 +91,56 @@ function Menu({ ids }: menuProps) {
   );
 
   return (
-    <div className="w-full flex flex-initial flex-col sm:flex-row">
-      <div className="px-2 sm:w-1/6">
-        <h2>Filters</h2>
-        <form onSubmit={(e) => e.preventDefault()} onClick={() => setPage(1)}>
-          <div>
-            <Input
-              type="search"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => {
-                e.preventDefault();
-                setSearch(e.target.value.toLowerCase());
-              }}
-            ></Input>
-          </div>
-          <div className="my-2 flex flex-col">
-            <Filter
-              setVal={setProfession}
-              initialVal={profession}
-              names={Object.keys(professions)}
-              allias={professions}
-            />
-          </div>
-          <div className="my-2 flex flex-col">
-            <Filter
-              setVal={setTier}
-              initialVal={tier}
-              names={tiers}
-              allias={mapperTiers}
-            />{" "}
-          </div>
-          <div>
-            <Button
-              type="reset"
-              variant="destructive"
-              onClick={() => {
-                setProfession([]);
-                setTier([]);
-              }}
-            >
-              Reset
-            </Button>
-          </div>
-          {operators && <p>Hit(s) - {operators.length}</p>}
-        </form>
+    <div className="container w-full flex-1 flex-col sm:grid sm:grid-cols-6 gap-10">
+      <div>
+        <aside className="sm:sticky sm:top-20 sm:block sm:z-40 w-full">
+          <h2>Filters</h2>
+          <form onSubmit={(e) => e.preventDefault()} onClick={() => setPage(1)}>
+            <div>
+              <Input
+                type="search"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setSearch(e.target.value.toLowerCase());
+                }}
+              ></Input>
+            </div>
+            <div className="my-2 flex flex-col">
+              <Filter
+                setVal={setProfession}
+                initialVal={profession}
+                names={Object.keys(professions)}
+                allias={professions}
+              />
+            </div>
+            <div className="my-2 flex flex-col">
+              <Filter
+                setVal={setTier}
+                initialVal={tier}
+                names={tiers}
+                allias={mapperTiers}
+              />{" "}
+            </div>
+            <div>
+              <Button
+                type="reset"
+                variant="destructive"
+                onClick={() => {
+                  setProfession([]);
+                  setTier([]);
+                }}
+              >
+                Reset
+              </Button>
+            </div>
+            {operators && <p>Hit(s) - {operators.length}</p>}
+          </form>
+        </aside>
       </div>
-      <div className="w-full px-2 sm:w-3/4">
-        <div className="w-full sm:w-4/5 lg:w-1/2 lg:ml-20 m-auto lg:m-0">
+      <main className="w-full sm:col-span-5">
+        <div className="w-full sm:w-4/5 m-auto">
           <form className="w-full flex flex-row place-content-between">
             <Button
               onClick={(e) => {
@@ -201,7 +203,7 @@ function Menu({ ids }: menuProps) {
             <h2>No Operators Found</h2>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -3,9 +3,5 @@ import { getMenuData } from "@/lib/operators";
 
 export default async function Home() {
   const operators = await getMenuData();
-  return (
-    <div>
-      <Menu ids={operators} />
-    </div>
-  );
+  return <Menu ids={operators} />;
 }

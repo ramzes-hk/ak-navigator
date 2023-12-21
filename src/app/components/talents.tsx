@@ -40,8 +40,8 @@ function Talents({ talents }: talentsProps) {
         <tr key="headers" className="divide-x">
           <th>Talent</th>
           <th>Name</th>
-          <th>Requirements</th>
-          <th>Description</th>
+          <th>Reqs</th>
+          <th>Desc</th>
         </tr>
       </thead>
       <tbody>

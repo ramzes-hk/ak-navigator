@@ -1,7 +1,7 @@
 import { CharWithBuff, getBaseSkills } from "@/lib/base_skills";
 import { parseDescription, TagsReplacement } from "@/lib/operators";
 
-interface fileProps {
+interface baseSkillsProps {
   charId: string;
 }
 const tagsReplacement: TagsReplacement = {
@@ -22,7 +22,7 @@ const tagsReplacement: TagsReplacement = {
 };
 type BrokenBuff = CharWithBuff["buffChar"][number]["buffData"][number];
 
-async function File({ charId }: fileProps) {
+async function BaseSkills({ charId }: baseSkillsProps) {
   const bData = await getBaseSkills(charId);
   if (bData === null) return null;
   return (
@@ -70,4 +70,4 @@ async function File({ charId }: fileProps) {
   );
 }
 
-export default File;
+export default BaseSkills;

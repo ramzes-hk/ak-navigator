@@ -2,15 +2,13 @@ import Link from "next/link";
 
 function Navbar() {
   return (
-    <div className="mt-2 absolute left-0 top-0 z-10">
-      <Link
-        className="border p-2 border-black rounded-lg hover:bg-stone-400"
-        prefetch={false}
-        href="/"
-      >
-        Menu
-      </Link>
-    </div>
+    <header className="sticky top-0 z-50 w-full border-b backdrop-blur-sm">
+      <div className="flex container flex items-center h-14">
+        <Link className="text-2xl" prefetch={false} href="/">
+          AK-NAVIGATOR
+        </Link>
+      </div>
+    </header>
   );
 }
 
