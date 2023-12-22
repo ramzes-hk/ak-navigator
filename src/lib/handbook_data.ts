@@ -23,7 +23,7 @@ interface HandbookInfo {
   };
 }
 
-export async function getHandbook(charID: string): Promise<HandbookChar> {
+export async function getHandbook(charID: string): Promise<HandbookChar | null> {
   const fileName = path.join(
     process.cwd(),
     "operators",

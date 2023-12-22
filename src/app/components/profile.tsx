@@ -29,7 +29,7 @@ async function Profile({ id }: profileProps) {
           Operator
         </Link>
       </div>
-      {hbData.storyTextAudio.map((story, i) => (
+      {hbData ? hbData.storyTextAudio.map((story, i) => (
         <div key={`story-${i}`}>
           <Card>
             <CardHeader>
@@ -57,7 +57,7 @@ async function Profile({ id }: profileProps) {
             </CardContent>
           </Card>
         </div>
-      ))}
+      )) : <p>No Data</p>}
     </div>
   );
 }

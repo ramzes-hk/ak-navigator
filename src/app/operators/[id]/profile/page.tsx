@@ -1,4 +1,9 @@
 import Profile from "@/components/profile";
+import { getAllOpIds } from "@/lib/operators";
+
+export async function generateStaticParams() {
+  return getAllOpIds();
+}
 
 interface pageProps {
   params: {

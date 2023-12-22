@@ -1,4 +1,9 @@
 import VoiceLines from "@/components/voice_lines";
+import { getAllOpIds } from "@/lib/operators";
+
+export async function generateStaticParams() {
+  return getAllOpIds();
+}
 
 interface pageProps {
   params: {
