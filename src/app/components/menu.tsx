@@ -91,8 +91,8 @@ function Menu({ ids }: menuProps) {
   );
 
   return (
-    <div className="container w-full flex-1 flex-col sm:grid sm:grid-cols-6 gap-10">
-      <div>
+    <div className="container w-full flex flex-col sm:flex-row item-start h-full">
+      <div className="w-1/6 h-svh">
         <aside className="sm:sticky sm:top-20 sm:block sm:z-40 w-full">
           <h2>Filters</h2>
           <form onSubmit={(e) => e.preventDefault()} onClick={() => setPage(1)}>
@@ -139,7 +139,7 @@ function Menu({ ids }: menuProps) {
           </form>
         </aside>
       </div>
-      <main className="w-full sm:col-span-5">
+      <main className="w-full sm:w-5/6">
         <div className="w-full sm:w-4/5 m-auto">
           <form className="w-full flex flex-row place-content-between">
             <Button
