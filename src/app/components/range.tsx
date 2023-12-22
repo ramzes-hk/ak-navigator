@@ -1,7 +1,7 @@
 import { getRange } from "@/lib/ranges";
 import { Phase } from "@/lib/operators";
-
 import CanvasRange from "./range_canvas";
+
 interface rangeProp {
   phases: Phase[];
 }

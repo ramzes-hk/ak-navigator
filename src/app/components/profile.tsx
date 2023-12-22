@@ -6,6 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
+import { getOpName } from "@/lib/operators";
+import { buttonVariants } from "./button";
+import Link from "next/link";
 
 interface profileProps {
   id: string;
@@ -13,9 +16,19 @@ interface profileProps {
 
 async function Profile({ id }: profileProps) {
   const hbData = await getHandbook("char_" + id);
+  const opName = await getOpName("char_" + id);
   return (
-    <>
-      <h1>{id}</h1>
+    <div className="container w-full">
+      <div className="py-4 flex flex-row space-x-4">
+        <h1 className="text-2xl text-bold">{opName}</h1>
+        <Link
+          className={buttonVariants({ variant: "default" })}
+          href={`/operators/${id}`}
+          prefetch={false}
+        >
+          Operator
+        </Link>
+      </div>
       {hbData.storyTextAudio.map((story, i) => (
         <div key={`story-${i}`}>
           <Card>
@@ -45,7 +58,7 @@ async function Profile({ id }: profileProps) {
           </Card>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

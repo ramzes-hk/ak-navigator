@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 import { db } from "@/db/db";
 import { operators } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export type AllOpNames = OpName[];
 
@@ -61,6 +62,14 @@ export function getAllOpIds(): IdsToReturn[] {
     });
   }
   return ids;
+}
+
+export async function getOpName(id: string): Promise<string> {
+  const result = await db
+    .select({ name: operators.name })
+    .from(operators)
+    .where(eq(operators.id, id));
+  return result[0].name;
 }
 
 export interface Trait {
