@@ -38,6 +38,13 @@ async function Operator({ id }: operatorProps) {
         >
           Profile
         </Link>
+        <Link
+          className={buttonVariants({ variant: "default" })}
+          href={`${id}/voice`}
+          prefetch={false}
+        >
+          Voice Lines
+        </Link>
       </div>
       <div>
         <RangeGrid phases={opData.phases} />
