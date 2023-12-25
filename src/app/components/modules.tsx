@@ -78,20 +78,23 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
               <td className="text-center">
                 <ul>
                   {phase.attributeBlackboard.map((blackboard, i) => (
-                    <li key={`stats-${i}`}>
+                    <li className="px-1" key={`stats-${i}`}>
                       {blackBoardMapping[blackboard.key]}+{blackboard.value}
                     </li>
                   ))}
                 </ul>
               </td>
               <td
+                className="px-1"
                 dangerouslySetInnerHTML={{ __html: getDescription(phase) }}
               ></td>
               {phase.equipLevel === 1 && (
                 <td rowSpan={3}>
                   <ul>
                     {missions.map((mission, i) => (
-                      <li key={`mission-${i}`}>{mission.desc}</li>
+                      <li className="px-1" key={`mission-${i}`}>
+                        {mission.desc}
+                      </li>
                     ))}
                   </ul>
                 </td>

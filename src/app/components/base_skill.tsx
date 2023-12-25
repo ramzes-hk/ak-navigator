@@ -32,8 +32,8 @@ async function BaseSkills({ charId }: baseSkillsProps) {
         <thead>
           <tr className="divide-x divide-y">
             <th>Name</th>
-            <th className="px-0.5">Requirements</th>
-            <th>Description</th>
+            <th className="px-0.5 w-8 sm:w-14">Reqs</th>
+            <th>Desc</th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +53,7 @@ async function BaseSkills({ charId }: baseSkillsProps) {
                   )}
                 </td>
                 <td
+                  className="px-1"
                   dangerouslySetInnerHTML={{
                     __html: parseDescription(
                       (bd as BrokenBuff).buff.description,

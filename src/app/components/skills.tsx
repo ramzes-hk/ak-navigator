@@ -76,6 +76,7 @@ async function Skill({ levels }: skillProps) {
               <tr className="divide-x" key={`level-${i}`}>
                 <td className="text-center">{i + 1}</td>
                 <td
+                  className="px-1"
                   dangerouslySetInnerHTML={{
                     __html: parseDescription(
                       level.description,
@@ -108,13 +109,13 @@ function SkillTables({ skills }: skillTablesProps) {
     <div className="w-full sm:w-3/4">
       {skills.map((skill: Level[], i: number) => {
         return (
-          <>
+          <div key={`skill-${i}`}>
             <h2>
               <b>Skill {i + 1}</b>
             </h2>
-            <Skill key={i} levels={skill} />
+            <Skill levels={skill} />
             <br />
-          </>
+          </div>
         );
       })}
     </div>

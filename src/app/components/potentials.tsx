@@ -14,7 +14,7 @@ function Potentials({ potentitalRanks }: PotentialsProps) {
             return (
               <tr key={i} className="divide-x divide-y">
                 <th className="border">{`${i + 2}`}</th>
-                <td>{potential.description}</td>
+                <td className="px-1">{potential.description}</td>
               </tr>
             );
           })}

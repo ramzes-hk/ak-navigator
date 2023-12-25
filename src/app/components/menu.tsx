@@ -3,7 +3,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "./button";
-import { Checkbox } from "./checkbox";
 import { Input } from "./input";
 import {
   Table,
@@ -14,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "./table";
+import { ToggleGroup, ToggleGroupItem } from "./toggle_group";
 
 interface menuProps {
   ids: {
@@ -45,29 +45,6 @@ const mapperTiers = tiers.reduce((obj: { [key: string]: string }, key, i) => {
   return obj;
 }, {});
 
-interface filterProps {
-  setVal: (val: string[]) => void;
-  initialVal: string[];
-  names: string[];
-  allias?: { [key: string]: string };
-}
-
-function Filter({ setVal, initialVal, names, allias }: filterProps) {
-  return names.map((name) => (
-    <div key={name}>
-      <Checkbox
-        id={name}
-        onClick={() => {
-          initialVal.includes(name)
-            ? setVal(initialVal.filter((item) => item !== name))
-            : setVal(initialVal.concat(name));
-        }}
-      />
-      <label htmlFor={name}>{allias ? allias[name] : name}</label>
-    </div>
-  ));
-}
-
 function Menu({ ids }: menuProps) {
   const pageSize = 25;
   const [search, setSearch] = useState<string>("");
@@ -92,49 +69,56 @@ function Menu({ ids }: menuProps) {
 
   return (
     <div className="container w-full flex flex-col sm:flex-row item-start h-full">
-      <div className="w-1/6 h-svh">
+      <div className="sm:w-1/6 h-svh">
         <aside className="sm:sticky sm:top-20 sm:block sm:z-40 w-full">
           <h2>Filters</h2>
           <form onSubmit={(e) => e.preventDefault()} onClick={() => setPage(1)}>
-            <div>
-              <Input
-                type="search"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => {
-                  e.preventDefault();
-                  setSearch(e.target.value.toLowerCase());
-                }}
-              ></Input>
-            </div>
-            <div className="my-2 flex flex-col">
-              <Filter
-                setVal={setProfession}
-                initialVal={profession}
-                names={Object.keys(professions)}
-                allias={professions}
-              />
-            </div>
-            <div className="my-2 flex flex-col">
-              <Filter
-                setVal={setTier}
-                initialVal={tier}
-                names={tiers}
-                allias={mapperTiers}
-              />{" "}
-            </div>
-            <div>
-              <Button
-                type="reset"
-                variant="destructive"
-                onClick={() => {
-                  setProfession([]);
-                  setTier([]);
-                }}
+            <Input
+              type="search"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => {
+                e.preventDefault();
+                setSearch(e.target.value.toLowerCase());
+              }}
+            ></Input>
+            <div className="py-4">
+              <ToggleGroup
+                value={profession}
+                className="flex flex-row flex-wrap"
+                onValueChange={(values) => setProfession(values)}
+                type="multiple"
               >
-                Reset
-              </Button>
+                {Object.keys(professions).map((prof) => (
+                  <ToggleGroupItem key={prof} value={prof}>
+                    {professions[prof]}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+              <ToggleGroup
+                value={tier}
+                className="flex flex-row flex-wrap"
+                onValueChange={(values) => setTier(values)}
+                type="multiple"
+              >
+                {tiers.map((tier) => (
+                  <ToggleGroupItem key={tier} value={tier}>
+                    {mapperTiers[tier]}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
             </div>
+            <Button
+              type="reset"
+              variant="destructive"
+              onClick={() => {
+                setProfession([]);
+                setTier([]);
+                setSearch("");
+              }}
+            >
+              Reset
+            </Button>
             {operators && <p>Hit(s) - {operators.length}</p>}
           </form>
         </aside>
