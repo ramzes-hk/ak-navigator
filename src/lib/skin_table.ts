@@ -5,8 +5,8 @@ interface CharSkin {
   portraitId: string;
   displaySkin: {
     skinName: string | null;
-    drawerList: string[];
-    content: string;
+    drawerList: string[] | null;
+    content: string | null;
     skinGroupId: string;
   };
 }

@@ -101,7 +101,7 @@ async function Operator({ id }: operatorProps) {
                   />
                 </CardContent>
                 <CardFooter>
-                  Artist: {skin.displaySkin.drawerList.join(" ")}
+                  {skin.displaySkin.drawerList && `Artist: ${skin.displaySkin.drawerList.join(" ")}`}
                 </CardFooter>
               </Card>
             </CarouselItem>
