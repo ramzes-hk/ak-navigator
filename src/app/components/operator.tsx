@@ -11,6 +11,7 @@ import { buttonVariants } from "@/components/button";
 import { getOpData } from "@/lib/operators";
 import { getModules } from "@/lib/modules_data";
 import Link from "next/link";
+import Image from "next/image";
 
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
@@ -46,6 +47,12 @@ async function Operator({ id }: operatorProps) {
           Voice Lines
         </Link>
       </div>
+      <Image
+        src={`https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/char_${id}_1.png`}
+        width={500}
+        height={700}
+        alt={opData.name}
+      />
       <div>
         <RangeGrid phases={opData.phases} />
       </div>

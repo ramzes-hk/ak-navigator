@@ -10,6 +10,7 @@ export const columns: ColumnDef<menuProps["ids"][number]>[] = [
     header: "Name",
     cell: (props) => (
       <Link
+        className="hover:text-underline underline-offset-4"
         href={`operators/${props.row.original.id.replace(/char_/, "")}`}
         type="button"
       >

@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com", 
+        port: "",
+        pathname: "/Aceship/Arknight-Images/main/characters/**",
+      }
+    ]
+  }
+};
 
 module.exports = nextConfig;

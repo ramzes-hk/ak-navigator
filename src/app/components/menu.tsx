@@ -59,7 +59,7 @@ function Menu({ ids }: menuProps) {
 
   return (
     <div className="px-4 sm:container w-full flex flex-col sm:flex-row item-start">
-      <div className="sm:w-1/6 h-svh">
+      <div className="sm:w-1/6">
         <aside className="sm:sticky sm:top-20 sm:block sm:z-40 w-full">
           <h2 className="pb-2 text-xl">Filters</h2>
           <form onSubmit={(e) => e.preventDefault()}>

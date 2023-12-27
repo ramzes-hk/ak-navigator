@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/table";
 import { Button } from "./button";
+import { useEffect } from "react";
 
 interface opTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,6 +32,9 @@ function OpTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+  useEffect(() => {
+    table.setPageSize(10);
+  }, [table]);
   return (
     <div className="sm:h-screen">
       <div className="flex items-center justify-end space-x-2 py-4">
