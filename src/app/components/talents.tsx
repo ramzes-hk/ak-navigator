@@ -38,7 +38,6 @@ function Talents({ talents }: talentsProps) {
       <caption>Talents</caption>
       <thead>
         <tr key="headers" className="divide-x">
-          <th>Talent</th>
           <th>Name</th>
           <th>Reqs</th>
           <th>Desc</th>
@@ -53,11 +52,6 @@ function Talents({ talents }: talentsProps) {
                 : "";
             return (
               <tr key={`row${i}-${j}`} className="divide-x divide-y">
-                {j === 0 && (
-                  <th
-                    rowSpan={candidate.candidates.length}
-                  >{`${talent.prefabKey}`}</th>
-                )}
                 {j === 0 && (
                   <td
                     rowSpan={candidate.candidates.length}
