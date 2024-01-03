@@ -14,6 +14,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./accordion";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table"
 type modulesProps = Module;
 
 const tagsReplacement: TagsReplacement = {
@@ -84,22 +93,22 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
           </Accordion>
       </CardHeader>
       <CardContent>
-        <table className="w-full sm:w-3/4 border border-collapse">
-          <caption>Module</caption>
-          <thead>
-            <tr className="divide-x divide-y">
-              <th className="w-12 px-0.5">Stage</th>
-              <th>Stats</th>
-              <th>Description</th>
-              <th>Missions</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table>
+          <TableCaption>Module</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Stage</TableHead>
+              <TableHead>Stats</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Missions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {phases.map((phase) => {
               return (
-                <tr key={phase.equipLevel} className="divide-x divide-y border">
-                  <td className="text-center">{phase.equipLevel}</td>
-                  <td className="text-center">
+                <TableRow key={phase.equipLevel}>
+                  <TableCell>{phase.equipLevel}</TableCell>
+                  <TableCell>
                     <ul>
                       {phase.attributeBlackboard.map((blackboard, i) => (
                         <li className="px-1" key={`stats-${i}`}>
@@ -107,13 +116,13 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
                         </li>
                       ))}
                     </ul>
-                  </td>
-                  <td
+                  </TableCell>
+                  <TableCell
                     className="px-1"
                     dangerouslySetInnerHTML={{ __html: getDescription(phase) }}
-                  ></td>
+                  ></TableCell>
                   {phase.equipLevel === 1 && (
-                    <td rowSpan={3}>
+                    <TableCell className="hover:bg-primary" rowSpan={3}>
                       <ul>
                         {missions.map((mission, i) => (
                           <li className="px-1" key={`mission-${i}`}>
@@ -121,13 +130,13 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
                           </li>
                         ))}
                       </ul>
-                    </td>
+                    </TableCell>
                   )}
-                </tr>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );
