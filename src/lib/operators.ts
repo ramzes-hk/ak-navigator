@@ -144,6 +144,7 @@ export interface Talent {
   candidates: {
     unlockCondition: {
       phase: string;
+      level: number;
     };
     requiredPotentialRank: number;
     prefabKey: string;

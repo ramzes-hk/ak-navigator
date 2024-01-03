@@ -58,7 +58,8 @@ function Talents({ talents }: talentsProps) {
                   >{`${talent.name}`}</td>
                 )}
                 <td className="border">
-                  {"E" + getPromotion(talent.unlockCondition.phase) + potential}
+                  {"E" + getPromotion(talent.unlockCondition.phase) + potential} 
+                  {talent.unlockCondition.level !== 1 && (" Lvl " + talent.unlockCondition.level)}
                 </td>
                 <td
                   dangerouslySetInnerHTML={{

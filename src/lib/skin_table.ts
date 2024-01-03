@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-interface CharSkin {
+export interface CharSkin {
   portraitId: string;
   displaySkin: {
     skinName: string | null;

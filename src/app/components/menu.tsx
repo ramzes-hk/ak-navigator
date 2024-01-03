@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { ToggleGroup, ToggleGroupItem } from "./toggle_group";
@@ -17,7 +17,7 @@ export interface menuProps {
   }[];
 }
 
-export const professions: { [key: string]: string } = {
+export const professions: Record<string, string> = {
   MEDIC: "Medic",
   TANK: "Defender",
   WARRIOR: "Guard",
