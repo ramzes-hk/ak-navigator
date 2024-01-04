@@ -85,9 +85,9 @@ function getCharName(id: string): string {
 }
 
 export interface Module {
-  phases: Phase[];
+  phases: Phase[] | null;
   equipDict: UniEquip;
-  missions: Mission[];
+  missions: Mission[] | null;
 }
 
 export async function getModules(id: string): Promise<Module[]> {
@@ -100,10 +100,14 @@ export async function getModules(id: string): Promise<Module[]> {
   const charName = getCharName(id);
   for (let i = 1; i < 4; i++) {
     const moduleId = `uniequip_00${i}_${charName}`;
-    if (battleEquipTable[moduleId] === undefined) {
+    if (uniEquipTable.equipDict[moduleId] === undefined) {
       continue;
     }
     const uniEquip = uniEquipTable.equipDict[moduleId];
+    if (i === 1) {
+      modules.push({ equipDict: uniEquip, phases: null, missions: null});
+      continue;
+    }
     const phases = battleEquipTable[moduleId].phases.map((phase) => ({
       ...phase,
       parts: phase.parts.filter((part) => !part.isToken),

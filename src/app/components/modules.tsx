@@ -22,7 +22,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table"
+} from "@/components/table";
 type modulesProps = Module;
 
 const tagsReplacement: TagsReplacement = {
@@ -85,58 +85,67 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
     <Card>
       <CardHeader>
         <CardTitle>{equipDict.uniEquipName}</CardTitle>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Decription</AccordionTrigger>
-              <AccordionContent>{equipDict.uniEquipDesc}</AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <CardDescription>
+          {equipDict.typeName1}
+          {equipDict.typeName2 && "-" + equipDict.typeName2}
+        </CardDescription>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Decription</AccordionTrigger>
+            <AccordionContent>{equipDict.uniEquipDesc}</AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableCaption>Module</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Stage</TableHead>
-              <TableHead>Stats</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Missions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {phases.map((phase) => {
-              return (
-                <TableRow key={phase.equipLevel}>
-                  <TableCell>{phase.equipLevel}</TableCell>
-                  <TableCell>
-                    <ul>
-                      {phase.attributeBlackboard.map((blackboard, i) => (
-                        <li className="px-1" key={`stats-${i}`}>
-                          {blackBoardMapping[blackboard.key]}+{blackboard.value}
-                        </li>
-                      ))}
-                    </ul>
-                  </TableCell>
-                  <TableCell
-                    className="px-1"
-                    dangerouslySetInnerHTML={{ __html: getDescription(phase) }}
-                  ></TableCell>
-                  {phase.equipLevel === 1 && (
-                    <TableCell className="hover:bg-primary" rowSpan={3}>
+        {phases && missions && (
+          <Table>
+            <TableCaption>Module</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Stage</TableHead>
+                <TableHead>Stats</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Missions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {phases.map((phase) => {
+                return (
+                  <TableRow key={phase.equipLevel}>
+                    <TableCell className="text-center">
+                      {phase.equipLevel}
+                    </TableCell>
+                    <TableCell>
                       <ul>
-                        {missions.map((mission, i) => (
-                          <li className="px-1" key={`mission-${i}`}>
-                            {mission.desc}
+                        {phase.attributeBlackboard.map((blackboard, i) => (
+                          <li className="px-1" key={`stats-${i}`}>
+                            {blackBoardMapping[blackboard.key]}
+                            {blackboard.value > 0 ? "+" : "-"}
+                            {Math.abs(blackboard.value)}
                           </li>
                         ))}
                       </ul>
                     </TableCell>
-                  )}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+                    <TableCell
+                      dangerouslySetInnerHTML={{
+                        __html: getDescription(phase),
+                      }}
+                    ></TableCell>
+                    {phase.equipLevel === 1 && (
+                      <TableCell className="" rowSpan={3}>
+                        <ul className="list-disc px-2">
+                          {missions.map((mission, i) => (
+                            <li key={`mission-${i}`}>{mission.desc}</li>
+                          ))}
+                        </ul>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );

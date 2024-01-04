@@ -33,7 +33,8 @@ async function Operator({ id }: operatorProps) {
     <div className="container flex flex-col flex-initial gap-6 mb-8">
       <div className="flex flex-row space-x-4 py-4">
         <h1 className="text-2xl">
-          {opData.name}{convertRarity(opData.rarity)}
+          {opData.name}
+          {convertRarity(opData.rarity)}
         </h1>
         <Link
           className={buttonVariants({ variant: "default" })}
