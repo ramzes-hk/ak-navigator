@@ -28,10 +28,10 @@ function Talents({ talents }: talentsProps) {
     const firstDesc = talent.candidates.at(0)?.description;
     for (let i = 1; i < talent.candidates.length; i++) {
       if (talent.candidates[i].description !== firstDesc) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
   return (
     <table className="w-1/2 text-center border border-collapse divide-y">
@@ -48,16 +48,17 @@ function Talents({ talents }: talentsProps) {
           candidate.candidates.map((talent, j) => {
             const potential =
               talent.requiredPotentialRank !== 0
-                ? " P" + talent.requiredPotentialRank.toString()
+                ? " P" + (talent.requiredPotentialRank + 1).toString()
                 : "";
             return (
               <tr key={`row${i}-${j}`} className="divide-x divide-y">
-                {j === 0 && (
-                  <td
-                    rowSpan={candidate.candidates.length}
-                  >{`${talent.name}`}</td>
-                )}
-                <td className="border">
+                <td
+                  rowSpan={
+                    isSameDesc(candidate) ? candidate.candidates.length : 1
+                  }
+                  className="px-1"
+                >{`${talent.name}`}</td>
+                <td className="border px-1">
                   {"E" + getPromotion(talent.unlockCondition.phase) + potential}
                   {talent.unlockCondition.level !== 1 &&
                     " Lvl " + talent.unlockCondition.level}

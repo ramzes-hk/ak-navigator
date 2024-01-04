@@ -105,7 +105,7 @@ export async function getModules(id: string): Promise<Module[]> {
     }
     const uniEquip = uniEquipTable.equipDict[moduleId];
     if (i === 1) {
-      modules.push({ equipDict: uniEquip, phases: null, missions: null});
+      modules.push({ equipDict: uniEquip, phases: null, missions: null });
       continue;
     }
     const phases = battleEquipTable[moduleId].phases.map((phase) => ({
