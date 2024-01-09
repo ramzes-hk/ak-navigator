@@ -1,7 +1,7 @@
 "use client";
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils/cn";
+
+import { useState } from "react";
+import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/button";
 import {
   Command,
@@ -12,7 +12,6 @@ import {
 } from "@/components/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/popover";
 import { AllOpNames } from "@/lib/operators";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface comboboxProps {
@@ -20,9 +19,8 @@ interface comboboxProps {
 }
 
 export function ComboboxDemo({ names }: comboboxProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
-  const [value, setValue] = React.useState();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -33,13 +31,11 @@ export function ComboboxDemo({ names }: comboboxProps) {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? names.find((name) => name.id === value)?.name
-            : "Select operator..."}
+          Select operator
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] h-1/2 p-0">
+      <PopoverContent className="w-[200px] p-0 overflow-auto max-h-[500px]">
         <Command>
           <CommandInput placeholder="Search operator..." />
           <CommandEmpty>No operator found.</CommandEmpty>
@@ -47,20 +43,12 @@ export function ComboboxDemo({ names }: comboboxProps) {
             {names.map((name) => (
               <CommandItem
                 key={name.id}
-                value={name.id}
+                value={name.name}
                 onSelect={() => {
-                  router.push(`/operators/${name.id.replace(/char_/, "")}`)
+                  router.push(`/operators/${name.id.replace(/char_/, "")}`);
                 }}
               >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === name.id ? "opacity-100" : "opacity-0",
-                  )}
-                />
-              <Link href={`/operators/${name.id.replace(/char_/, "")}`}>
-                  {name.name}
-              </Link>
+                {name.name}
               </CommandItem>
             ))}
           </CommandGroup>

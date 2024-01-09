@@ -4,12 +4,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "raw.githubusercontent.com", 
+        hostname: "raw.githubusercontent.com",
         port: "",
         pathname: "/Aceship/Arknight-Images/main/characters/**",
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

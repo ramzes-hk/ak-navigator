@@ -34,18 +34,8 @@
   "socialSlotNum": 10,
   "furniDuplicationLimit": 6,
   "assistFavorReport": 1647342000,
-  "manufactManpowerCostByNum": [
-    0,
-    0,
-    -5,
-    -10
-  ],
-  "tradingManpowerCostByNum": [
-    0,
-    0,
-    -5,
-    -10
-  ],
+  "manufactManpowerCostByNum": [0, 0, -5, -10],
+  "tradingManpowerCostByNum": [0, 0, -5, -10],
   "roomUnlockConds": {
     "CONTROL#1": {
       "id": "CONTROL#1",
@@ -16058,10 +16048,7 @@
     }
   },
   "workshopBonus": {
-    "char_4019_ncdeer": [
-      "ws_bonus1_40",
-      "ws_bonus2_80"
-    ]
+    "char_4019_ncdeer": ["ws_bonus1_40", "ws_bonus2_80"]
   },
   "customData": {
     "furnitures": {
@@ -70412,10 +70399,7 @@
         "themeId": "furni_set_cabin",
         "comfort": 60,
         "count": 2,
-        "furniture": [
-          "furni_cabin_control_01",
-          "furni_cabin_display_01"
-        ]
+        "furniture": ["furni_cabin_control_01", "furni_cabin_display_01"]
       },
       "furni_set_cabin_2": {
         "id": "furni_set_cabin_2",
@@ -70440,10 +70424,7 @@
         "themeId": "furni_set_cabin",
         "comfort": 185,
         "count": 2,
-        "furniture": [
-          "furni_cabin_bed_01",
-          "furni_cabin_fireExtinguisher_01"
-        ]
+        "furniture": ["furni_cabin_bed_01", "furni_cabin_fireExtinguisher_01"]
       },
       "furni_set_cabin_4": {
         "id": "furni_set_cabin_4",
@@ -74792,9 +74773,7 @@
             },
             {
               "name": "Default",
-              "sequences": [
-                "ThemeSortId"
-              ],
+              "sequences": ["ThemeSortId"],
               "stableSequence": "None",
               "stableSequenceOrder": "DESC"
             }
@@ -74828,9 +74807,7 @@
             },
             {
               "name": "Default",
-              "sequences": [
-                "ThemeSortId"
-              ],
+              "sequences": ["ThemeSortId"],
               "stableSequence": "None",
               "stableSequenceOrder": "DESC"
             }
@@ -74846,18 +74823,13 @@
           "templates": [
             {
               "name": "Ambience",
-              "sequences": [
-                "FurnitureAtomsphere",
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureAtomsphere", "FurnitureSortId"],
               "stableSequence": "None",
               "stableSequenceOrder": "DESC"
             },
             {
               "name": "Default",
-              "sequences": [
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureSortId"],
               "stableSequence": "FurnitureIsSingle",
               "stableSequenceOrder": "DESC"
             }
@@ -74871,18 +74843,13 @@
           "templates": [
             {
               "name": "Ambience",
-              "sequences": [
-                "FurnitureAtomsphere",
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureAtomsphere", "FurnitureSortId"],
               "stableSequence": "None",
               "stableSequenceOrder": "DESC"
             },
             {
               "name": "Default",
-              "sequences": [
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureSortId"],
               "stableSequence": "FurnitureIsSingle",
               "stableSequenceOrder": "DESC"
             }
@@ -74898,18 +74865,13 @@
           "templates": [
             {
               "name": "Ambience",
-              "sequences": [
-                "FurnitureAtomsphere",
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureAtomsphere", "FurnitureSortId"],
               "stableSequence": "FurnitureGroupId",
               "stableSequenceOrder": "ASC"
             },
             {
               "name": "Default",
-              "sequences": [
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureSortId"],
               "stableSequence": "FurnitureGroupId",
               "stableSequenceOrder": "ASC"
             }
@@ -74923,18 +74885,13 @@
           "templates": [
             {
               "name": "Ambience",
-              "sequences": [
-                "FurnitureAtomsphere",
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureAtomsphere", "FurnitureSortId"],
               "stableSequence": "FurnitureGroupId",
               "stableSequenceOrder": "ASC"
             },
             {
               "name": "Default",
-              "sequences": [
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureSortId"],
               "stableSequence": "FurnitureGroupId",
               "stableSequenceOrder": "ASC"
             }
@@ -74983,9 +74940,7 @@
             },
             {
               "name": "Default",
-              "sequences": [
-                "ThemeSortId"
-              ],
+              "sequences": ["ThemeSortId"],
               "stableSequence": "None",
               "stableSequenceOrder": "DESC"
             }
@@ -75032,9 +74987,7 @@
             },
             {
               "name": "Default",
-              "sequences": [
-                "ThemeSortId"
-              ],
+              "sequences": ["ThemeSortId"],
               "stableSequence": "None",
               "stableSequenceOrder": "DESC"
             }
@@ -75070,9 +75023,7 @@
             },
             {
               "name": "Default",
-              "sequences": [
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureSortId"],
               "stableSequence": "FurnitureIsSingle",
               "stableSequenceOrder": "DESC"
             }
@@ -75106,9 +75057,7 @@
             },
             {
               "name": "Default",
-              "sequences": [
-                "FurnitureSortId"
-              ],
+              "sequences": ["FurnitureSortId"],
               "stableSequence": "FurnitureIsSingle",
               "stableSequenceOrder": "DESC"
             }
@@ -80301,11 +80250,5 @@
     "3002": 0,
     "3003": 500
   },
-  "assistantUnlock": [
-    1,
-    1,
-    3,
-    4,
-    5
-  ]
+  "assistantUnlock": [1, 1, 3, 4, 5]
 }

@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const { fontFamily } = require("tailwindcss/defaultTheme")
+const { fontFamily } = require("tailwindcss/defaultTheme");
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -7,7 +7,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
- theme: {
+  theme: {
     container: {
       center: true,
       padding: "2rem",
@@ -74,7 +74,7 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
-  }, 
+  },
   plugins: [require("tailwindcss-animate")],
 };
 export default config;

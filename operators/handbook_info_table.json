@@ -38423,9 +38423,7 @@
       "name": "Wei Yenwu",
       "appellation": "Wei Yenwu",
       "profession": "NONE",
-      "illustList": [
-        "KuroBlood"
-      ],
+      "illustList": ["KuroBlood"],
       "designerList": null,
       "cv": "--",
       "displayNumber": "L205",
@@ -38452,9 +38450,7 @@
       "name": "Fumizuki",
       "appellation": "Fumizuki",
       "profession": "NONE",
-      "illustList": [
-        "KuroBlood"
-      ],
+      "illustList": ["KuroBlood"],
       "designerList": null,
       "cv": "--",
       "displayNumber": "L206",
@@ -38481,9 +38477,7 @@
       "name": "Kal'tsit",
       "appellation": "Kal'tsit",
       "profession": "NONE",
-      "illustList": [
-        "唯@W"
-      ],
+      "illustList": ["唯@W"],
       "designerList": null,
       "cv": "Yoko Hikasa",
       "displayNumber": "B003",
@@ -38510,9 +38504,7 @@
       "name": "Ch'en",
       "appellation": "Ch'en",
       "profession": "NONE",
-      "illustList": [
-        "唯@W"
-      ],
+      "illustList": ["唯@W"],
       "designerList": null,
       "cv": "Shizuka Ishigami",
       "displayNumber": "LM04",
@@ -38539,9 +38531,7 @@
       "name": "Doctor",
       "appellation": "Dr",
       "profession": "NONE",
-      "illustList": [
-        "--"
-      ],
+      "illustList": ["--"],
       "designerList": null,
       "cv": "--",
       "displayNumber": "B101",
@@ -38568,9 +38558,7 @@
       "name": "Stormeye",
       "appellation": "Stormeye",
       "profession": "NONE",
-      "illustList": [
-        "熊太"
-      ],
+      "illustList": ["熊太"],
       "designerList": null,
       "cv": "<to be filled>",
       "displayNumber": "RE31",
@@ -38597,9 +38585,7 @@
       "name": "Touch",
       "appellation": "Touch",
       "profession": "NONE",
-      "illustList": [
-        "熊太"
-      ],
+      "illustList": ["熊太"],
       "designerList": null,
       "cv": "<to be filled>",
       "displayNumber": "RE18",
@@ -38626,9 +38612,7 @@
       "name": "Sharp",
       "appellation": "Sharp",
       "profession": "NONE",
-      "illustList": [
-        "熊太"
-      ],
+      "illustList": ["熊太"],
       "designerList": null,
       "cv": "<to be filled>",
       "displayNumber": "RE26",
@@ -38655,9 +38639,7 @@
       "name": "Pith",
       "appellation": "Pith",
       "profession": "NONE",
-      "illustList": [
-        "Cornelies"
-      ],
+      "illustList": ["Cornelies"],
       "designerList": null,
       "cv": "<to be filled>",
       "displayNumber": "RE07",
@@ -38684,9 +38666,7 @@
       "name": "Tulip",
       "appellation": "Tulip",
       "profession": "NONE",
-      "illustList": [
-        "Chuzenji"
-      ],
+      "illustList": ["Chuzenji"],
       "designerList": null,
       "cv": "<to be filled>",
       "displayNumber": "R066",
@@ -43587,11 +43567,7 @@
     },
     {
       "timestamp": 1626188400,
-      "charSet": [
-        "char_208_melan",
-        "char_290_vigna",
-        "char_242_otter"
-      ]
+      "charSet": ["char_208_melan", "char_290_vigna", "char_242_otter"]
     },
     {
       "timestamp": 1627646400,
@@ -43653,10 +43629,7 @@
     },
     {
       "timestamp": 1642161600,
-      "charSet": [
-        "char_123_fang",
-        "char_298_susuro"
-      ]
+      "charSet": ["char_123_fang", "char_298_susuro"]
     },
     {
       "timestamp": 1646146800,
@@ -43669,19 +43642,11 @@
     },
     {
       "timestamp": 1651147200,
-      "charSet": [
-        "char_204_platnm",
-        "char_128_plosis",
-        "char_196_sunbr"
-      ]
+      "charSet": ["char_204_platnm", "char_128_plosis", "char_196_sunbr"]
     },
     {
       "timestamp": 1653577200,
-      "charSet": [
-        "char_423_blemsh",
-        "char_215_mantic",
-        "char_240_wyvern"
-      ]
+      "charSet": ["char_423_blemsh", "char_215_mantic", "char_240_wyvern"]
     },
     {
       "timestamp": 1656590400,
@@ -43694,19 +43659,11 @@
     },
     {
       "timestamp": 1657796400,
-      "charSet": [
-        "char_437_mizuki",
-        "char_195_glassb",
-        "char_192_falco"
-      ]
+      "charSet": ["char_437_mizuki", "char_195_glassb", "char_192_falco"]
     },
     {
       "timestamp": 1659106800,
-      "charSet": [
-        "char_2014_nian",
-        "char_241_panda",
-        "char_308_swire"
-      ]
+      "charSet": ["char_2014_nian", "char_241_panda", "char_308_swire"]
     },
     {
       "timestamp": 1660824000,
@@ -43719,34 +43676,19 @@
     },
     {
       "timestamp": 1663340400,
-      "charSet": [
-        "char_106_franka",
-        "char_117_myrrh",
-        "char_149_scave"
-      ]
+      "charSet": ["char_106_franka", "char_117_myrrh", "char_149_scave"]
     },
     {
       "timestamp": 1664902800,
-      "charSet": [
-        "char_243_waaifu",
-        "char_336_folivo"
-      ]
+      "charSet": ["char_243_waaifu", "char_336_folivo"]
     },
     {
       "timestamp": 1666180800,
-      "charSet": [
-        "char_348_ceylon",
-        "char_235_jesica",
-        "char_301_cutter"
-      ]
+      "charSet": ["char_348_ceylon", "char_235_jesica", "char_301_cutter"]
     },
     {
       "timestamp": 1667487600,
-      "charSet": [
-        "char_436_whispr",
-        "char_378_asbest",
-        "char_278_orchid"
-      ]
+      "charSet": ["char_436_whispr", "char_378_asbest", "char_278_orchid"]
     },
     {
       "timestamp": 1672142400,
@@ -43779,19 +43721,11 @@
     },
     {
       "timestamp": 1677603600,
-      "charSet": [
-        "char_115_headbr",
-        "char_127_estell",
-        "char_258_podego"
-      ]
+      "charSet": ["char_115_headbr", "char_127_estell", "char_258_podego"]
     },
     {
       "timestamp": 1678795200,
-      "charSet": [
-        "char_134_ifrit",
-        "char_108_silent",
-        "char_129_bluep"
-      ]
+      "charSet": ["char_134_ifrit", "char_108_silent", "char_129_bluep"]
     },
     {
       "timestamp": 1680282000,
@@ -43804,17 +43738,11 @@
     },
     {
       "timestamp": 1681491600,
-      "charSet": [
-        "char_201_moeshd",
-        "char_478_kirara",
-        "char_1014_nearl2"
-      ]
+      "charSet": ["char_201_moeshd", "char_478_kirara", "char_1014_nearl2"]
     },
     {
       "timestamp": 1682614800,
-      "charSet": [
-        "char_4040_rockr"
-      ]
+      "charSet": ["char_4040_rockr"]
     },
     {
       "timestamp": 1684843200,
@@ -43837,11 +43765,7 @@
     },
     {
       "timestamp": 1689249600,
-      "charSet": [
-        "char_479_sleach",
-        "char_133_mm",
-        "char_185_frncat"
-      ]
+      "charSet": ["char_479_sleach", "char_133_mm", "char_185_frncat"]
     },
     {
       "timestamp": 1690563600,
@@ -43881,23 +43805,15 @@
     },
     {
       "timestamp": 1695315600,
-      "charSet": [
-        "char_300_phenxi"
-      ]
+      "charSet": ["char_300_phenxi"]
     },
     {
       "timestamp": 1696179600,
-      "charSet": [
-        "char_325_bison",
-        "char_254_vodfox",
-        "char_265_sophia"
-      ]
+      "charSet": ["char_325_bison", "char_254_vodfox", "char_265_sophia"]
     },
     {
       "timestamp": 1698148800,
-      "charSet": [
-        "char_328_cammou"
-      ]
+      "charSet": ["char_328_cammou"]
     },
     {
       "timestamp": 1699376400,
