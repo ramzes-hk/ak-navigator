@@ -30,7 +30,7 @@ async function Operator({ id }: operatorProps) {
   const isSingleTrait =
     !opData.trait || (opData.trait && opData.trait.candidates.length === 1);
   return (
-    <div className="container flex flex-col flex-initial gap-6 mb-8">
+    <div className="sm:container flex flex-col flex-initial gap-6 mb-8">
       <div className="flex flex-row space-x-4 py-4">
         <h1 className="text-2xl">
           {opData.name}

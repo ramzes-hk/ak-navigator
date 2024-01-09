@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import fsPromise from "fs/promises";
 import { db } from "@/db/db";
 import { operators } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -176,44 +177,23 @@ export interface Data {
   respawnTime: number;
 }
 
-export async function readFileAs<T>(location: [string, ...string[]], callback: (err: NodeJS.ErrnoException | null, data?: T) => void) {
+export async function readFileAs<T>(
+  location: [string, ...string[]],
+): Promise<T> {
   const fileName = path.join(process.cwd(), ...location);
-  fs.readFile(fileName, "utf8", (err, data) => {
-    if (err) {
-      callback(err);
-      return;
-    }
-    try {
-      const parsedData = JSON.parse(data) as T;
-      callback(null, parsedData);
-    } catch (parseErr) {
-      console.log(parseErr);
-    }
-  })
-}
-
-function readAsPromise<T>(location: [string, ...string[]]): Promise<T> {
-  return new Promise((resolve, reject) => {
-    readFileAs<T>(location, (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      if (data === undefined) {
-        reject(new Error("no data"));
-        return;
-      }
-      resolve(data);
-    })
-  })
+  const prom = await fsPromise.readFile(fileName, "utf8");
+  return JSON.parse(prom) as T;
 }
 
 export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
-  const operators = await readAsPromise<Operators>([
+  const operators = await readFileAs<Operators>([
     "operators",
     "character_table.json",
   ]);
-  const skillsContent = await readAsPromise<Skills>(["operators", "skill_table.json"]);
+  const skillsContent = await readFileAs<Skills>([
+    "operators",
+    "skill_table.json",
+  ]);
   const skillDescription: Level[][] = [];
 
   const opReader = operators[opId];
