@@ -29,7 +29,17 @@ async function VoiceLines({ id }: voiceLinesProps) {
           Operator
         </Link>
       </div>
-      {charword.map((word) => (
+      <div className="py-4">
+        <ul>
+          {Object.values(charword.voiceLang.dict).map((lang) => (
+            <li key={lang.voiceLangType}>
+              {charword.voiceLangTypeDict[lang.voiceLangType].name}:{" "}
+              {lang.cvName}
+            </li>
+          ))}
+        </ul>
+      </div>
+      {charword.charwordCharArr.map((word) => (
         <Card key={word.voiceId}>
           <CardHeader>
             <CardTitle>{word.voiceTitle}</CardTitle>
