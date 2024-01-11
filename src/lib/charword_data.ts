@@ -49,7 +49,7 @@ interface Charwords {
   voiceLangTypeDict: CharwordTable["voiceLangTypeDict"];
 }
 
-export async function getCharword(charId: string): Promise<Charwords> {
+export async function getCharword(charId: string): Promise<Charwords | null> {
   const fileName = path.join(process.cwd(), "operators", "charword_table.json");
   const raw = fs.readFileSync(fileName, "utf8");
   const content = JSON.parse(raw) as CharwordTable;
@@ -57,6 +57,7 @@ export async function getCharword(charId: string): Promise<Charwords> {
   const lineKeys = Object.keys(content.charWords).filter((key) =>
     key.includes(charId),
   );
+  if (lineKeys.length === 0) return null;
   return {
     charwordCharArr: lineKeys.map((key) => content.charWords[key]),
     voiceLang: content.voiceLangDict["char_" + charId],

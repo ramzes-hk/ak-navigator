@@ -90,25 +90,27 @@ export interface Operator<T> {
   id?: string;
   name: string;
   description: string;
-  position: "MELEE" | "RANGED";
-  tagList: string[];
+  position: "MELEE" | "RANGED" | "ALL";
+  tagList: string[] | null;
   rarity: string;
   profession: string;
   subProfessionId: string;
   trait: Trait | null;
   phases: Phase[];
   skills: T;
+  displayTokenDict: Record<string, boolean> | null;
   talents: Talent[] | null;
   potentialRanks: PotentialRank[];
-  favorKeyFrames: FavorKeyFrame[];
+  favorKeyFrames: FavorKeyFrame[] | null;
 }
 
 interface SkillIds {
-  skillId: string;
+  skillId: string | null;
 }
 
 interface Skills {
   [skillId: string]: {
+    skillId: string;
     levels: Level[];
   };
 }
@@ -142,20 +144,25 @@ export interface AttributesKeyFrame {
 }
 
 export interface Talent {
-  candidates: {
-    unlockCondition: {
-      phase: string;
-      level: number;
-    };
-    requiredPotentialRank: number;
-    prefabKey: string;
-    name: string;
-    description: string;
-    blackboard: {
-      key: string;
-      value: number;
-    }[];
-  }[];
+  candidates:
+    | {
+        unlockCondition: {
+          phase: string;
+          level: number;
+        };
+        requiredPotentialRank: number;
+        prefabKey: string;
+        name: string | null;
+        description: string | null;
+        rangeId: string | null;
+        blackboard: {
+          key: string;
+          value: number;
+          valueStr: string | null;
+        }[];
+        tokenKey: string | null;
+      }[]
+    | null;
 }
 
 export interface PotentialRank {
@@ -195,9 +202,11 @@ export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
     "skill_table.json",
   ]);
   const skillDescription: Level[][] = [];
-
   const opReader = operators[opId];
   for (let skill of operators[opId].skills) {
+    if (skill.skillId === null) {
+      continue;
+    }
     skillDescription.push(skillsContent[skill.skillId].levels);
   }
   return {

@@ -13,6 +13,7 @@ import { getModules } from "@/lib/modules_data";
 import Link from "next/link";
 import SkinCarousel from "./skin_carousel";
 import { getPortraitId } from "@/lib/skin_table";
+import Token from "./token";
 
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
@@ -63,6 +64,10 @@ async function Operator({ id }: operatorProps) {
       <Tags position={opData.position} tagList={opData.tagList} />
       <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
       {opData.talents && <Talents talents={opData.talents} />}
+      {opData.displayTokenDict &&
+        Object.keys(opData.displayTokenDict).map((key) => (
+          <Token key={key} tokenId={key} />
+        ))}
       {opData.potentialRanks && (
         <Potentials potentitalRanks={opData.potentialRanks} />
       )}

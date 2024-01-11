@@ -1,20 +1,21 @@
-import { Phase, FavorKeyFrame, Data } from "@/lib/operators";
+import { Phase, Data, Operator, Level } from "@/lib/operators";
+
+type OperatorWithLevel = Operator<Level[][]>;
 
 interface statsProps {
-  phases: Phase[];
-  favorKeyFrames: FavorKeyFrame[];
+  phases: OperatorWithLevel["phases"];
+  favorKeyFrames: OperatorWithLevel["favorKeyFrames"];
 }
 
 type keyAttr = keyof Data;
-interface statsRowProps {
-  phases: Phase[];
-  name: string;
+
+interface statsRowProps extends statsProps {
+  name: OperatorWithLevel["name"];
   keyAttr: keyAttr;
-  favorKeyFrames: FavorKeyFrame[];
 }
 
 function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
-  const lastKeyFrame = favorKeyFrames.at(-1);
+  const lastKeyFrame = favorKeyFrames ? favorKeyFrames.at(-1) : null;
   return (
     <tr key={name} className="divide-x divide-y">
       <th>{name}</th>
@@ -117,7 +118,7 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
                   (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
                 ),
               )}
-            <th>Trust</th>
+            {favorKeyFrames && <th>Trust</th>}
           </tr>
         </thead>
         <tbody>

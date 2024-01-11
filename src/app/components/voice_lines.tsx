@@ -17,6 +17,12 @@ interface voiceLinesProps {
 async function VoiceLines({ id }: voiceLinesProps) {
   const charword = await getCharword(id);
   const opName = await getOpName("char_" + id);
+  if (charword === null) return <p>No data</p>;
+  const split = charword.charwordCharArr
+    .slice(1)
+    .find((line) => line.voiceId === charword.charwordCharArr[0].voiceId)
+    ? true
+    : false;
   return (
     <div className="container w-full">
       <div className="py-4 flex flex-row space-x-4">
@@ -39,22 +45,28 @@ async function VoiceLines({ id }: voiceLinesProps) {
           ))}
         </ul>
       </div>
-      {charword.charwordCharArr.map((word) => (
-        <Card key={word.voiceId}>
-          <CardHeader>
-            <CardTitle>{word.voiceTitle}</CardTitle>
-            {word.unlockType !== "DIRECT" && (
-              <CardDescription>
-                {word.unlockType === "FAVOR"
-                  ? `Trust ${word.unlockParam[0].valueInt}`
-                  : `E${word.unlockParam[0].valueInt}`}
-              </CardDescription>
-            )}
-          </CardHeader>
-          <CardContent>
-            <p>{word.voiceText}</p>
-          </CardContent>
-        </Card>
+      {split && <h2 className="text-3xl py-2">Original Lines</h2>}
+      {charword.charwordCharArr.map((word, i) => (
+        <div key={word.voiceId}>
+          {split && i === charword.charwordCharArr.length / 2 && (
+            <h2 className="text-3xl py-2">Skin Lines</h2>
+          )}
+          <Card key={word.voiceId}>
+            <CardHeader>
+              <CardTitle>{word.voiceTitle}</CardTitle>
+              {word.unlockType !== "DIRECT" && (
+                <CardDescription>
+                  {word.unlockType === "FAVOR"
+                    ? `Trust ${word.unlockParam[0].valueInt}`
+                    : `E${word.unlockParam[0].valueInt}`}
+                </CardDescription>
+              )}
+            </CardHeader>
+            <CardContent>
+              <p>{word.voiceText}</p>
+            </CardContent>
+          </Card>
+        </div>
       ))}
     </div>
   );

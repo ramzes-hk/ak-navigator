@@ -107,17 +107,19 @@ interface skillTablesProps {
 function SkillTables({ skills }: skillTablesProps) {
   return (
     <div className="w-full sm:w-3/4">
-      {skills.map((skill: Level[], i: number) => {
-        return (
-          <div key={`skill-${i}`}>
-            <h2>
-              <b>Skill {i + 1}</b>
-            </h2>
-            <Skill levels={skill} />
-            <br />
-          </div>
-        );
-      })}
+      {skills
+        .filter((skill) => skill[0].description !== null)
+        .map((skill, i) => {
+          return (
+            <div key={`skill-${i}`}>
+              <h2>
+                <b>Skill {i + 1}</b>
+              </h2>
+              <Skill levels={skill} />
+              <br />
+            </div>
+          );
+        })}
     </div>
   );
 }
