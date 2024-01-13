@@ -1,7 +1,11 @@
-import postgres from "postgres";
+import { createClient } from "@libsql/client";
 import * as schema from "./schema";
-import { drizzle } from "drizzle-orm/postgres-js";
+import { drizzle } from "drizzle-orm/libsql";
+import "dotenv/config";
 
-export const connection = postgres(process.env.DB as string);
+export const connection = createClient({
+  url: process.env.TURSO_URL ?? "",
+  authToken: process.env.TURSO_API_TOKEN,
+});
 
 export const db = drizzle(connection, { schema });
