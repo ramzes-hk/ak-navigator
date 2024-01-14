@@ -1,5 +1,5 @@
 import { getAllOpData } from "@/lib/operators";
-import  { db } from "./db";
+import { db } from "./db";
 import { operators } from "./schema";
 
 async function populate_operators() {
@@ -13,7 +13,7 @@ async function populate_operators() {
       rarity: op.rarity,
       profession: op.profession,
       subProfessionId: op.subProfessionId,
-    })
+    });
   }
 }
 populate_operators();

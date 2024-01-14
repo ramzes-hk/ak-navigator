@@ -14,6 +14,7 @@ import Link from "next/link";
 import SkinCarousel from "./skin_carousel";
 import { getPortraitId } from "@/lib/skin_table";
 import Token from "./token";
+import TokenDisplay from "./tokens_display";
 
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
@@ -64,10 +65,9 @@ async function Operator({ id }: operatorProps) {
       <Tags position={opData.position} tagList={opData.tagList} />
       <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
       {opData.talents && <Talents talents={opData.talents} />}
-      {opData.displayTokenDict &&
-        Object.keys(opData.displayTokenDict).map((key) => (
-          <Token key={key} tokenId={key} />
-        ))}
+      {opData.displayTokenDict && (
+        <TokenDisplay tokenDisplay={opData.displayTokenDict} />
+      )}
       {opData.potentialRanks && (
         <Potentials potentitalRanks={opData.potentialRanks} />
       )}

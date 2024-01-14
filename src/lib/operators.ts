@@ -201,14 +201,16 @@ export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
     "operators",
     "skill_table.json",
   ]);
+  const skillIds: Set<string> = new Set<string>();
   const skillDescription: Level[][] = [];
   const opReader = operators[opId];
   for (let skill of operators[opId].skills) {
     if (skill.skillId === null) {
       continue;
     }
-    skillDescription.push(skillsContent[skill.skillId].levels);
+    skillIds.add(skill.skillId);
   }
+  skillIds.forEach((sId) => skillDescription.push(skillsContent[sId].levels));
   return {
     ...opReader,
     id: opId,

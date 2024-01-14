@@ -21,8 +21,8 @@ async function Token({ tokenId }: tokenProps) {
     <Card>
       <CardHeader>
         <CardTitle>{token.name}</CardTitle>
-        <CardDescription>{token.description}</CardDescription>
         <CardContent>
+          <p className="py-4">{token.description}</p>
           <RangeGrid phases={token.phases} />
           <Stats phases={token.phases} favorKeyFrames={token.favorKeyFrames} />
           {token.talents && <Talents talents={token.talents} />}
