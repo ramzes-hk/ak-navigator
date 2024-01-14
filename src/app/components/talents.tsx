@@ -23,6 +23,18 @@ function Talents({ talents }: talentsProps) {
   function getPromotion(phase: string) {
     return phase.replace(/PHASE_/, "");
   }
+
+  function isSameDesc(talent: Talent): boolean {
+    if (talent.candidates === null) return true;
+    const firstDesc = talent.candidates.at(0)?.description;
+    for (let i = 1; i < talent.candidates.length; i++) {
+      if (talent.candidates[i].description !== firstDesc) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   talents = talents.map((talent) => {
     if (talent.candidates === null) return talent;
     const filteredCandidates = talent.candidates.filter(
@@ -33,15 +45,8 @@ function Talents({ talents }: talentsProps) {
       candidates: filteredCandidates,
     };
   });
-  function isSameDesc(talent: Talent): boolean {
-    if (talent.candidates === null) return true;
-    const firstDesc = talent.candidates.at(0)?.description;
-    for (let i = 1; i < talent.candidates.length; i++) {
-      if (talent.candidates[i].description !== firstDesc) {
-        return false;
-      }
-    }
-    return true;
+  if (talents.length === 0) {
+    return;
   }
   return (
     <table className="w-1/2 text-center border border-collapse divide-y">

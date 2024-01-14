@@ -15,7 +15,7 @@ function TokenDisplay({ tokenDisplay }: tokenDisplayProps) {
   const single =
     tokenDisplay && (Object.keys(tokenDisplay).length === 1 ? true : false);
   return (
-    <Accordion type={single ? "single" : "multiple"} collapsible>
+    <Accordion type={single ? "single" : "multiple"}>
       {tokenDisplay &&
         Object.keys(tokenDisplay).map((tId) => (
           <AccordionItem value={tId} key={tId}>
