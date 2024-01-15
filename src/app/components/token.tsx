@@ -1,11 +1,5 @@
 import { getOpData } from "@/lib/operators";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./card";
+import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import Stats from "./stats";
 import Talents from "./talents";
 import RangeGrid from "./range";
