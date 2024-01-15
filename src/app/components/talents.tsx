@@ -27,12 +27,7 @@ function Talents({ talents }: talentsProps) {
   function isSameDesc(talent: Talent): boolean {
     if (talent.candidates === null) return true;
     const firstDesc = talent.candidates.at(0)?.description;
-    for (let i = 1; i < talent.candidates.length; i++) {
-      if (talent.candidates[i].description !== firstDesc) {
-        return false;
-      }
-    }
-    return true;
+    return talent.candidates.every((c) => c.description === firstDesc);
   }
 
   talents = talents.map((talent) => {
@@ -45,7 +40,7 @@ function Talents({ talents }: talentsProps) {
       candidates: filteredCandidates,
     };
   });
-  if (talents.length === 0) {
+  if (talents.every((talent) => talent.candidates?.length === 0)) {
     return;
   }
   return (
