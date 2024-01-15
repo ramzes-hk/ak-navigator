@@ -1,4 +1,13 @@
 import { Talent, parseDescription, TagsReplacement } from "@/lib/operators";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table";
 
 const tagsReplacement: TagsReplacement = {
   "<@ba.vup>": "<span class='text-[#0098DC]'>",
@@ -24,10 +33,10 @@ function Talents({ talents }: talentsProps) {
     return phase.replace(/PHASE_/, "");
   }
 
-  function isSameDesc(talent: Talent): boolean {
-    if (talent.candidates === null) return true;
-    const firstDesc = talent.candidates.at(0)?.description;
-    return talent.candidates.every((c) => c.description === firstDesc);
+  function isSameName(talent: Talent): boolean {
+    if (!talent.candidates || talent.candidates.length === 0) return true;
+    const firstName = talent.candidates[0].name;
+    return talent.candidates.slice(1).every((c) => c.name === firstName);
   }
 
   talents = talents.map((talent) => {
@@ -40,19 +49,20 @@ function Talents({ talents }: talentsProps) {
       candidates: filteredCandidates,
     };
   });
+
   if (talents.every((talent) => talent.candidates?.length === 0)) {
     return;
   }
   return (
-    <table className="w-1/2 text-center border border-collapse divide-y">
+    <Table className="w-1/2 text-center border border-collapse divide-y">
       <caption>Talents</caption>
-      <thead>
-        <tr className="divide-x">
+      <TableHeader>
+        <TableRow className="divide-x">
           <th>Name</th>
           <th>Reqs</th>
           <th>Desc</th>
-        </tr>
-      </thead>
+        </TableRow>
+      </TableHeader>
       <tbody>
         {talents.map(
           (talent, i) =>
@@ -62,19 +72,24 @@ function Talents({ talents }: talentsProps) {
                   ? " P" + (candidate.requiredPotentialRank + 1).toString()
                   : "";
               return (
-                <tr key={`row${i}-${j}`} className="divide-x divide-y">
-                  <td
-                    rowSpan={isSameDesc(talent) ? talent.candidates?.length : 1}
-                    className="px-1"
-                  >{`${candidate.name}`}</td>
-                  <td className="border px-1">
+                <TableRow key={`row${i}-${j}`} className="divide-x divide-y">
+                  {(j === 0 || !isSameName(talent)) && (
+                    <TableCell
+                      rowSpan={
+                        isSameName(talent) ? talent.candidates?.length : 1
+                      }
+                    >
+                      {candidate.name}
+                    </TableCell>
+                  )}
+                  <TableCell className="border px-1">
                     {"E" +
                       getPromotion(candidate.unlockCondition.phase) +
                       potential}
                     {candidate.unlockCondition.level !== 1 &&
                       " Lvl " + candidate.unlockCondition.level}
-                  </td>
-                  <td
+                  </TableCell>
+                  <TableCell
                     dangerouslySetInnerHTML={{
                       __html: parseDescription(
                         candidate.description ?? "",
@@ -82,13 +97,13 @@ function Talents({ talents }: talentsProps) {
                         tagsReplacement,
                       ),
                     }}
-                  ></td>
-                </tr>
+                  ></TableCell>
+                </TableRow>
               );
             }),
         )}
       </tbody>
-    </table>
+    </Table>
   );
 }
 

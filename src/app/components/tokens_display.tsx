@@ -13,11 +13,10 @@ interface tokenDisplayProps {
 
 async function TokenDisplay({ tokenDisplay }: tokenDisplayProps) {
   if (tokenDisplay === null) return;
-  const single = Object.keys(tokenDisplay).length === 1 ? true : false;
   const namePromises = Object.keys(tokenDisplay).map((tId) => getOpData(tId));
   const names = await Promise.all(namePromises);
   return (
-    <Accordion type={single ? "single" : "multiple"}>
+    <Accordion type="single" collapsible>
       {Object.keys(tokenDisplay).map((tId, i) => {
         return (
           <AccordionItem value={tId} key={tId} className="w-full sm:w-3/4">

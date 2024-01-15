@@ -4,6 +4,7 @@ import Stats from "./stats";
 import Talents from "./talents";
 import RangeGrid from "./range";
 import SkillTables from "./skills";
+import Traits from "./traits";
 
 interface tokenProps {
   tokenId: string;
@@ -11,16 +12,35 @@ interface tokenProps {
 
 async function Token({ tokenId }: tokenProps) {
   const token = await getOpData(tokenId);
+  const isSingleTrait =
+    !token.trait || (token.trait && token.trait.candidates.length === 1);
   return (
     <Card>
       <CardHeader>
         <CardTitle>{token.name}</CardTitle>
         <CardContent>
-          <p className="py-4">{token.description}</p>
-          <RangeGrid phases={token.phases} />
-          <Stats phases={token.phases} favorKeyFrames={token.favorKeyFrames} />
-          {token.talents && <Talents talents={token.talents} />}
-          {token.skills && <SkillTables skills={token.skills} />}
+          <div className="py-4">
+            <Traits
+              input={token.description}
+              traits={token.trait}
+              isSingleTrait={isSingleTrait}
+            />
+          </div>
+          <div className="py-4">
+            <RangeGrid phases={token.phases} />
+          </div>
+          <div className="py-4">
+            <Stats
+              phases={token.phases}
+              favorKeyFrames={token.favorKeyFrames}
+            />
+          </div>
+          <div className="py-4">
+            {token.talents && <Talents talents={token.talents} />}
+          </div>
+          <div className="py-4">
+            {token.skills && <SkillTables skills={token.skills} />}
+          </div>
         </CardContent>
       </CardHeader>
     </Card>

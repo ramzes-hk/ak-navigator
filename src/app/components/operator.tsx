@@ -13,7 +13,6 @@ import { getModules } from "@/lib/modules_data";
 import Link from "next/link";
 import SkinCarousel from "./skin_carousel";
 import { getPortraitId } from "@/lib/skin_table";
-import Token from "./token";
 import TokenDisplay from "./tokens_display";
 
 function convertRarity(rarity: string): string {
