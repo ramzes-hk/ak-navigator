@@ -8,7 +8,7 @@ import {
 } from "@/components/accordion";
 
 interface tokenDisplayProps {
-  tokenDisplay: Operator<null>["displayTokenDict"];
+  tokenDisplay: Operator["displayTokenDict"];
 }
 
 async function TokenDisplay({ tokenDisplay }: tokenDisplayProps) {
@@ -20,7 +20,7 @@ async function TokenDisplay({ tokenDisplay }: tokenDisplayProps) {
       {Object.keys(tokenDisplay).map((tId, i) => {
         return (
           <AccordionItem value={tId} key={tId} className="w-full sm:w-3/4">
-            <AccordionTrigger>{names[i].name}</AccordionTrigger>
+            <AccordionTrigger>{names[i].operator.name}</AccordionTrigger>
             <AccordionContent>
               <Token tokenId={tId} />
             </AccordionContent>

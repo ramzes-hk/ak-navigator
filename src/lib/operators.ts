@@ -82,11 +82,18 @@ export interface Trait {
   }[];
 }
 
-interface Operators {
-  [key: string]: Operator<SkillIds[]>;
+interface UnlockCond {
+  phase: string;
+  level: number;
 }
 
-export interface Operator<T> {
+interface LvlUpCost {
+  id: string;
+  count: number;
+  type: string;
+}
+
+export interface Operator {
   id?: string;
   name: string;
   description: string;
@@ -97,15 +104,24 @@ export interface Operator<T> {
   subProfessionId: string;
   trait: Trait | null;
   phases: Phase[];
-  skills: T;
+  skills: SkillIds[];
   displayTokenDict: Record<string, boolean> | null;
   talents: Talent[] | null;
   potentialRanks: PotentialRank[];
   favorKeyFrames: FavorKeyFrame[] | null;
+  allSkillLvlUp: {
+    unlockCond: UnlockCond;
+    lvlUpCost: LvlUpCost[];
+  }[];
 }
 
 interface SkillIds {
   skillId: string | null;
+  levelUpCostCond: {
+    unlockCond: UnlockCond;
+    lvlUpTime: number;
+    levelUpCost: LvlUpCost[];
+  }[];
 }
 
 interface Skills {
@@ -136,6 +152,7 @@ export interface Level {
 export interface Phase {
   rangeId: string;
   attributesKeyFrames: AttributesKeyFrame[];
+  evolveCost: LvlUpCost[] | null;
 }
 
 export interface AttributesKeyFrame {
@@ -146,10 +163,7 @@ export interface AttributesKeyFrame {
 export interface Talent {
   candidates:
     | {
-        unlockCondition: {
-          phase: string;
-          level: number;
-        };
+        unlockCondition: UnlockCond;
         requiredPotentialRank: number;
         prefabKey: string;
         name: string | null;
@@ -184,6 +198,11 @@ export interface Data {
   respawnTime: number;
 }
 
+interface getOpDataReturn {
+  operator: Operator;
+  skills: Level[][];
+}
+
 export async function readFileAs<T>(
   location: [string, ...string[]],
 ): Promise<T> {
@@ -192,8 +211,8 @@ export async function readFileAs<T>(
   return JSON.parse(prom) as T;
 }
 
-export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
-  const operators = await readFileAs<Operators>([
+export async function getOpData(opId: string): Promise<getOpDataReturn> {
+  const operators = await readFileAs<Record<string, Operator>>([
     "operators",
     "character_table.json",
   ]);
@@ -204,28 +223,29 @@ export async function getOpData(opId: string): Promise<Operator<Level[][]>> {
   const skillIds: Set<string> = new Set<string>();
   const skillDescription: Level[][] = [];
   const opReader = operators[opId];
-  for (let skill of operators[opId].skills) {
-    if (skill.skillId === null) {
-      continue;
-    }
+  opReader.skills.forEach((skill) => {
+    if (!skill.skillId) return;
     skillIds.add(skill.skillId);
-  }
+  });
   skillIds.forEach((sId) => skillDescription.push(skillsContent[sId].levels));
   return {
-    ...opReader,
-    id: opId,
+    operator: {
+      ...opReader,
+      id: opId,
+    },
     skills: skillDescription,
   };
 }
 
 export interface MappedOps {
-  [key: string]: Operator<Level[][]>;
+  [key: string]: Operator;
 }
 
-export async function getAllOpData(): Promise<Operator<Level[][]>[]> {
+export async function getAllOpData(): Promise<Operator[]> {
   const ids = getAllOpIds();
   const opPromise = ids.map((id) => getOpData("char_" + id.id));
-  return await Promise.all(opPromise);
+  const ops = await Promise.all(opPromise);
+  return ops.map((op) => op.operator);
 }
 
 export async function getMenuData() {

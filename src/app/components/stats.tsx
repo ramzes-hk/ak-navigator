@@ -1,16 +1,14 @@
-import { Phase, Data, Operator, Level } from "@/lib/operators";
-
-type OperatorWithLevel = Operator<Level[][]>;
+import { Phase, Data, Operator } from "@/lib/operators";
 
 interface statsProps {
-  phases: OperatorWithLevel["phases"];
-  favorKeyFrames: OperatorWithLevel["favorKeyFrames"];
+  phases: Operator["phases"];
+  favorKeyFrames: Operator["favorKeyFrames"];
 }
 
 type keyAttr = keyof Data;
 
 interface statsRowProps extends statsProps {
-  name: OperatorWithLevel["name"];
+  name: Operator["name"];
   keyAttr: keyAttr;
 }
 

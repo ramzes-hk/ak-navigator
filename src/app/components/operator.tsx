@@ -24,18 +24,19 @@ interface operatorProps {
 }
 
 async function Operator({ id }: operatorProps) {
-  const opData = await getOpData("char_" + id);
+  const { operator, skills } = await getOpData("char_" + id);
   const modules = await getModules(id);
   const skins = await getPortraitId(id);
 
   const isSingleTrait =
-    !opData.trait || (opData.trait && opData.trait.candidates.length === 1);
+    !operator.trait ||
+    (operator.trait && operator.trait.candidates.length === 1);
   return (
     <div className="sm:container flex flex-col flex-initial gap-6 mb-8">
       <div className="flex flex-row space-x-4 py-4">
         <h1 className="text-2xl">
-          {opData.name}
-          {convertRarity(opData.rarity)}
+          {operator.name}
+          {convertRarity(operator.rarity)}
         </h1>
         <Link
           className={buttonVariants({ variant: "default" })}
@@ -52,26 +53,29 @@ async function Operator({ id }: operatorProps) {
           Voice Lines
         </Link>
       </div>
-      <SkinCarousel skins={skins} name={opData.name} />
+      <SkinCarousel skins={skins} name={operator.name} />
       <div>
-        <RangeGrid phases={opData.phases} />
+        <RangeGrid phases={operator.phases} />
       </div>
       <Traits
-        input={opData.description}
-        traits={opData.trait}
+        input={operator.description}
+        traits={operator.trait}
         isSingleTrait={isSingleTrait}
       />
-      <Tags position={opData.position} tagList={opData.tagList} />
-      <Stats phases={opData.phases} favorKeyFrames={opData.favorKeyFrames} />
-      {opData.talents && <Talents talents={opData.talents} />}
-      {opData.displayTokenDict && (
-        <TokenDisplay tokenDisplay={opData.displayTokenDict} />
+      <Tags position={operator.position} tagList={operator.tagList} />
+      <Stats
+        phases={operator.phases}
+        favorKeyFrames={operator.favorKeyFrames}
+      />
+      {operator.talents && <Talents talents={operator.talents} />}
+      {operator.displayTokenDict && (
+        <TokenDisplay tokenDisplay={operator.displayTokenDict} />
       )}
-      {opData.potentialRanks && (
-        <Potentials potentitalRanks={opData.potentialRanks} />
+      {operator.potentialRanks && (
+        <Potentials potentitalRanks={operator.potentialRanks} />
       )}
       <BaseSkills charId={"char_" + id} />
-      <SkillTables skills={opData.skills} />
+      <SkillTables skills={skills} />
       {modules &&
         modules.map((module, i) => (
           <Modules

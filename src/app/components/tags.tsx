@@ -1,9 +1,9 @@
 import { Badge } from "./badge";
-import { Operator, Level } from "@/lib/operators";
+import { Operator } from "@/lib/operators";
 
 interface tagsProps {
-  position: Operator<Level[][]>["position"];
-  tagList: Operator<Level[][]>["tagList"];
+  position: Operator["position"];
+  tagList: Operator["tagList"];
 }
 
 const positions = {

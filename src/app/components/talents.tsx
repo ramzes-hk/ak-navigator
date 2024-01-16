@@ -55,7 +55,7 @@ function Talents({ talents }: talentsProps) {
   }
   return (
     <Table className="w-1/2 text-center border border-collapse divide-y">
-      <caption>Talents</caption>
+      <TableCaption className="caption-top">Talents</TableCaption>
       <TableHeader>
         <TableRow className="divide-x">
           <th>Name</th>
@@ -63,7 +63,7 @@ function Talents({ talents }: talentsProps) {
           <th>Desc</th>
         </TableRow>
       </TableHeader>
-      <tbody>
+      <TableBody>
         {talents.map(
           (talent, i) =>
             talent.candidates?.map((candidate, j) => {
@@ -72,9 +72,13 @@ function Talents({ talents }: talentsProps) {
                   ? " P" + (candidate.requiredPotentialRank + 1).toString()
                   : "";
               return (
-                <TableRow key={`row${i}-${j}`} className="divide-x divide-y">
+                <TableRow
+                  key={`row${i}-${j}`}
+                  className="divide-x divide-y hover:bg-background"
+                >
                   {(j === 0 || !isSameName(talent)) && (
                     <TableCell
+                      className="hover:bg-muted/50"
                       rowSpan={
                         isSameName(talent) ? talent.candidates?.length : 1
                       }
@@ -82,7 +86,7 @@ function Talents({ talents }: talentsProps) {
                       {candidate.name}
                     </TableCell>
                   )}
-                  <TableCell className="border px-1">
+                  <TableCell className="border hover:bg-muted/50">
                     {"E" +
                       getPromotion(candidate.unlockCondition.phase) +
                       potential}
@@ -90,6 +94,7 @@ function Talents({ talents }: talentsProps) {
                       " Lvl " + candidate.unlockCondition.level}
                   </TableCell>
                   <TableCell
+                    className="hover:bg-muted/50"
                     dangerouslySetInnerHTML={{
                       __html: parseDescription(
                         candidate.description ?? "",
@@ -102,7 +107,7 @@ function Talents({ talents }: talentsProps) {
               );
             }),
         )}
-      </tbody>
+      </TableBody>
     </Table>
   );
 }

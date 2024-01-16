@@ -11,7 +11,7 @@ interface tokenProps {
 }
 
 async function Token({ tokenId }: tokenProps) {
-  const token = await getOpData(tokenId);
+  const { operator: token, skills } = await getOpData(tokenId);
   const isSingleTrait =
     !token.trait || (token.trait && token.trait.candidates.length === 1);
   return (
@@ -39,7 +39,7 @@ async function Token({ tokenId }: tokenProps) {
             {token.talents && <Talents talents={token.talents} />}
           </div>
           <div className="py-4">
-            {token.skills && <SkillTables skills={token.skills} />}
+            {token.skills && <SkillTables skills={skills} />}
           </div>
         </CardContent>
       </CardHeader>
