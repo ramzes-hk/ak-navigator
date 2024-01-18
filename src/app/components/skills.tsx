@@ -81,7 +81,6 @@ async function Skill({ levels }: skillProps) {
                     __html: parseDescription(
                       level.description,
                       level.blackboard,
-                      tagsReplacement,
                       level.duration,
                     ),
                   }}

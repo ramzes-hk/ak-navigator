@@ -58,7 +58,7 @@ async function Operator({ id }: operatorProps) {
         <RangeGrid phases={operator.phases} />
       </div>
       <Traits
-        input={operator.description}
+        description={operator.description}
         traits={operator.trait}
         isSingleTrait={isSingleTrait}
       />

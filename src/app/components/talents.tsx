@@ -99,7 +99,6 @@ function Talents({ talents }: talentsProps) {
                       __html: parseDescription(
                         candidate.description ?? "",
                         candidate.blackboard,
-                        tagsReplacement,
                       ),
                     }}
                   ></TableCell>

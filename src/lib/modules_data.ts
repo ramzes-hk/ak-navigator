@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { Blackboard } from "./operators";
 
 interface UniEquip {
   uniEquipId: string;
@@ -25,11 +26,6 @@ interface UniEquipTable {
   missionList: {
     [key: string]: Mission;
   };
-}
-
-interface Blackboard {
-  key: string;
-  value: number;
 }
 
 interface Candidate {

@@ -1,6 +1,6 @@
 import { Module } from "@/lib/modules_data";
 import { Phase } from "@/lib/modules_data";
-import { parseDescription, TagsReplacement } from "@/lib/operators";
+import { parseDescription } from "@/lib/operators";
 import {
   Card,
   CardContent,
@@ -23,24 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
+
 type modulesProps = Module;
 
-const tagsReplacement: TagsReplacement = {
-  "<@ba.vup>": "<span class='text-[#0098DC]'>",
-  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
-  "</>": "</span>",
-  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
-  "<\\$ba.camou>": "",
-  "<\\$ba.charged>": "<br />",
-  "<\\$ba.barrier>": "",
-  "<\\$ba.protect>": "",
-  "<\\$ba.stun>": "",
-  "<\\$ba.dt.element>": "",
-  "<@ba.talpu>": "<span class='text-[#0098DC]'>",
-  "<\\$ba.sluggish>": "",
-  "<@ba.kw>": "<span class='text-[#00B0FF]'>",
-};
-const blackBoardMapping: { [key: string]: string } = {
+const blackBoardMapping: Record<string, string> = {
   atk: "ATK",
   attack_speed: "ASPD",
   max_hp: "MaxHP",
@@ -59,9 +45,7 @@ function getDescription(phase: Phase, index: number = -1): string {
     const blackboard = firstCandidate?.blackboard;
     let desc = firstCandidate?.additionalDescription;
     desc = desc ? desc : firstCandidate?.overrideDescripton;
-    return desc
-      ? parseDescription(desc, blackboard ? blackboard : [], tagsReplacement)
-      : "";
+    return desc ? parseDescription(desc, blackboard ? blackboard : []) : "";
   }
   if (Math.abs(index) === phase.parts.length) {
     return "";
@@ -76,7 +60,7 @@ function getDescription(phase: Phase, index: number = -1): string {
     ? lastElem?.overrideTraitDataBundle.candidates?.at(0)?.blackboard
     : lastElem?.addOrOverrideTalentDataBundle.candidates?.at(0)?.blackboard;
   return desc
-    ? parseDescription(desc, blackBoard ? blackBoard : [], tagsReplacement)
+    ? parseDescription(desc, blackBoard ? blackBoard : [])
     : getDescription(phase, index - 1);
 }
 

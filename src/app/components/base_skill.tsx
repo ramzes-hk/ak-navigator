@@ -1,25 +1,10 @@
 import { CharWithBuff, getBaseSkills } from "@/lib/base_skills";
-import { parseDescription, TagsReplacement } from "@/lib/operators";
+import { parseDescription } from "@/lib/operators";
 
 interface baseSkillsProps {
   charId: string;
 }
-const tagsReplacement: TagsReplacement = {
-  "<@cc.vup>": "<span class='text-[#0098DC]'>",
-  "<@cc.vdown>": "<span class='text-[#FF6237]'>",
-  "</>": "</span>",
-  "<@cc.rem>": "<span class='text-[#F49800]'>",
-  "<\\$ba.camou>": "",
-  "<\\$ba.charged>": "<br />",
-  "<\\$ba.barrier>": "",
-  "<\\$ba.protect>": "",
-  "<\\$ba.stun>": "",
-  "<\\$ba.strong>": "",
-  "<\\$ba.dt.element>": "",
-  "<@cc.talpu>": "<span class='text-[#0098DC]'>",
-  "<\\$ba.sluggish>": "",
-  "<@cc.kw>": "<span class='text-[#00B0FF]'>",
-};
+
 type BrokenBuff = CharWithBuff["buffChar"][number]["buffData"][number];
 
 async function BaseSkills({ charId }: baseSkillsProps) {
@@ -58,7 +43,6 @@ async function BaseSkills({ charId }: baseSkillsProps) {
                     __html: parseDescription(
                       (bd as BrokenBuff).buff.description,
                       [],
-                      tagsReplacement,
                     ),
                   }}
                 ></td>

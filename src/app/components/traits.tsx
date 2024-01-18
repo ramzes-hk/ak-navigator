@@ -1,38 +1,20 @@
-import { Trait, replaceValues } from "@/lib/operators";
-
-interface traitHeaderProps {
-  dangerousHTML: string;
-}
-
-function TraitHeader({ dangerousHTML }: traitHeaderProps) {
-  return <h2 dangerouslySetInnerHTML={{ __html: dangerousHTML }}></h2>;
-}
+import { Trait, parseDescription, replaceValues } from "@/lib/operators";
 
 interface traitProps {
-  input: string;
+  description: string;
   traits: Trait | null;
 }
 
-function Trait({ input, traits }: traitProps) {
-  let trait = input
-    .replace(/<@ba.kw>/g, '<span class="text-[#00B0FF]">')
-    .replace(/<\/>/g, "</span>");
-  if (!input.includes("{")) {
-    return <TraitHeader dangerousHTML={trait} />;
-  }
-  if (traits === null) {
-    return <TraitHeader dangerousHTML={trait} />;
-  }
-  return (
-    <TraitHeader
-      dangerousHTML={replaceValues(trait, traits.candidates[0].blackboard)}
-    />
+function Trait({ description, traits }: traitProps) {
+  const trait = parseDescription(
+    description,
+    traits?.candidates[0].blackboard ?? [],
   );
+  return <p dangerouslySetInnerHTML={{ __html: trait }}></p>;
 }
-function TraitTable({ input, traits }: traitProps) {
-  let trait = input
-    .replace(/<@ba.kw>/g, '<span class="text-[#00B0FF]">')
-    .replace(/<\/>/g, "</span>");
+
+function TraitTable({ description, traits }: traitProps) {
+  const trait = parseDescription(description, []);
   return (
     <table className="border border-collapse border-black">
       <tbody>
@@ -54,16 +36,16 @@ function TraitTable({ input, traits }: traitProps) {
 }
 
 interface traitsProps {
-  input: string;
+  description: string;
   traits: Trait | null;
   isSingleTrait: boolean;
 }
 
-function Traits({ input, traits, isSingleTrait: isSingleTrait }: traitsProps) {
+function Traits({ description, traits, isSingleTrait }: traitsProps) {
   return isSingleTrait ? (
-    <Trait input={input} traits={traits} />
+    <Trait description={description} traits={traits} />
   ) : (
-    <TraitTable input={input} traits={traits} />
+    <TraitTable description={description} traits={traits} />
   );
 }
 

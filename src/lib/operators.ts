@@ -4,6 +4,7 @@ import fsPromise from "fs/promises";
 import { db } from "@/db/db";
 import { operators } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { getStyle } from "./rich_text_styles";
 
 export type AllOpNames = OpName[];
 
@@ -73,12 +74,15 @@ export async function getOpName(id: string): Promise<string> {
   return result[0].name;
 }
 
+export interface Blackboard {
+  key: string;
+  value: number;
+  valueStr: string | null;
+}
+
 export interface Trait {
   candidates: {
-    blackboard: {
-      key: string;
-      value: number;
-    }[];
+    blackboard: Blackboard[];
   }[];
 }
 
@@ -143,10 +147,7 @@ export interface Level {
     initSp: string;
   };
   duration: number;
-  blackboard: {
-    key: string;
-    value: number;
-  }[];
+  blackboard: Blackboard[];
 }
 
 export interface Phase {
@@ -169,11 +170,7 @@ export interface Talent {
         name: string | null;
         description: string | null;
         rangeId: string | null;
-        blackboard: {
-          key: string;
-          value: number;
-          valueStr: string | null;
-        }[];
+        blackboard: Blackboard[];
         tokenKey: string | null;
       }[]
     | null;
@@ -266,42 +263,40 @@ export interface TagsReplacement {
 }
 
 export const tagsReplacement: TagsReplacement = {
-  "<@ba.vup>": "<span class='text-[#0098DC]'>",
-  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
+  "<@ba.vup>": "<span style='color: #0098DC;'>",
+  "<@ba.vdown>": "<span style='color: #FF6237;'>",
   "</>": "</span>",
-  "<@ba.rem>": "<span class='text-[#F49800]'>",
+  "<@ba.rem>": "<span style='color: #F49800;'>",
   "<\\$ba.camou>": "",
   "<\\$ba.charged>": "<br />",
   "<\\$ba.barrier>": "",
   "<\\$ba.protect>": "",
   "<\\$ba.stun>": "",
   "<\\$ba.dt.element>": "",
-  "<@ba.talpu>": "<span class='text-[#0098DC]'>",
+  "<@ba.talpu>": "<span style='color: #0098DC;'>",
   "<\\$ba.sluggish>": "",
+  "<@ba.kw>": "<span style='color: #00B0FF;>",
 };
 
 function escapeRegExp(input: string) {
   return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-export interface Blackboard {
-  key: string;
-  value: number;
-}
-
 export function parseDescription(
   description: string,
   blackboard: Blackboard[],
-  tagsReplacement: TagsReplacement,
   duration?: number,
 ): string {
-  let desc = description.replace("\n", "<br />");
-  desc = replaceValues(desc, blackboard);
-  desc = duration ? desc.replace(/{duration}/, String(duration)) : desc;
-  for (const key in tagsReplacement) {
-    desc = desc.replace(RegExp(key, "g"), tagsReplacement[key]);
+  description = description.replaceAll("\n", "<br />");
+  description = replaceValues(description, blackboard);
+  description = duration
+    ? description.replace(/{duration}/, String(duration))
+    : description;
+  const style = getStyle();
+  for (const key in style) {
+    description = description.replace(RegExp(key, "g"), style[key]);
   }
-  return desc;
+  return description;
 }
 
 export function replaceValues(

@@ -21,7 +21,7 @@ async function Token({ tokenId }: tokenProps) {
         <CardContent>
           <div className="py-4">
             <Traits
-              input={token.description}
+              description={token.description}
               traits={token.trait}
               isSingleTrait={isSingleTrait}
             />
