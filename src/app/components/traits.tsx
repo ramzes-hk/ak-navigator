@@ -1,4 +1,11 @@
 import { Trait, parseDescription, replaceValues } from "@/lib/operators";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@/components/table";
 
 interface traitProps {
   description: string;
@@ -13,25 +20,30 @@ function Trait({ description, traits }: traitProps) {
   return <p dangerouslySetInnerHTML={{ __html: trait }}></p>;
 }
 
-function TraitTable({ description, traits }: traitProps) {
-  const trait = parseDescription(description, []);
+function TraitTable({ traits }: traitProps) {
   return (
-    <table className="border border-collapse border-black">
-      <tbody>
+    <Table className="w-full sm:w-1/2">
+      <TableBody>
         {traits?.candidates.map((candidate, i) => {
           return (
-            <tr className="divide-y divide-black" key={i}>
-              <th className="border border-black">{`E${i}`}</th>
-              <td
+            <TableRow className="" key={i}>
+              <TableHead className="">{`E${candidate.unlockCondition.phase.replace(
+                /PHASE_/,
+                "",
+              )}`}</TableHead>
+              <TableCell
                 dangerouslySetInnerHTML={{
-                  __html: replaceValues(trait, candidate.blackboard),
+                  __html: parseDescription(
+                    candidate.overrideDescripton,
+                    candidate.blackboard,
+                  ),
                 }}
-              ></td>
-            </tr>
+              ></TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 }
 

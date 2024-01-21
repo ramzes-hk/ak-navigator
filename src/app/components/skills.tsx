@@ -1,31 +1,14 @@
-import { Level, parseDescription, TagsReplacement } from "@/lib/operators";
+import { Level, parseDescription } from "@/lib/operators";
 import { getRange } from "@/lib/ranges";
 import CanvasRange from "./range_canvas";
 
-const tagsReplacement: TagsReplacement = {
-  "<@ba.vup>": "<span class='text-[#0098DC]'>",
-  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
-  "</>": "</span>",
-  "<@ba.rem>": "<span class='text-[#F49800]'>",
-  "<\\$ba.camou>": "",
-  "<\\$ba.charged>": "<br />",
-  "<\\$ba.barrier>": "",
-  "<\\$ba.protect>": "",
-  "<\\$ba.stun>": "",
-  "<\\$ba.strong>": "",
-  "<\\$ba.dt.element>": "",
-  "<@ba.talpu>": "<span class='text-[#0098DC]'>",
-  "<\\$ba.sluggish>": "",
-  "<@ba.kw>": "<span class='text-[#00B0FF]'>",
-};
-
-const spRecovery: { [key: string]: string } = {
+const spRecovery: Record<string, string> = {
   INCREASE_WITH_TIME: "Auto Recovery",
   INCREASE_WHEN_ATTACK: "Offensive Recovery",
   INCREASE_WHEN_TAKEN_DAMAGE: "Defensive Recovery",
 };
 
-const skillType: { [key: string]: string } = {
+const skillType: Record<string, string> = {
   MANUAL: "Manual",
   AUTO: "Auto",
   PASSIVE: "Passive",
@@ -41,23 +24,20 @@ async function Skill({ levels }: skillProps) {
     : null;
   return (
     <div className="w-full">
-      <table className="w-full border-x border-t border-collapse">
-        <tbody>
-          <tr className="divide-x">
-            <th>{levels[0].name}</th>
-            {levels[0].spData.spType !== 8 && (
-              <th>{spRecovery[levels[0].spData.spType]}</th>
-            )}
-            <th>{skillType[levels[0].skillType]}</th>
-            {rangeData && (
-              <th className="flex justify-center">
-                <CanvasRange range={rangeData} />
-              </th>
-            )}
-          </tr>
-        </tbody>
-      </table>
-
+      <div className="flex space-x-4">
+        <div>{levels[0].name}</div>
+        {levels[0].spData.spType !== 8 && (
+          <>
+            <div>{spRecovery[levels[0].spData.spType]}</div>
+          </>
+        )}
+        <div>{skillType[levels[0].skillType]}</div>
+        {rangeData && (
+          <div className="flex justify-center">
+            <CanvasRange range={rangeData} />
+          </div>
+        )}
+      </div>
       <table className="w-full border-collapse border divide-y">
         <thead>
           <tr className="p-2 divide-x">

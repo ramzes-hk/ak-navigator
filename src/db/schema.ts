@@ -11,7 +11,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const operators = sqliteTable("operators", {
   id: text("id", { length: 32 }).primaryKey(),
   name: text("name", { length: 256 }).unique().notNull(),
-  description: text("description", { length: 256 }).notNull(),
+  description: text("description", { length: 256 }),
   position: text("position").notNull(),
   rarity: text("rarity").notNull(),
   profession: text("profession", { length: 32 }).notNull(),

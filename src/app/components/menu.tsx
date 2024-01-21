@@ -7,16 +7,6 @@ import { ToggleGroup, ToggleGroupItem } from "./toggle_group";
 import { columns } from "./columns";
 import OpTable from "./op_list";
 
-export interface menuProps {
-  ids: {
-    id: string;
-    name: string;
-    rarity: string;
-    profession: string;
-    subProfessionId: string;
-  }[];
-}
-
 export const professions: Record<string, string> = {
   MEDIC: "Medic",
   TANK: "Defender",
@@ -27,6 +17,15 @@ export const professions: Record<string, string> = {
   SUPPORT: "Support",
   SPECIAL: "Specialist",
 };
+export interface menuProps {
+  ids: {
+    id: string;
+    name: string;
+    rarity: string;
+    profession: string;
+    subProfessionId: string;
+  }[];
+}
 
 const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
 const tierAllies = new Array(6)

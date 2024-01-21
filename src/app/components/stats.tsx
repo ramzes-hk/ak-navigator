@@ -1,4 +1,12 @@
 import { Phase, Data, Operator } from "@/lib/operators";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table";
 
 interface statsProps {
   phases: Operator["phases"];
@@ -15,13 +23,15 @@ interface statsRowProps extends statsProps {
 function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
   const lastKeyFrame = favorKeyFrames ? favorKeyFrames.at(-1) : null;
   return (
-    <tr key={name} className="divide-x divide-y">
-      <th>{name}</th>
+    <TableRow key={name} className="divide-x">
+      <TableHead>{name}</TableHead>
       {phases
         .map((phase: Phase, i: number) => {
           return phase.attributesKeyFrames.map((keyFrame, j) => {
             return (
-              <td key={`${keyAttr}-${i}-${j}`}>{keyFrame.data[keyAttr]}</td>
+              <TableCell key={`${keyAttr}-${i}-${j}`}>
+                {keyFrame.data[keyAttr]}
+              </TableCell>
             );
           });
         })
@@ -30,8 +40,8 @@ function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
             (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
           ),
         )}
-      {lastKeyFrame && <td>{lastKeyFrame.data[keyAttr]}</td>}
-    </tr>
+      {lastKeyFrame && <TableCell>{lastKeyFrame.data[keyAttr]}</TableCell>}
+    </TableRow>
   );
 }
 
@@ -65,25 +75,24 @@ function BaseStats({ phases }: baseStatsProps) {
 
   const data = phases[0].attributesKeyFrames[0].data;
   return (
-    <table className="w-full border border-collapse divide-y">
-      <caption>Base Stats</caption>
-      <thead>
-        <tr className="divide-x">
-          <th>Cost</th>
-          <th>Redeploy Time</th>
-          <th>Block</th>
-          <th>Attack Interval</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr className="divide-x">
-          <td>{getChangingStat("cost")}</td>
-          <td>{data.respawnTime}s</td>
-          <td>{getChangingStat("blockCnt")}</td>
-          <td>{data.baseAttackTime}s</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table className="w-full table-fixed border-b-4">
+      <TableHeader>
+        <TableRow className="divide-x">
+          <TableHead>Cost</TableHead>
+          <TableHead>Redeploy Time</TableHead>
+          <TableHead>Block</TableHead>
+          <TableHead>Attack Interval</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow className="divide-x">
+          <TableCell>{getChangingStat("cost")}</TableCell>
+          <TableCell>{data.respawnTime}s</TableCell>
+          <TableCell>{getChangingStat("blockCnt")}</TableCell>
+          <TableCell>{data.baseAttackTime}s</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }
 
@@ -96,18 +105,19 @@ const StatsMapping: { [key: string]: keyof Data } = {
 
 function Stats({ phases, favorKeyFrames }: statsProps) {
   return (
-    <div className="sm:w-1/2 text-center">
+    <div className="sm:w-1/2 border">
       <BaseStats phases={phases} />
-      <table className="w-full border border-collapse divide-y">
-        <caption>Stats</caption>
-        <thead>
-          <tr className="divide-x">
-            <th>Lvl</th>
+      <Table className="w-full table-fixed">
+        <TableHeader>
+          <TableRow className="divide-x">
+            <TableHead>Lvl</TableHead>
             {phases
               .map((phase: Phase, i: number) => {
                 return phase.attributesKeyFrames.map((keyFrame, j) => {
                   return (
-                    <th key={`names-${i}-${j}`}>{`E${i} ${keyFrame.level}`}</th>
+                    <TableHead
+                      key={`names-${i}-${j}`}
+                    >{`E${i} ${keyFrame.level}`}</TableHead>
                   );
                 });
               })
@@ -116,10 +126,10 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
                   (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
                 ),
               )}
-            {favorKeyFrames && <th>Trust</th>}
-          </tr>
-        </thead>
-        <tbody>
+            {favorKeyFrames && <TableHead>Trust</TableHead>}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {Object.entries(StatsMapping).map(([key, value]) => {
             return (
               <StatsRow
@@ -131,8 +141,8 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
               />
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }

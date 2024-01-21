@@ -15,7 +15,7 @@ const positions = {
 function Tags({ position, tagList }: tagsProps) {
   return (
     <div className="flex flex-row w-full mb-4">
-      <Badge>{positions[position]}</Badge>
+      {position !== "NONE" && <Badge>{positions[position]}</Badge>}
       {tagList && tagList.map((tag) => <Badge key={tag}>{tag}</Badge>)}
     </div>
   );

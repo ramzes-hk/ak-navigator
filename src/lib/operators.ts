@@ -5,6 +5,19 @@ import { db } from "@/db/db";
 import { operators } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getStyle } from "./rich_text_styles";
+import { getTerms } from "./term_description";
+import { getUniequip } from "./modules_data";
+
+export const professions: Record<string, string> = {
+  MEDIC: "Medic",
+  TANK: "Defender",
+  WARRIOR: "Guard",
+  CASTER: "Caster",
+  PIONEER: "Vanguard",
+  SNIPER: "Sniper",
+  SUPPORT: "Support",
+  SPECIAL: "Specialist",
+};
 
 export type AllOpNames = OpName[];
 
@@ -83,6 +96,8 @@ export interface Blackboard {
 export interface Trait {
   candidates: {
     blackboard: Blackboard[];
+    unlockCondition: UnlockCond;
+    overrideDescripton: string;
   }[];
 }
 
@@ -100,9 +115,20 @@ interface LvlUpCost {
 export interface Operator {
   id?: string;
   name: string;
-  description: string;
-  position: "MELEE" | "RANGED" | "ALL";
+  description: string | null;
+  potentialItemId: string | null;
+  nationId: string | null;
+  groupId: string | null;
+  teamId: string | null;
+  displayNumber: string | null;
+  appellation: string;
+  position: "MELEE" | "RANGED" | "ALL" | "NONE";
   tagList: string[] | null;
+  itemUsage: string | null;
+  itemDesc: string | null;
+  itemObtainApproach: string | null;
+  maxPotentialLevel: number;
+  isSpChar: boolean;
   rarity: string;
   profession: string;
   subProfessionId: string;
@@ -124,7 +150,7 @@ interface SkillIds {
   levelUpCostCond: {
     unlockCond: UnlockCond;
     lvlUpTime: number;
-    levelUpCost: LvlUpCost[];
+    levelUpCost: LvlUpCost[] | null;
   }[];
 }
 
@@ -198,6 +224,7 @@ export interface Data {
 interface getOpDataReturn {
   operator: Operator;
   skills: Level[][];
+  subProfession: string;
 }
 
 export async function readFileAs<T>(
@@ -231,6 +258,7 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
       id: opId,
     },
     skills: skillDescription,
+    subProfession: getUniequip().subProfDict[opReader.subProfessionId].subProfessionName,
   };
 }
 
@@ -258,26 +286,6 @@ export async function getMenuData() {
   return result;
 }
 
-export interface TagsReplacement {
-  [key: string]: string;
-}
-
-export const tagsReplacement: TagsReplacement = {
-  "<@ba.vup>": "<span style='color: #0098DC;'>",
-  "<@ba.vdown>": "<span style='color: #FF6237;'>",
-  "</>": "</span>",
-  "<@ba.rem>": "<span style='color: #F49800;'>",
-  "<\\$ba.camou>": "",
-  "<\\$ba.charged>": "<br />",
-  "<\\$ba.barrier>": "",
-  "<\\$ba.protect>": "",
-  "<\\$ba.stun>": "",
-  "<\\$ba.dt.element>": "",
-  "<@ba.talpu>": "<span style='color: #0098DC;'>",
-  "<\\$ba.sluggish>": "",
-  "<@ba.kw>": "<span style='color: #00B0FF;>",
-};
-
 function escapeRegExp(input: string) {
   return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -295,6 +303,9 @@ export function parseDescription(
   const style = getStyle();
   for (const key in style) {
     description = description.replace(RegExp(key, "g"), style[key]);
+  }
+  for (const key in getTerms()) {
+    description = description.replace(RegExp(key, "g"), " ");
   }
   return description;
 }

@@ -20,11 +20,13 @@ async function Token({ tokenId }: tokenProps) {
         <CardTitle>{token.name}</CardTitle>
         <CardContent>
           <div className="py-4">
-            <Traits
-              description={token.description}
-              traits={token.trait}
-              isSingleTrait={isSingleTrait}
-            />
+            {token.description && (
+              <Traits
+                description={token.description}
+                traits={token.trait}
+                isSingleTrait={isSingleTrait}
+              />
+            )}
           </div>
           <div className="py-4">
             <RangeGrid phases={token.phases} />

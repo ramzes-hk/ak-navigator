@@ -1,4 +1,4 @@
-import { Talent, parseDescription, TagsReplacement } from "@/lib/operators";
+import { Talent, parseDescription } from "@/lib/operators";
 import {
   Table,
   TableBody,
@@ -8,21 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
-
-const tagsReplacement: TagsReplacement = {
-  "<@ba.vup>": "<span class='text-[#0098DC]'>",
-  "<@ba.vdown>": "<span class='text-[#FF6237]'>",
-  "</>": "</span>",
-  "<@ba.rem>": "<br /><span class='text-[#F49800]'>",
-  "<\\$ba.camou>": "",
-  "<\\$ba.charged>": "<br />",
-  "<\\$ba.barrier>": "",
-  "<\\$ba.protect>": "",
-  "<\\$ba.stun>": "",
-  "<\\$ba.dt.element>": "",
-  "<@ba.talpu>": "<span class='text-[#0098DC]'>",
-  "<\\$ba.sluggish>": "",
-};
 
 interface talentsProps {
   talents: Talent[];
@@ -54,13 +39,12 @@ function Talents({ talents }: talentsProps) {
     return;
   }
   return (
-    <Table className="w-1/2 text-center border border-collapse divide-y">
-      <TableCaption className="caption-top">Talents</TableCaption>
+    <Table className="w-1/2 border border-collapse divide-y">
       <TableHeader>
         <TableRow className="divide-x">
-          <th>Name</th>
-          <th>Reqs</th>
-          <th>Desc</th>
+          <TableHead className="text-center">Name</TableHead>
+          <TableHead className="text-center">Reqs</TableHead>
+          <TableHead className="text-center">Desc</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -78,7 +62,7 @@ function Talents({ talents }: talentsProps) {
                 >
                   {(j === 0 || !isSameName(talent)) && (
                     <TableCell
-                      className="hover:bg-muted/50"
+                      className="hover:bg-muted/50 text-center"
                       rowSpan={
                         isSameName(talent) ? talent.candidates?.length : 1
                       }
@@ -86,7 +70,7 @@ function Talents({ talents }: talentsProps) {
                       {candidate.name}
                     </TableCell>
                   )}
-                  <TableCell className="border hover:bg-muted/50">
+                  <TableCell className="border text-center hover:bg-muted/50">
                     {"E" +
                       getPromotion(candidate.unlockCondition.phase) +
                       potential}

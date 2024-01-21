@@ -19,13 +19,17 @@ interface Mission {
   desc: string;
 }
 
-interface UniEquipTable {
-  equipDict: {
-    [key: string]: UniEquip;
-  };
-  missionList: {
-    [key: string]: Mission;
-  };
+interface SubProf {
+"subProfessionId": string;
+      "subProfessionName": string;
+      "subProfessionCatagory": number;
+}
+
+export interface UniEquipTable {
+  equipDict: Record<string, UniEquip>;
+  missionList: Record<string, Mission>;
+  subProfDict: Record<string, SubProf>;
+  charEquip: Record<string, string[]>;
 }
 
 interface Candidate {
@@ -86,8 +90,12 @@ export interface Module {
   missions: Mission[] | null;
 }
 
+export function getUniequip(): UniEquipTable {
+  return getParsedJSON<UniEquipTable>("uniequip_table.json");
+}
+
 export async function getModules(id: string): Promise<Module[]> {
-  const uniEquipTable = getParsedJSON<UniEquipTable>("uniequip_table.json");
+  const uniEquipTable = getUniequip(); 
   const battleEquipTable = getParsedJSON<BattleEquipTable>(
     "battle_equip_table.json",
   );

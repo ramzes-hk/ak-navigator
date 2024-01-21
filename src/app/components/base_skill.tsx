@@ -1,6 +1,14 @@
 import { CharWithBuff, getBaseSkills } from "@/lib/base_skills";
 import { parseDescription } from "@/lib/operators";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table";
 interface baseSkillsProps {
   charId: string;
 }
@@ -11,47 +19,43 @@ async function BaseSkills({ charId }: baseSkillsProps) {
   const bData = await getBaseSkills(charId);
   if (bData === null) return null;
   return (
-    <div className="pb-8">
-      <table className="border w-full sm:w-3/4">
-        <caption>Base Skills</caption>
-        <thead>
-          <tr className="divide-x divide-y">
-            <th>Name</th>
-            <th className="px-0.5 w-8 sm:w-14">Reqs</th>
-            <th>Desc</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bData.buffChar.map((bc) =>
-            bc.buffData.map((bd) => (
-              <tr key={bd.buffId} className="divide-x divide-y">
-                <td className="text-center border">
-                  {(bd as BrokenBuff).buff.buffName}
-                </td>
-                <td className="text-center">
-                  E{bd.cond.phase.replace(/PHASE_/, "")}{" "}
-                  {bd.cond.level !== 1 && (
-                    <>
-                      <br />
-                      <span className="text-nowrap">Lvl {bd.cond.level}</span>
-                    </>
-                  )}
-                </td>
-                <td
-                  className="px-1"
-                  dangerouslySetInnerHTML={{
-                    __html: parseDescription(
-                      (bd as BrokenBuff).buff.description,
-                      [],
-                    ),
-                  }}
-                ></td>
-              </tr>
-            )),
-          )}
-        </tbody>
-      </table>
-    </div>
+    <Table className="w-full sm:w-3/4">
+      <TableHeader>
+        <TableRow>
+          <TableHead className="text-center">Name</TableHead>
+          <TableHead className="sm:w-14 text-center">Reqs</TableHead>
+          <TableHead className="text-center">Desc</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {bData.buffChar.map((bc) =>
+          bc.buffData.map((bd) => (
+            <TableRow key={bd.buffId}>
+              <TableCell className="text-center">
+                {(bd as BrokenBuff).buff.buffName}
+              </TableCell>
+              <TableCell className="text-center">
+                E{bd.cond.phase.replace(/PHASE_/, "")}{" "}
+                {bd.cond.level !== 1 && (
+                  <>
+                    <br />
+                    <span className="text-nowrap">Lvl {bd.cond.level}</span>
+                  </>
+                )}
+              </TableCell>
+              <TableCell
+                dangerouslySetInnerHTML={{
+                  __html: parseDescription(
+                    (bd as BrokenBuff).buff.description,
+                    [],
+                  ),
+                }}
+              ></TableCell>
+            </TableRow>
+          )),
+        )}
+      </TableBody>
+    </Table>
   );
 }
 

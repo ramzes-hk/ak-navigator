@@ -1,27 +1,31 @@
 import { PotentialRank } from "@/lib/operators";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@/components/table";
 interface PotentialsProps {
-  potentitalRanks: PotentialRank[];
+  potentialRanks: PotentialRank[];
 }
 
-function Potentials({ potentitalRanks }: PotentialsProps) {
+function Potentials({ potentialRanks }: PotentialsProps) {
+  if (potentialRanks.length === 0) return <p>No potentials available</p>;
   return (
-    <>
-      <table className="w-full sm:w-1/2 border border-collapse">
-        <caption>Potentials</caption>
-        <tbody>
-          {potentitalRanks.map((potential, i) => {
-            return (
-              <tr key={i} className="divide-x divide-y">
-                <th className="border">{`${i + 2}`}</th>
-                <td className="px-1">{potential.description}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {potentitalRanks.length === 0 && <p>No potentials available</p>}
-    </>
+    <Table className="w-full sm:w-1/2 table-fixed">
+      <TableBody>
+        {potentialRanks.map((potential, i) => {
+          return (
+            <TableRow key={i}>
+              <TableHead className="text-center w-12">{`${i + 2}`}</TableHead>
+              <TableCell>{potential.description}</TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 }
 
