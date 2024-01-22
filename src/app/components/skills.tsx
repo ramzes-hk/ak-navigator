@@ -1,6 +1,16 @@
 import { Level, parseDescription } from "@/lib/operators";
 import { getRange } from "@/lib/ranges";
 import CanvasRange from "./range_canvas";
+import { Separator } from "./separator";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/table";
 
 const spRecovery: Record<string, string> = {
   INCREASE_WITH_TIME: "Auto Recovery",
@@ -24,39 +34,46 @@ async function Skill({ levels }: skillProps) {
     : null;
   return (
     <div className="w-full">
-      <div className="flex space-x-4">
-        <div>{levels[0].name}</div>
-        {levels[0].spData.spType !== 8 && (
-          <>
-            <div>{spRecovery[levels[0].spData.spType]}</div>
-          </>
-        )}
-        <div>{skillType[levels[0].skillType]}</div>
-        {rangeData && (
-          <div className="flex justify-center">
-            <CanvasRange range={rangeData} />
-          </div>
-        )}
-      </div>
-      <table className="w-full border-collapse border divide-y">
-        <thead>
-          <tr className="p-2 divide-x">
-            <th className="text-center w-8 sm:w-12">Lvl</th>
-            <th>Description</th>
-            {(levels.at(0) ?? { duration: 0 }).duration > 1 && (
-              <th className="sm:w-12 px-0.5 text-center">Duration</th>
+      <Table className="border border-b-4">
+        <TableHeader>
+          <TableRow className="divide-x">
+            <TableHead className="text-base text-foreground text-center">
+              {levels[0].name}
+            </TableHead>
+            {levels[0].spData.spType !== 8 && (
+              <TableHead className="text-base text-foreground text-center">
+                {spRecovery[levels[0].spData.spType]}
+              </TableHead>
             )}
-            <th className="w-8 sm:w-12 px-0.5 text-center">Init SP</th>
-            <th className="w-8 sm:w-12 px-0.5 text-center">SP</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y">
+            <TableHead className="text-base text-foreground text-center">
+              {skillType[levels[0].skillType]}
+            </TableHead>
+            {rangeData && (
+              <TableHead className="flex-auto justify-center items-center">
+                <CanvasRange range={rangeData} />
+              </TableHead>
+            )}
+          </TableRow>
+        </TableHeader>
+      </Table>
+      <Table className="w-full border-collapse border divide-y table-fixed">
+        <TableHeader>
+          <TableRow className="divide-x">
+            <TableHead className="text-center w-8 sm:w-12">Lvl</TableHead>
+            <TableHead className="text-center">Description</TableHead>
+            {(levels.at(0) ?? { duration: 0 }).duration > 1 && (
+              <TableHead className="sm:w-16">Duration</TableHead>
+            )}
+            <TableHead className="w-8 sm:w-12 text-center">Init SP</TableHead>
+            <TableHead className="w-8 sm:w-12 text-center">SP</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="divide-y">
           {levels.map((level, i) => {
             return (
-              <tr className="divide-x" key={`level-${i}`}>
-                <td className="text-center">{i + 1}</td>
-                <td
-                  className="px-1"
+              <TableRow className="divide-x" key={`level-${i}`}>
+                <TableCell className="text-center">{i + 1}</TableCell>
+                <TableCell
                   dangerouslySetInnerHTML={{
                     __html: parseDescription(
                       level.description,
@@ -64,17 +81,23 @@ async function Skill({ levels }: skillProps) {
                       level.duration,
                     ),
                   }}
-                ></td>
+                ></TableCell>
                 {level.duration > 1 && (
-                  <td className="text-center">{level.duration}</td>
+                  <TableCell className="text-center">
+                    {level.duration}
+                  </TableCell>
                 )}
-                <td className="text-center">{level.spData.initSp}</td>
-                <td className="text-center">{level.spData.spCost}</td>
-              </tr>
+                <TableCell className="text-center">
+                  {level.spData.initSp}
+                </TableCell>
+                <TableCell className="text-center">
+                  {level.spData.spCost}
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }

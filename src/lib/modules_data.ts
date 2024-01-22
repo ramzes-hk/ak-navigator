@@ -20,9 +20,9 @@ interface Mission {
 }
 
 interface SubProf {
-"subProfessionId": string;
-      "subProfessionName": string;
-      "subProfessionCatagory": number;
+  subProfessionId: string;
+  subProfessionName: string;
+  subProfessionCatagory: number;
 }
 
 export interface UniEquipTable {
@@ -95,7 +95,7 @@ export function getUniequip(): UniEquipTable {
 }
 
 export async function getModules(id: string): Promise<Module[]> {
-  const uniEquipTable = getUniequip(); 
+  const uniEquipTable = getUniequip();
   const battleEquipTable = getParsedJSON<BattleEquipTable>(
     "battle_equip_table.json",
   );

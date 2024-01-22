@@ -258,7 +258,8 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
       id: opId,
     },
     skills: skillDescription,
-    subProfession: getUniequip().subProfDict[opReader.subProfessionId].subProfessionName,
+    subProfession:
+      getUniequip().subProfDict[opReader.subProfessionId].subProfessionName,
   };
 }
 
