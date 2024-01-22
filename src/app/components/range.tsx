@@ -24,7 +24,9 @@ async function RangeGrid({ phases }: rangeProp) {
         <tr className="divide-x divide-y border">
           {ranges.map((range, i) => (
             <td key={i} className="p-4">
-              <CanvasRange range={range} />
+              <CanvasRange range={range}>
+                <p>Operator Range at E{i}</p>
+              </CanvasRange>
             </td>
           ))}
         </tr>

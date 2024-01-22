@@ -11,11 +11,11 @@ import {
   CommandItem,
 } from "@/components/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/popover";
-import { AllOpNames } from "@/lib/operators";
+import { OpName } from "@/lib/operators";
 import { useRouter } from "next/navigation";
 
 interface comboboxProps {
-  names: AllOpNames;
+  names: OpName[];
 }
 
 export function ComboboxDemo({ names }: comboboxProps) {

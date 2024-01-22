@@ -1,12 +1,13 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, ReactNode } from "react";
 import { Range } from "@/lib/ranges";
 
 interface canvasRangeProps {
   range: Range;
+  children?: ReactNode;
 }
 
-function CanvasRange({ range }: canvasRangeProps) {
+function CanvasRange({ range, children }: canvasRangeProps) {
   let minW = 0;
   let minH = 0;
   let maxW = 0;
@@ -49,7 +50,11 @@ function CanvasRange({ range }: canvasRangeProps) {
       draw(context);
     }
   });
-  return <canvas ref={canvasRef} {...props} />;
+  return (
+    <canvas ref={canvasRef} {...props}>
+      {children}
+    </canvas>
+  );
 }
 
 export default CanvasRange;

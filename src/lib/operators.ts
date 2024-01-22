@@ -19,28 +19,20 @@ export const professions: Record<string, string> = {
   SPECIAL: "Specialist",
 };
 
-export type AllOpNames = OpName[];
-
 export interface OpName {
   id: string;
   name: string;
 }
 
-interface OpNames {
-  [key: string]: {
-    name: string;
-  };
-}
-
-export function getAllOpNames(): AllOpNames {
+export function getAllOpNames(): OpName[] {
   const fileName = path.join(
     process.cwd(),
     "operators",
     "character_table.json",
   );
   const rawFile = fs.readFileSync(fileName, "utf8");
-  const contents = JSON.parse(rawFile) as OpNames;
-  const names: AllOpNames = [];
+  const contents = JSON.parse(rawFile) as Record<string, any>;
+  const names: OpName[] = [];
   for (const key in contents) {
     if (!key.includes("char_")) {
       continue;
@@ -48,35 +40,6 @@ export function getAllOpNames(): AllOpNames {
     names.push({ id: key, name: contents[key]["name"] });
   }
   return names;
-}
-
-interface Ids {
-  [key: string]: null;
-}
-
-interface IdsToReturn {
-  id: string;
-}
-
-export function getAllOpIds(): IdsToReturn[] {
-  const fileName = path.join(
-    process.cwd(),
-    "operators",
-    "character_table.json",
-  );
-  const rawFile = fs.readFileSync(fileName, "utf8");
-  const contents = JSON.parse(rawFile) as Ids;
-
-  const ids: IdsToReturn[] = [];
-  for (const key in contents) {
-    if (!key.includes("char") || key.includes("512_aprot")) {
-      continue;
-    }
-    ids.push({
-      id: key.replace(/^char_/, ""),
-    });
-  }
-  return ids;
 }
 
 export async function getOpName(id: string): Promise<string> {
@@ -268,7 +231,7 @@ export interface MappedOps {
 }
 
 export async function getAllOpData(): Promise<Operator[]> {
-  const ids = getAllOpIds();
+  const ids = getAllOpNames();
   const opPromise = ids.map((id) => getOpData("char_" + id.id));
   const ops = await Promise.all(opPromise);
   return ops.map((op) => op.operator);

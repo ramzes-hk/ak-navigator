@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { buttonVariants } from "./button";
 
 function Navbar({ children }: { children?: React.ReactNode }) {
   return (
@@ -7,6 +8,13 @@ function Navbar({ children }: { children?: React.ReactNode }) {
       <div className="flex container flex items-center h-14 justify-between">
         <Link className="text-2xl" prefetch={false} href="/">
           AK-NAVIGATOR
+        </Link>
+        <Link
+          className={buttonVariants({ variant: "link" })}
+          prefetch={false}
+          href="/"
+        >
+          Operators
         </Link>
         <div>{children}</div>
       </div>

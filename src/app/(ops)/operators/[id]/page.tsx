@@ -1,8 +1,8 @@
-import { getAllOpIds } from "@/lib/operators";
+import { getAllOpNames } from "@/lib/operators";
 import Operator from "@/components/operator";
 
 export async function generateStaticParams() {
-  return getAllOpIds();
+  return getAllOpNames().map((op) => op.id);
 }
 
 interface pageProps {
