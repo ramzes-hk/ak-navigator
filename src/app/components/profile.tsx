@@ -15,8 +15,8 @@ interface profileProps {
 }
 
 async function Profile({ id }: profileProps) {
-  const hbData = await getHandbook("char_" + id);
-  const opName = await getOpName("char_" + id);
+  const hbData = await getHandbook(id);
+  const opName = await getOpName(id);
   return (
     <div className="container w-full">
       <div className="py-4 flex flex-row space-x-4">

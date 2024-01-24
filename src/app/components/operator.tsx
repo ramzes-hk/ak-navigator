@@ -24,7 +24,7 @@ interface operatorProps {
 }
 
 async function Operator({ id }: operatorProps) {
-  const { operator, skills, subProfession } = await getOpData("char_" + id);
+  const { operator, skills, subProfession } = await getOpData(id);
   const modules = await getModules(id);
   const skins = await getPortraitId(id);
   const isSingleTrait =

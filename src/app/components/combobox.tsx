@@ -46,7 +46,7 @@ export function ComboboxDemo({ names }: comboboxProps) {
                 value={name.name}
                 onSelect={() => {
                   setOpen(false);
-                  router.push(`/operators/${name.id.replace(/char_/, "")}`);
+                  router.push(`/operators/${name.id}`);
                 }}
               >
                 {name.name}

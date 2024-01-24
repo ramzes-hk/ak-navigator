@@ -60,7 +60,7 @@ export async function getCharword(charId: string): Promise<Charwords | null> {
   if (lineKeys.length === 0) return null;
   return {
     charwordCharArr: lineKeys.map((key) => content.charWords[key]),
-    voiceLang: content.voiceLangDict["char_" + charId],
+    voiceLang: content.voiceLangDict[charId],
     voiceLangTypeDict: content.voiceLangTypeDict,
   };
 }

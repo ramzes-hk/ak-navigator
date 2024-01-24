@@ -10,9 +10,7 @@ export interface Range {
   }[];
 }
 
-interface Ranges {
-  [key: string]: Range;
-}
+type Ranges = Record<string, Range>;
 
 export async function getRange(id: string): Promise<Range> {
   const fileName = path.join(process.cwd(), "operators", "range_table.json");

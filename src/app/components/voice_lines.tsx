@@ -16,7 +16,7 @@ interface voiceLinesProps {
 
 async function VoiceLines({ id }: voiceLinesProps) {
   const charword = await getCharword(id);
-  const opName = await getOpName("char_" + id);
+  const opName = await getOpName(id);
   if (charword === null) return <p>No data</p>;
   const split = charword.charwordCharArr
     .slice(1)

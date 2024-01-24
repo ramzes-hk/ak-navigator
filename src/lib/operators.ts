@@ -24,7 +24,7 @@ export interface OpName {
   name: string;
 }
 
-export function getAllOpNames(): OpName[] {
+export function getAllOpNames(isOps: boolean = true): OpName[] {
   const fileName = path.join(
     process.cwd(),
     "operators",
@@ -34,10 +34,10 @@ export function getAllOpNames(): OpName[] {
   const contents = JSON.parse(rawFile) as Record<string, any>;
   const names: OpName[] = [];
   for (const key in contents) {
-    if (!key.includes("char_")) {
+    if ((!key.includes("char") && isOps) || key.includes("512")) {
       continue;
     }
-    names.push({ id: key, name: contents[key]["name"] });
+    names.push({ id: key , name: contents[key]["name"] });
   }
   return names;
 }
@@ -127,7 +127,7 @@ interface Skills {
 export interface Level {
   name: string;
   rangeId: string | null;
-  description: string;
+  description: string | null;
   skillType: string;
   durationType: string;
   spData: {
@@ -140,7 +140,7 @@ export interface Level {
 }
 
 export interface Phase {
-  rangeId: string;
+  rangeId: string | null;
   attributesKeyFrames: AttributesKeyFrame[];
   evolveCost: LvlUpCost[] | null;
 }
@@ -189,13 +189,19 @@ interface getOpDataReturn {
   skills: Level[][];
   subProfession: string;
 }
+const fileCache = new Map();
 
 export async function readFileAs<T>(
   location: [string, ...string[]],
 ): Promise<T> {
   const fileName = path.join(process.cwd(), ...location);
-  const prom = await fsPromise.readFile(fileName, "utf8");
-  return JSON.parse(prom) as T;
+  if (fileCache.has(fileName)) {
+    return fileCache.get(fileName) as T;
+  }
+  const fileContent = await fsPromise.readFile(fileName, "utf8");
+  const parsedContent = JSON.parse(fileContent) as T;
+  fileCache.set(fileName, parsedContent);
+  return parsedContent;
 }
 
 export async function getOpData(opId: string): Promise<getOpDataReturn> {
@@ -213,7 +219,7 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
   opReader.skills.forEach((skill) => {
     if (!skill.skillId) return;
     skillIds.add(skill.skillId);
-  });
+  }); 
   skillIds.forEach((sId) => skillDescription.push(skillsContent[sId].levels));
   return {
     operator: {
@@ -226,14 +232,15 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
   };
 }
 
-export interface MappedOps {
-  [key: string]: Operator;
-}
+export type MappedOps = Record<string, Operator>;
 
-export async function getAllOpData(): Promise<Operator[]> {
-  const ids = getAllOpNames();
-  const opPromise = ids.map((id) => getOpData("char_" + id.id));
-  const ops = await Promise.all(opPromise);
+export async function getAllOpData(isOp: boolean = true): Promise<Operator[]> {
+  const ids = getAllOpNames(isOp);
+  const ops = [];
+  for (const id in ids) {
+    const data = await getOpData(ids[id].id);
+    ops.push(data);
+  }
   return ops.map((op) => op.operator);
 }
 

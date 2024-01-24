@@ -16,6 +16,13 @@ function Navbar({ children }: { children?: React.ReactNode }) {
         >
           Operators
         </Link>
+        <Link
+         className={buttonVariants({ variant: "link"})}
+          prefetch={false}
+          href="/entities"
+        >
+          Entities
+        </Link>
         <div>{children}</div>
       </div>
     </header>

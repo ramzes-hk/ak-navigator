@@ -2,7 +2,7 @@ import VoiceLines from "@/components/voice_lines";
 import { getAllOpNames } from "@/lib/operators";
 
 export async function generateStaticParams() {
-  return getAllOpNames().map((op) => op.id);
+  return getAllOpNames().map((op) => ({id: op.id}));
 }
 
 interface pageProps {

@@ -7,7 +7,7 @@ export interface CharSkin {
     skinName: string | null;
     drawerList: string[] | null;
     content: string | null;
-    skinGroupId: string;
+    skinGroupId: string | null;
   };
 }
 

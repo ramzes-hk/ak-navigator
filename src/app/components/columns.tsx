@@ -11,7 +11,7 @@ export const columns: ColumnDef<menuProps["ids"][number]>[] = [
     cell: (props) => (
       <Link
         className="hover:text-underline underline-offset-4"
-        href={`operators/${props.row.original.id.replace(/char_/, "")}`}
+        href={`operators/${props.row.original.id}`}
         type="button"
         prefetch={false}
       >

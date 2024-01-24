@@ -76,7 +76,7 @@ async function Skill({ levels }: skillProps) {
                 <TableCell
                   dangerouslySetInnerHTML={{
                     __html: parseDescription(
-                      level.description,
+                      level.description ?? "-",
                       level.blackboard,
                       level.duration,
                     ),
