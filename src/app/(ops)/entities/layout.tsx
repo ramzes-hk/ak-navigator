@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={className}>
         <div className="relative min-h-screen flex flex-col">
           <Navbar>
-            <ComboboxDemo names={names} />
+            <ComboboxDemo itemName="entity" names={names} />
           </Navbar>
           <div className="flex-1">{children}</div>
         </div>

@@ -3,5 +3,5 @@ import { getEntitiesMenuData } from "@/lib/operators";
 
 export default async function Home() {
   const operators = await getEntitiesMenuData();
-  return <Menu ids={operators} />;
+  return <Menu route="entities" ids={operators} />;
 }

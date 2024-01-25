@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { ToggleGroup, ToggleGroupItem } from "./toggle_group";
-import { columns } from "./columns";
+import { getColumns } from "./columns";
 import OpTable from "./op_list";
 import { professions } from "@/lib/professions";
 
@@ -16,6 +16,7 @@ export interface menuProps {
     profession: string;
     subProfessionId: string;
   }[];
+  route: string;
 }
 
 const tiers = new Array(6).fill(null).map((_, i) => `TIER_${i + 1}`);
@@ -30,7 +31,7 @@ export const mappedTiers = tiers.reduce(
   {},
 );
 
-function Menu({ ids }: menuProps) {
+function Menu({ ids, route }: menuProps) {
   const [search, setSearch] = useState<string>("");
   const [tier, setTier] = useState<string[]>([]);
   const [profession, setProfession] = useState<string[]>([]);
@@ -105,7 +106,7 @@ function Menu({ ids }: menuProps) {
       </div>
       <main className="w-full sm:w-5/6 sm:h-full">
         <div className="w-full sm:w-4/5 m-auto pb-4">
-          <OpTable columns={columns} data={operators} />
+          <OpTable columns={getColumns(route)} data={operators} />
         </div>
       </main>
     </div>
