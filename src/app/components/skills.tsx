@@ -1,11 +1,9 @@
 import { Level, parseDescription } from "@/lib/operators";
 import { getRange } from "@/lib/ranges";
 import CanvasRange from "./range_canvas";
-import { Separator } from "./separator";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,

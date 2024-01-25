@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
-import { menuProps, professions, mappedTiers } from "./menu";
+import { menuProps, mappedTiers } from "./menu";
+import { professions } from "@/lib/professions";
 
 export const columns: ColumnDef<menuProps["ids"][number]>[] = [
   {

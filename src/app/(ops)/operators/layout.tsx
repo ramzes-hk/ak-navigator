@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   let className = inter.className;
   className += " dark min-h-screen";
-  const names = getAllOpNames();
+  const names = getAllOpNames("char");
 
   return (
     <html lang="en">

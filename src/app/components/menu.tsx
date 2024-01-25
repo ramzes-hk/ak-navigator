@@ -6,17 +6,8 @@ import { Input } from "./input";
 import { ToggleGroup, ToggleGroupItem } from "./toggle_group";
 import { columns } from "./columns";
 import OpTable from "./op_list";
+import { professions } from "@/lib/professions";
 
-export const professions: Record<string, string> = {
-  MEDIC: "Medic",
-  TANK: "Defender",
-  WARRIOR: "Guard",
-  CASTER: "Caster",
-  PIONEER: "Vanguard",
-  SNIPER: "Sniper",
-  SUPPORT: "Support",
-  SPECIAL: "Specialist",
-};
 export interface menuProps {
   ids: {
     id: string;

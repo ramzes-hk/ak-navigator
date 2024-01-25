@@ -3,28 +3,17 @@ import fs from "fs";
 import fsPromise from "fs/promises";
 import { db } from "@/db/db";
 import { operators } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, like, notLike } from "drizzle-orm";
 import { getStyle } from "./rich_text_styles";
 import { getTerms } from "./term_description";
 import { getUniequip } from "./modules_data";
-
-export const professions: Record<string, string> = {
-  MEDIC: "Medic",
-  TANK: "Defender",
-  WARRIOR: "Guard",
-  CASTER: "Caster",
-  PIONEER: "Vanguard",
-  SNIPER: "Sniper",
-  SUPPORT: "Support",
-  SPECIAL: "Specialist",
-};
 
 export interface OpName {
   id: string;
   name: string;
 }
 
-export function getAllOpNames(isOps: boolean = true): OpName[] {
+export function getAllOpNames(filter?: "char" | "token&trap"): OpName[] {
   const fileName = path.join(
     process.cwd(),
     "operators",
@@ -34,10 +23,15 @@ export function getAllOpNames(isOps: boolean = true): OpName[] {
   const contents = JSON.parse(rawFile) as Record<string, any>;
   const names: OpName[] = [];
   for (const key in contents) {
-    if ((!key.includes("char") && isOps) || key.includes("512")) {
-      continue;
+    if (filter) {
+      if (
+        (filter === "char" ? !key.includes("char") : key.includes("char")) ||
+        key.includes("512")
+      ) {
+        continue;
+      }
     }
-    names.push({ id: key , name: contents[key]["name"] });
+    names.push({ id: key, name: contents[key]["name"] });
   }
   return names;
 }
@@ -219,7 +213,7 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
   opReader.skills.forEach((skill) => {
     if (!skill.skillId) return;
     skillIds.add(skill.skillId);
-  }); 
+  });
   skillIds.forEach((sId) => skillDescription.push(skillsContent[sId].levels));
   return {
     operator: {
@@ -234,14 +228,24 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
 
 export type MappedOps = Record<string, Operator>;
 
-export async function getAllOpData(isOp: boolean = true): Promise<Operator[]> {
-  const ids = getAllOpNames(isOp);
-  const ops = [];
-  for (const id in ids) {
-    const data = await getOpData(ids[id].id);
-    ops.push(data);
+export async function getAllOpData(
+  filter: "char" | "token&trap" | undefined,
+): Promise<Operator[]> {
+  const operators = await readFileAs<Record<string, Operator>>([
+    "operators",
+    "character_table.json",
+  ]);
+  if (filter !== undefined) {
+    return Object.keys(operators)
+      .filter((id) =>
+        filter === "char" ? id.includes("char") : !id.includes("char"),
+      )
+      .filter((id) => !id.includes("512"))
+      .map((id) => ({ ...operators[id], id: id }));
   }
-  return ops.map((op) => op.operator);
+  return Object.keys(operators)
+    .filter((id) => !id.includes("512"))
+    .map((id) => ({ ...operators[id], id: id }));
 }
 
 export async function getMenuData() {
@@ -253,7 +257,22 @@ export async function getMenuData() {
       profession: operators.profession,
       subProfessionId: operators.subProfessionId,
     })
-    .from(operators);
+    .from(operators)
+    .where(like(operators.id, "%char%"));
+  return result;
+}
+
+export async function getEntitiesMenuData() {
+  const result = await db
+    .select({
+      id: operators.id,
+      name: operators.name,
+      rarity: operators.rarity,
+      profession: operators.profession,
+      subProfessionId: operators.subProfessionId,
+    })
+    .from(operators)
+    .where(notLike(operators.id, "%char%"));
   return result;
 }
 

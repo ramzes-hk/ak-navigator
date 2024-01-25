@@ -7,10 +7,10 @@ interface rangeProp {
 }
 
 async function RangeGrid({ phases }: rangeProp) {
-  const ids = phases.map(phase => phase.rangeId).filter((id): id is string => id !== null);
-  const ranges = await Promise.all(
-    ids.map(async (id) => await getRange(id)),
-  );
+  const ids = phases
+    .map((phase) => phase.rangeId)
+    .filter((id): id is string => id !== null);
+  const ranges = await Promise.all(ids.map(async (id) => await getRange(id)));
   if (ranges.length === 0) return null;
   return (
     <table className="border">

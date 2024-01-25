@@ -2,11 +2,10 @@ import RangeGrid from "./range";
 import Traits from "./traits";
 import Talents from "./talents";
 import SkillTables from "./skills";
-import Potentials from "./potentials";
 import Tags from "./tags";
-import BaseSkills from "./base_skill";
 import Stats from "./stats";
-import { getOpData, professions } from "@/lib/operators";
+import { getOpData } from "@/lib/operators";
+import { professions } from "@/lib/professions";
 
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
@@ -58,14 +57,6 @@ async function Enitity({ id }: operatorProps) {
           <Talents talents={operator.talents} />
         </>
       )}
-      {operator.potentialRanks && (
-        <>
-          <h2 className="text-xl">Potentials</h2>
-          <Potentials potentialRanks={operator.potentialRanks} />
-        </>
-      )}
-      <h2 className="text-xl">Base Skills</h2>
-      <BaseSkills charId={"char_" + id} />
       <SkillTables skills={skills} />
     </div>
   );

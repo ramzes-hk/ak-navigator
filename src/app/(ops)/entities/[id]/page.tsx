@@ -3,7 +3,7 @@ import Enitity from "@/components/entity";
 
 export async function generateStaticParams() {
   const names = getAllOpNames(false);
-  return names.map(op => ({id: op.id}));
+  return names.map((op) => ({ id: op.id }));
 }
 
 interface pageProps {

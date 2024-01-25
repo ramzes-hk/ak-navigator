@@ -17,7 +17,7 @@ function Navbar({ children }: { children?: React.ReactNode }) {
           Operators
         </Link>
         <Link
-         className={buttonVariants({ variant: "link"})}
+          className={buttonVariants({ variant: "link" })}
           prefetch={false}
           href="/entities"
         >

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "d7110db7-c305-47ea-8b8a-9f8019312cac",
+  "id": "02ff3663-d135-4007-b457-36c613ca2bb7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "operator_tags": {
@@ -75,7 +75,7 @@
           "name": "description",
           "type": "text(256)",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "position": {
@@ -142,15 +142,7 @@
           "autoincrement": false
         }
       },
-      "indexes": {
-        "operators_name_unique": {
-          "name": "operators_name_unique",
-          "columns": [
-            "name"
-          ],
-          "isUnique": true
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}

@@ -23,7 +23,6 @@ interface skinCarouselProps {
 }
 
 function SkinCarousel({ skins, name }: skinCarouselProps) {
-  console.log(skins);
   return (
     <Carousel className="md:w-1/2 border rounded-lg p-1">
       <CarouselContent>
@@ -33,7 +32,9 @@ function SkinCarousel({ skins, name }: skinCarouselProps) {
               <CardHeader>
                 <CardTitle>
                   {skin.displaySkin.skinName ??
-                    ("E" + skin.displaySkin.skinGroupId?.replace(/ILLUST_/, "")) ?? name}
+                    "E" +
+                      skin.displaySkin.skinGroupId?.replace(/ILLUST_/, "") ??
+                    name}
                 </CardTitle>
                 <Accordion type="single" collapsible>
                   <AccordionItem value="item-1">

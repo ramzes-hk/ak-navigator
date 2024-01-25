@@ -2,8 +2,8 @@ import { getAllOpNames } from "@/lib/operators";
 import Operator from "@/components/operator";
 
 export async function generateStaticParams() {
-  const names = getAllOpNames();
-  return names.map(op => ({id: op.id}));
+  const names = getAllOpNames("char");
+  return names.map((op) => ({ id: op.id }));
 }
 
 interface pageProps {

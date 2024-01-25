@@ -1,7 +1,7 @@
 import Menu from "@/components/menu";
-import { getMenuData } from "@/lib/operators";
+import { getEntitiesMenuData } from "@/lib/operators";
 
 export default async function Home() {
-  const operators = await getMenuData();
+  const operators = await getEntitiesMenuData();
   return <Menu ids={operators} />;
 }
