@@ -5,7 +5,7 @@ import { buttonVariants } from "./button";
 function Navbar({ children }: { children?: React.ReactNode }) {
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="flex container flex items-center h-14 justify-between">
+      <div className="container h-14 flex items-center">
         <Link className="text-2xl" prefetch={false} href="/">
           AK-NAVIGATOR
         </Link>
@@ -23,7 +23,7 @@ function Navbar({ children }: { children?: React.ReactNode }) {
         >
           Entities
         </Link>
-        <div>{children}</div>
+        <div className="flex flex-1 justify-end">{children}</div>
       </div>
     </header>
   );
