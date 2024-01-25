@@ -2,7 +2,7 @@ import { getAllOpNames } from "@/lib/operators";
 import Enitity from "@/components/entity";
 
 export async function generateStaticParams() {
-  const names = getAllOpNames(false);
+  const names = getAllOpNames("token&trap");
   return names.map((op) => ({ id: op.id }));
 }
 

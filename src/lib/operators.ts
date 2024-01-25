@@ -24,13 +24,11 @@ export function getAllOpNames(filter?: "char" | "token&trap"): OpName[] {
   const names: OpName[] = [];
   for (const key in contents) {
     if (filter) {
-      if (
-        (filter === "char" ? !key.includes("char") : key.includes("char")) ||
-        key.includes("512")
-      ) {
+      if (filter === "char" ? !key.includes("char") : key.includes("char")) {
         continue;
       }
     }
+    if (key.includes("512")) continue;
     names.push({ id: key, name: contents[key]["name"] });
   }
   return names;
