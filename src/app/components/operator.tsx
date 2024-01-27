@@ -15,6 +15,7 @@ import Link from "next/link";
 import SkinCarousel from "./skin_carousel";
 import { getPortraitId } from "@/lib/skin_table";
 import TokenDisplay from "./tokens_display";
+import Materials from "./materials";
 
 function convertRarity(rarity: string): string {
   return "\u2606".repeat(parseInt(rarity.replace(/TIER_/, "")));
@@ -111,6 +112,7 @@ async function Operator({ id }: operatorProps) {
           ))}
         </>
       )}
+      {!operator.isNotObtainable && <Materials operator={operator} />}
     </div>
   );
 }

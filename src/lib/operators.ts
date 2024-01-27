@@ -61,7 +61,7 @@ interface UnlockCond {
   level: number;
 }
 
-interface LvlUpCost {
+export interface LvlUpCost {
   id: string;
   count: number;
   type: string;
@@ -82,6 +82,7 @@ export interface Operator {
   itemUsage: string | null;
   itemDesc: string | null;
   itemObtainApproach: string | null;
+  isNotObtainable: boolean;
   maxPotentialLevel: number;
   isSpChar: boolean;
   rarity: string;
@@ -94,9 +95,9 @@ export interface Operator {
   talents: Talent[] | null;
   potentialRanks: PotentialRank[];
   favorKeyFrames: FavorKeyFrame[] | null;
-  allSkillLvlUp: {
+  allSkillLvlup: {
     unlockCond: UnlockCond;
-    lvlUpCost: LvlUpCost[];
+    lvlUpCost: LvlUpCost[] | null;
   }[];
 }
 

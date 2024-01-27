@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { LvlUpCost } from "./operators";
 
 interface ItemTable {
   items: Record<string, Item>;
@@ -33,10 +34,19 @@ interface BuildingProduct {
   formulaId: string;
 }
 
-export async function getItem(itemId: string): Promise<Item> {
+async function getItemTable() {
   const fileName = path.join(process.cwd(), "operators", "item_table.json");
   const raw = await fs.promises.readFile(fileName, "utf8");
-  const content = JSON.parse(raw) as ItemTable;
+  return JSON.parse(raw) as ItemTable;
+}
 
+export async function getItem(itemId: string): Promise<Item> {
+  const content = await getItemTable();
   return content.items[itemId];
+}
+
+export async function getItemBatch(cost: LvlUpCost[]): Promise<Item[]> {
+  const content = await getItemTable();
+  const mats = cost.map((mat) => content.items[mat.id]);
+  return mats;
 }
