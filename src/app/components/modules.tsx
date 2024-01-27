@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
+import { getItemBatch } from "@/lib/item_table";
 
 type modulesProps = Module;
 
@@ -102,7 +103,7 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
                     <TableCell>
                       <ul>
                         {phase.attributeBlackboard.map((blackboard, i) => (
-                          <li className="px-1" key={`stats-${i}`}>
+                          <li key={`stats-${i}`}>
                             {blackBoardMapping[blackboard.key]}
                             {blackboard.value > 0 ? "+" : "-"}
                             {Math.abs(blackboard.value)}
@@ -116,7 +117,7 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
                       }}
                     ></TableCell>
                     {phase.equipLevel === 1 && (
-                      <TableCell className="" rowSpan={3}>
+                      <TableCell rowSpan={3}>
                         <ul className="list-disc px-2">
                           {missions.map((mission, i) => (
                             <li key={`mission-${i}`}>{mission.desc}</li>
@@ -130,8 +131,47 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
             </TableBody>
           </Table>
         )}
+        <Materials itemCost={equipDict.itemCost} />
       </CardContent>
     </Card>
+  );
+}
+
+async function Materials({
+  itemCost,
+}: {
+  itemCost: Module["equipDict"]["itemCost"];
+}) {
+  if (!itemCost) return null;
+  const mats = await Promise.all(
+    Object.values(itemCost).map((stage) => getItemBatch(stage)),
+  );
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="text-center">Stage</TableHead>
+          <TableHead>Mats</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {mats.map((stage, i) => (
+          <TableRow key={`stage-${i}`}>
+            <TableCell className="text-center">{i + 1}</TableCell>
+            <TableCell>
+              {stage
+                .map(
+                  (mat, j) =>
+                    `${mat.name}x${itemCost[(i + 1).toString()].at(j)
+                      ?.count}, `,
+                )
+                .join("")
+                .slice(0, -2)}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
 

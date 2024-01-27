@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { Blackboard } from "./operators";
+import { LvlUpCost } from "./operators";
 
 interface UniEquip {
   uniEquipId: string;
@@ -12,6 +13,7 @@ interface UniEquip {
   typeName2: string;
   charId: string;
   missionList: string[];
+  itemCost: Record<string, LvlUpCost[]> | null;
 }
 
 interface Mission {
