@@ -1,9 +1,6 @@
 import path from "path";
 import fs from "fs";
 import fsPromise from "fs/promises";
-import { db } from "@/db/db";
-import { operators } from "@/db/schema";
-import { eq, like, notLike } from "drizzle-orm";
 import { getStyle } from "./rich_text_styles";
 import { getTerms } from "./term_description";
 import { getUniequip } from "./modules_data";
@@ -32,14 +29,6 @@ export function getAllOpNames(filter?: "char" | "token&trap"): OpName[] {
     names.push({ id: key, name: contents[key]["name"] });
   }
   return names;
-}
-
-export async function getOpName(id: string): Promise<string> {
-  const result = await db
-    .select({ name: operators.name })
-    .from(operators)
-    .where(eq(operators.id, id));
-  return result[0].name;
 }
 
 export interface Blackboard {
@@ -247,33 +236,6 @@ export async function getAllOpData(
     .map((id) => ({ ...operators[id], id: id }));
 }
 
-export async function getMenuData() {
-  const result = await db
-    .select({
-      id: operators.id,
-      name: operators.name,
-      rarity: operators.rarity,
-      profession: operators.profession,
-      subProfessionId: operators.subProfessionId,
-    })
-    .from(operators)
-    .where(like(operators.id, "%char%"));
-  return result;
-}
-
-export async function getEntitiesMenuData() {
-  const result = await db
-    .select({
-      id: operators.id,
-      name: operators.name,
-      rarity: operators.rarity,
-      profession: operators.profession,
-      subProfessionId: operators.subProfessionId,
-    })
-    .from(operators)
-    .where(notLike(operators.id, "%char%"));
-  return result;
-}
 
 function escapeRegExp(input: string) {
   return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

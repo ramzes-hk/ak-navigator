@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
+import DynamicAttributes from "./attributes";
 
 interface statsProps {
   phases: Operator["phases"];
@@ -105,44 +106,47 @@ const StatsMapping: { [key: string]: keyof Data } = {
 
 function Stats({ phases, favorKeyFrames }: statsProps) {
   return (
-    <div className="sm:w-1/2 border">
-      <BaseStats phases={phases} />
-      <Table className="w-full table-fixed">
-        <TableHeader>
-          <TableRow className="divide-x">
-            <TableHead>Lvl</TableHead>
-            {phases
-              .map((phase: Phase, i: number) => {
-                return phase.attributesKeyFrames.map((keyFrame, j) => {
-                  return (
-                    <TableHead
-                      key={`names-${i}-${j}`}
-                    >{`E${i} ${keyFrame.level}`}</TableHead>
-                  );
-                });
-              })
-              .map((phase, i) =>
-                phase.filter(
-                  (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
-                ),
-              )}
-            {favorKeyFrames && <TableHead>Trust</TableHead>}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.entries(StatsMapping).map(([key, value]) => {
-            return (
-              <StatsRow
-                key={key}
-                phases={phases}
-                name={key}
-                keyAttr={value}
-                favorKeyFrames={favorKeyFrames}
-              />
-            );
-          })}
-        </TableBody>
-      </Table>
+    <div className="sm:w-1/2">
+      <div className="border">
+        <BaseStats phases={phases} />
+        <Table className="w-full table-fixed">
+          <TableHeader>
+            <TableRow className="divide-x">
+              <TableHead>Lvl</TableHead>
+              {phases
+                .map((phase: Phase, i: number) => {
+                  return phase.attributesKeyFrames.map((keyFrame, j) => {
+                    return (
+                      <TableHead
+                        key={`names-${i}-${j}`}
+                      >{`E${i} ${keyFrame.level}`}</TableHead>
+                    );
+                  });
+                })
+                .map((phase, i) =>
+                  phase.filter(
+                    (_, j) => !((i === 1 && j === 0) || (i === 2 && j === 0)),
+                  ),
+                )}
+              {favorKeyFrames && <TableHead>Trust</TableHead>}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Object.entries(StatsMapping).map(([key, value]) => {
+              return (
+                <StatsRow
+                  key={key}
+                  phases={phases}
+                  name={key}
+                  keyAttr={value}
+                  favorKeyFrames={favorKeyFrames}
+                />
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+      <DynamicAttributes phases={phases} />
     </div>
   );
 }

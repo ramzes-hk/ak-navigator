@@ -1,5 +1,5 @@
 import { getCharword } from "@/lib/charword_data";
-import { getOpName } from "@/lib/operators";
+import { getOpName } from "@/lib/db_queries";
 import Link from "next/link";
 import { buttonVariants } from "./button";
 import {

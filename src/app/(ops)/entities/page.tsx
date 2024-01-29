@@ -1,5 +1,5 @@
 import Menu from "@/components/menu";
-import { getEntitiesMenuData } from "@/lib/operators";
+import { getEntitiesMenuData } from "@/lib/db_queries";
 
 export default async function Home() {
   const operators = await getEntitiesMenuData();

@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
-import { getOpName } from "@/lib/operators";
+import { getOpName } from "@/lib/db_queries";
 import { buttonVariants } from "./button";
 import Link from "next/link";
 
