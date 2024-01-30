@@ -1,9 +1,46 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "02ff3663-d135-4007-b457-36c613ca2bb7",
+  "id": "e6750107-b54b-4627-8716-053b17955046",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "enemies": {
+      "name": "enemies",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text(16)",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text(32)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "values": {
+          "name": "values",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "handbook": {
+          "name": "handbook",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "operator_tags": {
       "name": "operator_tags",
       "columns": {

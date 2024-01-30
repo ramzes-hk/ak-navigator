@@ -1,4 +1,5 @@
 import { Enemy } from "@/lib/enemy_database";
+import { EnemyHandbookTable, HandbookEnemy } from "@/lib/enemy_handbook_table";
 import {
   FavorKeyFrame,
   PotentialRank,
@@ -44,4 +45,5 @@ export const enemies = sqliteTable("enemies", {
   id: text("id", { length: 16 }).primaryKey(),
   name: text("name", { length: 32 }).notNull(),
   values: text("values").$type<Enemy["Value"]>(),
+  handbook: text("handbook").$type<HandbookEnemy>(),
 });

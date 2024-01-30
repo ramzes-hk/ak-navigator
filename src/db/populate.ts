@@ -1,6 +1,9 @@
 import { getAllOpData } from "@/lib/operators";
 import { db } from "./db";
 import { operators } from "./schema";
+import { getAllEnemies } from "@/lib/enemy_database";
+import { enemies } from "./schema";
+import { getAllHandbookEnemies } from "@/lib/enemy_handbook_table";
 
 async function populate_operators() {
   const opData = await getAllOpData(undefined);
@@ -16,4 +19,18 @@ async function populate_operators() {
     });
   }
 }
-populate_operators();
+
+async function populate_enemies() {
+  const es = getAllEnemies();
+  const hand = getAllHandbookEnemies();
+  for (const e of es) {
+    await db.insert(enemies).values({
+      id: e.Key,
+      name: e.Value[0].enemyData.name.m_value,
+      values: e.Value,
+      handbook: hand[e.Key],
+    });
+  }
+}
+
+populate_enemies();
