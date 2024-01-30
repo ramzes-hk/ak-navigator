@@ -1,3 +1,4 @@
+import { Enemy } from "@/lib/enemy_database";
 import {
   FavorKeyFrame,
   PotentialRank,
@@ -37,4 +38,10 @@ export const operatorTags = sqliteTable("operator_tags", {
 export const tags = sqliteTable("tags", {
   id: integer("id").primaryKey(),
   tag: text("tag", { length: 256 }),
+});
+
+export const enemies = sqliteTable("enemies", {
+  id: text("id", { length: 16 }).primaryKey(),
+  name: text("name", { length: 32 }).notNull(),
+  values: text("values").$type<Enemy["Value"]>(),
 });

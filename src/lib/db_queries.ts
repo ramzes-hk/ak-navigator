@@ -1,5 +1,5 @@
 import { db } from "@/db/db";
-import { operators } from "@/db/schema"; 
+import { operators } from "@/db/schema";
 import { eq, like, notLike } from "drizzle-orm";
 
 export async function getOpName(id: string): Promise<string> {

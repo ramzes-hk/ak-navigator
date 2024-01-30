@@ -236,7 +236,6 @@ export async function getAllOpData(
     .map((id) => ({ ...operators[id], id: id }));
 }
 
-
 function escapeRegExp(input: string) {
   return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
