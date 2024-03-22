@@ -54,7 +54,7 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
   const maxLvl = phases[elite].attributesKeyFrames[1].level;
   const def = phases[elite].attributesKeyFrames[0].data;
   const minLvl = phases[elite].attributesKeyFrames[0].level;
-  const [lvl, setLvl] = useState<number>(0);
+  const [lvl, setLvl] = useState<number>(1);
   const [attributes, setAttributes] = useState<Attributes>({
     MaxHP: def.maxHp,
     ATK: def.atk,
@@ -78,7 +78,7 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
                 RES: phase.magicResistance,
               });
               setElite(parseInt(e.slice(1)));
-              setLvl(0);
+              setLvl(1);
             }}
             className="flex"
             defaultValue="E0"
@@ -113,7 +113,7 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
               setLvl(val[0]);
               setAttributes(calculateAttributes(val[0]));
             }}
-            defaultValue={[0]}
+            defaultValue={[1]}
             min={minLvl}
             max={maxLvl}
             step={1}
