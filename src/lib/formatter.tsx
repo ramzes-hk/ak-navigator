@@ -5,15 +5,6 @@ interface CustomProps {
   children: ReactNode;
 }
 
-function LineBreak({ children }: CustomProps) {
-  return (
-    <span>
-      <br />
-      {children}
-    </span>
-  );
-}
-
 const Up: React.FC<CustomProps> = ({ children }) => {
   return <span style={{ color: "#0098DC" }}>{children}</span>;
 };
