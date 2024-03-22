@@ -48,11 +48,11 @@ async function Profile({ id }: profileProps) {
               </CardHeader>
               <CardContent>
                 <p>
-                  {story.stories[0].storyText.split("\n").map((line) => (
-                    <>
+                  {story.stories[0].storyText.split("\n").map((line, i) => (
+                    <span key={`line-${i}`}>
                       {line}
                       <br />
-                    </>
+                    </span>
                   ))}
                 </p>
               </CardContent>
