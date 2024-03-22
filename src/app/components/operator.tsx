@@ -97,7 +97,7 @@ async function Operator({ id }: operatorProps) {
         </>
       )}
       <h2 className="text-xl">Base Skills</h2>
-      <BaseSkills charId={"char_" + id} />
+      <BaseSkills charId={id} />
       <SkillTables skills={skills} />
       {modules.length > 0 && (
         <>
