@@ -60,7 +60,7 @@ async function Skill({ levels }: skillProps) {
             <TableHead className="text-center w-8 sm:w-12">Lvl</TableHead>
             <TableHead className="text-center">Description</TableHead>
             {(levels.at(0) ?? { duration: 0 }).duration > 1 && (
-              <TableHead className="sm:w-16">Duration</TableHead>
+              <TableHead className="w-20 text-center">Duration</TableHead>
             )}
             <TableHead className="w-8 sm:w-12 text-center">Init SP</TableHead>
             <TableHead className="w-8 sm:w-12 text-center">SP</TableHead>

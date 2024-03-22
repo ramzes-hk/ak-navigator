@@ -4,8 +4,8 @@ import { buttonVariants } from "./button";
 
 function Navbar({ children }: { children?: React.ReactNode }) {
   return (
-    <header className="sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="container h-14 flex items-center">
+    <header className="md:sticky md:top-0 md:z-50 w-full border-b backdrop-blur-sm">
+      <div className="container md:h-14 flex items-center flex-col md:flex-row pb-4 md:pb-0">
         <Link className="text-2xl" prefetch={false} href="/">
           AK-NAVIGATOR
         </Link>
