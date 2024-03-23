@@ -21,4 +21,15 @@ function Tags({ position, tagList }: tagsProps) {
   );
 }
 
+interface enemyTagsProps {
+  tags: string[];
+}
+export function EnemyTags({ tags }: enemyTagsProps) {
+  return (
+    <div className="flex flex-row w-full mb-4">
+      {tags && tags.map((tag) => <Badge key={tag}>{tag}</Badge>)}
+    </div>
+  );
+}
+
 export default Tags;

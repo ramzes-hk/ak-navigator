@@ -20,11 +20,13 @@ import { useEffect } from "react";
 interface opTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  title: string;
 }
 
 function OpTable<TData, TValue>({
   columns,
   data,
+  title,
 }: opTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -56,7 +58,7 @@ function OpTable<TData, TValue>({
         </Button>
       </div>
       <Table className="w-full h-full table-fixed">
-        <TableCaption>Operator List</TableCaption>
+        <TableCaption>{title}</TableCaption>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroups) => (
             <TableRow key={headerGroups.id}>

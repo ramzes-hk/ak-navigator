@@ -267,10 +267,7 @@ export function replaceValues(
   let desc = description;
   blackboard.forEach((placeholder) => {
     let value = Math.abs(placeholder.value);
-    let pattern = RegExp(
-      `\{-*${escapeRegExp(placeholder.key)}:[^}]*\}`,
-      "gi",
-    );
+    let pattern = RegExp(`\{-*${escapeRegExp(placeholder.key)}:[^}]*\}`, "gi");
     let match = pattern.exec(desc);
     if (match === null) {
       pattern = RegExp(`\{${placeholder.key}\}`, "gi");

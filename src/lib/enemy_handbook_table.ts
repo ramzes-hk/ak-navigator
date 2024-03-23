@@ -28,7 +28,7 @@ export interface HandbookEnemy {
 
 interface Ability {
   text: string;
-  textFormat: string;
+  textFormat: "NORMAL" | "TITLE" | "SILENCE";
 }
 
 interface LevelInfo {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { ToggleGroup, ToggleGroupItem } from "./toggle_group";
-import { getColumns } from "./columns";
+import { getOpColumns } from "./columns";
 import OpTable from "./op_list";
 import { professions } from "@/lib/professions";
 
@@ -47,6 +47,7 @@ function Menu({ ids, route }: menuProps) {
     profession.length === 0
       ? operators
       : operators.filter((op) => profession.includes(op.profession));
+  const title = route.includes("operators") ? "Operator" : "Entity" + " List";
 
   return (
     <div className="px-4 sm:container w-full flex flex-col sm:flex-row item-start">
@@ -106,7 +107,11 @@ function Menu({ ids, route }: menuProps) {
       </div>
       <main className="w-full sm:w-5/6 sm:h-full">
         <div className="w-full sm:w-4/5 m-auto pb-4">
-          <OpTable columns={getColumns(route)} data={operators} />
+          <OpTable
+            columns={getOpColumns(route)}
+            data={operators}
+            title={title}
+          />
         </div>
       </main>
     </div>

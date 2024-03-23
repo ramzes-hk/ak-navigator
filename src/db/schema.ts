@@ -1,5 +1,5 @@
 import { Enemy } from "@/lib/enemy_database";
-import { EnemyHandbookTable, HandbookEnemy } from "@/lib/enemy_handbook_table";
+import { HandbookEnemy } from "@/lib/enemy_handbook_table";
 import {
   FavorKeyFrame,
   PotentialRank,

@@ -1,4 +1,4 @@
-import { Trait, parseDescription, replaceValues } from "@/lib/operators";
+import { Trait, parseDescription } from "@/lib/operators";
 import {
   Table,
   TableBody,
@@ -6,6 +6,7 @@ import {
   TableHead,
   TableRow,
 } from "@/components/table";
+import { HandbookEnemy } from "@/lib/enemy_handbook_table";
 
 interface traitProps {
   description: string;
@@ -58,6 +59,50 @@ function Traits({ description, traits, isSingleTrait }: traitsProps) {
     <Trait description={description} traits={traits} />
   ) : (
     <TraitTable description={description} traits={traits} />
+  );
+}
+
+interface enemyTraitsProps {
+  traits: HandbookEnemy["abilityList"];
+}
+
+export function EnemyTraits({ traits }: enemyTraitsProps) {
+  return (
+    <div>
+      {traits.map((trait) => {
+        if (trait.textFormat === "NORMAL") {
+          return (
+            <p key={trait.text}>
+              {" "}
+              -{" "}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: parseDescription(trait.text, []),
+                }}
+              ></span>
+            </p>
+          );
+        } else if (trait.textFormat === "TITLE") {
+          return (
+            <p key={trait.text} color="red">
+              {trait.text}
+            </p>
+          );
+        } else {
+          return (
+            <p key={trait.text}>
+              {" "}
+              X{" "}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: parseDescription(trait.text, []),
+                }}
+              ></span>
+            </p>
+          );
+        }
+      })}
+    </div>
   );
 }
 
