@@ -1,4 +1,4 @@
-import { PotentialRank } from "@/lib/operators";
+import { PotentialRank } from "@/lib/operators_types";
 
 import {
   Table,

@@ -11,7 +11,7 @@ import {
   CommandItem,
 } from "@/components/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/popover";
-import { OpName } from "@/lib/operators";
+import { OpName } from "@/lib/operators_types";
 import { useRouter } from "next/navigation";
 
 interface comboboxProps {

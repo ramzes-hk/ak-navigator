@@ -1,7 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { Blackboard } from "./operators";
-import { LvlUpCost } from "./operators";
+import { Blackboard, LvlUpCost } from "./operators_types";
 
 interface UniEquip {
   uniEquipId: string;

@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
-import { Blackboard, replaceValues } from "./operators";
+import { replaceValues } from "./operators";
+import { Blackboard } from "./operators_types";
 
 interface CustomProps {
   children: ReactNode;

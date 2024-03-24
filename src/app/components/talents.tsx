@@ -1,8 +1,8 @@
-import { Talent, parseDescription } from "@/lib/operators";
+import { parseDescription } from "@/lib/operators";
+import { Talent } from "@/lib/operators_types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,

@@ -1,5 +1,5 @@
 import { getRange } from "@/lib/ranges";
-import { Phase } from "@/lib/operators";
+import { Phase } from "@/lib/operators_types";
 import CanvasRange from "./range_canvas";
 
 interface rangeProp {

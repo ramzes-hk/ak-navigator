@@ -1,4 +1,4 @@
-import { Phase, Data, Operator } from "@/lib/operators";
+import { Phase, Data, Operator } from "@/lib/operators_types";
 import {
   Table,
   TableBody,

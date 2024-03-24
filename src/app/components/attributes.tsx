@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
-import { Phase } from "@/lib/operators";
+import { Phase } from "@/lib/operators_types";
 import { useState } from "react";
 import { Slider } from "./slider";
 import { Label } from "@/components/label";

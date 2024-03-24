@@ -1,4 +1,5 @@
-import { Level, parseDescription } from "@/lib/operators";
+import { parseDescription } from "@/lib/operators";
+import { Level } from "@/lib/operators_types";
 import { getRange } from "@/lib/ranges";
 import CanvasRange from "./range_canvas";
 import {

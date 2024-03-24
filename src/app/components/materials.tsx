@@ -1,5 +1,5 @@
 import { getItemBatch } from "@/lib/item_table";
-import { Operator } from "@/lib/operators";
+import { Operator } from "@/lib/operators_types";
 import {
   Table,
   TableBody,

@@ -1,4 +1,5 @@
-import { Operator, getOpData } from "@/lib/operators";
+import { getOpData } from "@/lib/operators";
+import { Operator } from "@/lib/operators_types";
 import Token from "./token";
 import {
   Accordion,

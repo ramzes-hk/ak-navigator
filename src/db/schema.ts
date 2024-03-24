@@ -1,4 +1,4 @@
-import { Enemy } from "@/lib/enemy_database";
+import { Enemy } from "@/lib/enemy_database_types";
 import { HandbookEnemy } from "@/lib/enemy_handbook_table";
 import {
   FavorKeyFrame,
@@ -7,7 +7,7 @@ import {
   Trait,
   Phase,
   Level,
-} from "@/lib/operators";
+} from "@/lib/operators_types";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const operators = sqliteTable("operators", {

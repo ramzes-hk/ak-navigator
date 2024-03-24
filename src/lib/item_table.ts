@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { LvlUpCost } from "./operators";
+import { LvlUpCost } from "./operators_types";
 
 interface ItemTable {
   items: Record<string, Item>;

@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { DamageType } from "./enemy_database_types";
 
 interface EnemyHandbookTable {
   levelInfoList: LevelInfo[];
@@ -22,7 +23,7 @@ export interface HandbookEnemy {
   hideInHandbook: boolean;
   abilityList: Ability[];
   linkEnemies: string[];
-  damageType: string[];
+  damageType: DamageType[];
   invisibleDetail: boolean;
 }
 

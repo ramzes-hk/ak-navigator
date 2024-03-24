@@ -1,5 +1,5 @@
 import { Badge } from "./badge";
-import { Operator } from "@/lib/operators";
+import { Operator } from "@/lib/operators_types";
 
 interface tagsProps {
   position: Operator["position"];
