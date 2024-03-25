@@ -19,6 +19,7 @@ import {
   raceData,
 } from "@/lib/enemy_database_types";
 import { Button } from "./button";
+import { Separator } from "./separator";
 
 function EnemiesMenu({ ids, route }: enemyMenuProps) {
   const [search, setSearch] = useState<string>("");
@@ -79,12 +80,13 @@ function EnemiesMenu({ ids, route }: enemyMenuProps) {
                 onValueChange={(values) => setLevelType(values as LevelType[])}
                 type="multiple"
               >
-                {levelTypes.map((lvlType) => (
+                {Object.keys(levelTypes).map((lvlType) => (
                   <ToggleGroupItem key={lvlType} value={lvlType}>
-                    {lvlType}
+                    {levelTypes[lvlType as LevelType]}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
+              <Separator />
               <ToggleGroup
                 value={tags}
                 className="flex flex-row flex-wrap justify-start"
@@ -97,30 +99,33 @@ function EnemiesMenu({ ids, route }: enemyMenuProps) {
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
+              <Separator />
               <ToggleGroup
                 value={motion}
                 className="flex flex-row flex-wrap justify-start"
                 onValueChange={(values) => setMotion(values as Motion[])}
                 type="multiple"
               >
-                {motionTypes.map((m) => (
+                {Object.keys(motionTypes).map((m) => (
                   <ToggleGroupItem key={m} value={m}>
-                    {m}
+                    {motionTypes[m as Motion]}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
+              <Separator />
               <ToggleGroup
                 value={applyWay}
                 className="flex flex-row flex-wrap justify-start"
                 onValueChange={(values) => setApplyWay(values as ApplyWay[])}
                 type="multiple"
               >
-                {applyWayTypes.map((val) => (
+                {Object.keys(applyWayTypes).map((val) => (
                   <ToggleGroupItem key={val} value={val}>
-                    {val}
+                    {applyWayTypes[val as ApplyWay]}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
+              <Separator />
               <ToggleGroup
                 value={damageType}
                 className="flex flex-row flex-wrap justify-start"
@@ -129,9 +134,9 @@ function EnemiesMenu({ ids, route }: enemyMenuProps) {
                 }
                 type="multiple"
               >
-                {damageTypes.map((val) => (
+                {Object.keys(damageTypes).map((val) => (
                   <ToggleGroupItem key={val} value={val}>
-                    {val}
+                    {damageTypes[val as DamageType]}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
@@ -141,6 +146,10 @@ function EnemiesMenu({ ids, route }: enemyMenuProps) {
               variant="destructive"
               onClick={() => {
                 setLevelType([]);
+                setTags([]);
+                setMotion([]);
+                setApplyWay([]);
+                setDamageType([]);
                 setSearch("");
               }}
             >

@@ -70,24 +70,28 @@ interface EnemySpData {
   increment: number;
 }
 
-export const levelTypes = ["NORMAL", "ELITE", "BOSS"] as const;
-export type LevelType = (typeof levelTypes)[number];
+export const levelTypes = { NORMAL: "Normal", Elite: "Elite", BOSS: "Boss" };
+export type LevelType = keyof typeof levelTypes;
 
-export const motionTypes = ["WALK", "FLY"] as const;
-export type Motion = (typeof motionTypes)[number];
+export const motionTypes = { WALK: "Ground", FLY: "Flying" };
+export type Motion = keyof typeof motionTypes;
 
-export const applyWayTypes = ["NONE", "MELEE", "RANGED"] as const;
-export type ApplyWay = (typeof applyWayTypes)[number];
+export const applyWayTypes = { NONE: "None", MELEE: "Melee", RANGED: "Ranged" };
+export type ApplyWay = keyof typeof applyWayTypes;
 
-export const damageTypes = ["NO_DAMAGE", "PHYSIC", "MAGIC", "HEAL"] as const;
-export type DamageType = (typeof damageTypes)[number];
+export const damageTypes = {
+  NO_DAMAGE: "Null",
+  PHYSIC: "Physical",
+  MAGIC: "Arts",
+  HEAL: "Healing",
+};
+export type DamageType = keyof typeof damageTypes;
 
 interface DefineValue<
   T extends
     | string
     | number
     | boolean
-    | string[]
     | LevelType
     | Race[]
     | Motion
