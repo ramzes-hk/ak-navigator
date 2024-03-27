@@ -19,7 +19,9 @@ export default function RootLayout({
 }) {
   let className = inter.className;
   className += " dark min-h-screen";
-  const names: OpName[] = getMenuEnemies().ids.map(val => { return {id: val.enemyId, name: val.name}})
+  const names: OpName[] = getMenuEnemies().ids.map((val) => {
+    return { id: val.enemyId, name: val.name };
+  });
   return (
     <html lang="en">
       <body className={className}>

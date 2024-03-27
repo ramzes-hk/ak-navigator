@@ -69,7 +69,7 @@ interface enemyTraitsProps {
 
 export function EnemyTraits({ traits }: enemyTraitsProps) {
   return (
-    <div>
+    <div className="w-full sm:w-3/4">
       {traits.map((trait) => {
         if (trait.textFormat === "NORMAL") {
           return (

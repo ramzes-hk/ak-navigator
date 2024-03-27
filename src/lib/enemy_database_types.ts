@@ -33,6 +33,7 @@ interface Value {
       baseForceLevel: DefineValue<number>;
       tauntLevel: DefineValue<number>;
       epDamageResistance: DefineValue<number>;
+      epResistance: DefineValue<number>;
       stunImmune: DefineValue<boolean>;
       silenceImmune: DefineValue<boolean>;
       sleepImmune: DefineValue<boolean>;
@@ -101,6 +102,7 @@ interface DefineValue<
   m_defined: boolean;
   m_value: T;
 }
+
 export const raceData = {
   infection: {
     id: "infection",

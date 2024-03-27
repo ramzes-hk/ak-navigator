@@ -1,5 +1,6 @@
 import { Badge } from "./badge";
 import { Operator } from "@/lib/operators_types";
+import { Race, raceData } from "@/lib/enemy_database_types";
 
 interface tagsProps {
   position: Operator["position"];
@@ -22,14 +23,14 @@ function Tags({ position, tagList }: tagsProps) {
 }
 
 interface enemyTagsProps {
-  tags: string[];
+  tags: Race[];
 }
 export function EnemyTags({ tags }: enemyTagsProps) {
   return (
     <div className="flex flex-row w-full mb-4">
-      {tags && tags.map((tag) => <Badge key={tag}>{tag}</Badge>)}
+      {tags &&
+        tags.map((tag) => <Badge key={tag}>{raceData[tag].raceName}</Badge>)}
     </div>
   );
 }
-
 export default Tags;

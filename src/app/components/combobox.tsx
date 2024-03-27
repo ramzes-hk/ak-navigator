@@ -22,6 +22,12 @@ interface comboboxProps {
 export function ComboboxDemo({ names, itemName = "operator" }: comboboxProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const root =
+    itemName === "operator"
+      ? "operators"
+      : itemName === "entity"
+      ? "entities"
+      : "enemies";
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -47,7 +53,7 @@ export function ComboboxDemo({ names, itemName = "operator" }: comboboxProps) {
                 value={name.name}
                 onSelect={() => {
                   setOpen(false);
-                  router.push(`/operators/${name.id}`);
+                  router.push(`/${root}/${name.id}`);
                 }}
               >
                 {name.name}

@@ -1,6 +1,8 @@
 import { getEnemy } from "@/lib/enemies";
 import { EnemyTags } from "./tags";
 import { EnemyTraits } from "./traits";
+import EnemyTable from "./enemy_table";
+import EnemyStats from "./enemy_stats";
 
 interface enemyProps {
   id: string;
@@ -18,13 +20,14 @@ function Enemy({ id }: enemyProps) {
       <h2 className="text-xl">Description</h2>
       <p>{handbook.description}</p>
       <EnemyTags tags={enemy.Value[0].enemyData.enemyTags.m_value} />
-      <h2 className="text-xl">Stats</h2>
       {handbook.abilityList.length > 0 && (
         <div>
           <h2 className="text-xl">Traits</h2>
           <EnemyTraits traits={handbook.abilityList} />
         </div>
       )}
+      <EnemyTable enemy={enemy} hb={handbook} />
+      <EnemyStats enemy={enemy} />
     </div>
   );
 }
