@@ -137,3 +137,22 @@ export interface Data {
   baseAttackTime: number;
   respawnTime: number;
 }
+
+export const tags = [
+  "Elemental",
+  "DP-Recovery",
+  "Summon",
+  "AoE",
+  "Healing",
+  "Nuker",
+  "Defense",
+  "DPS",
+  "Fast-Redeploy",
+  "Shift",
+  "Survival",
+  "Slow",
+  "Debuff",
+  "Robot",
+  "Crowd-Control",
+  "Support",
+];
