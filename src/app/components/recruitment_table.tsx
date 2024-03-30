@@ -28,7 +28,7 @@ function RecruitmentTable({ operators }: recruitmentTableProps) {
     .map((ops, i) => {
       return {
         names: ops.map((op) => op.name).join(" "),
-        tag: allTags[i].join(" "),
+        tag: allTags[i].map(tag => positionsAndProfessions[tag] ?? tag).join(" "),
       };
     })
     .filter((t) => t.names !== "");
@@ -100,5 +100,7 @@ const positions: Record<string, string> = {
   RANGED: "Ranged",
 };
 const rarities = { Starter: 2, "Senior Operator": 5, "Top Operator": 6 };
+
+const positionsAndProfessions = {...positions, ...professions};
 
 export default RecruitmentTable;
