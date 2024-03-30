@@ -1,9 +1,8 @@
 import RecruitmentTable from "@/components/recruitment_table";
-import { getOpData } from "@/lib/operators";
-import { recruitIds } from "@/lib/recruitment_list";
+import { tagOperators } from "@/lib/operators";
 
 export default async function Tags() {
-  const ops = await Promise.all(recruitIds.map((id) => getOpData(id)));
+  const ops = await tagOperators();
 
-  return <RecruitmentTable operators={ops.map((val) => val.operator)} />;
+  return <RecruitmentTable operators={ops.map((val) => val)} />;
 }

@@ -1,3 +1,12 @@
+export interface TaggedOperator {
+  id: string;
+  name: string;
+  profession: string;
+  rarity: string;
+  position: string;
+  tags: string[];
+}
+
 export const recruitmentList = {
   1: ["Lancet-2", "Castle-3", "THRM-EX", "Justice Knight", "Friston-3"],
   2: ["Yato", "Noir Corne", "Rangers", "Durin", "12F"],

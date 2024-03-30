@@ -5,6 +5,7 @@ import { getStyle } from "./rich_text_styles";
 import { getTerms } from "./term_description";
 import { getUniequip } from "./modules_data";
 import { OpName, Operator, Level, Skills, Blackboard } from "./operators_types";
+import { TaggedOperator, recruitIds } from "./recruitment_list";
 
 export function getAllOpNames(filter?: "char" | "token&trap"): OpName[] {
   const fileName = path.join(
@@ -145,4 +146,27 @@ export function replaceValues(
     }
   });
   return desc;
+}
+
+export async function tagOperators(): Promise<TaggedOperator[]> {
+  const ops = await Promise.all(recruitIds.map((id) => getOpData(id)));
+  return ops.map((op) => {
+    const tags = op.operator.tagList ?? [];
+    tags.push(op.operator.position, op.operator.profession);
+    if (op.operator.rarity[5] === "5" || op.operator.rarity[5] === "6") {
+      if (op.operator.rarity[5] === "6") {
+        tags.push("Top Operator");
+      } else {
+        tags.push("Senior Operator");
+      }
+    }
+    return {
+      id: op.operator.id ?? "",
+      name: op.operator.name,
+      profession: op.operator.profession,
+      rarity: op.operator.rarity,
+      position: op.operator.position,
+      tags: tags,
+    };
+  });
 }

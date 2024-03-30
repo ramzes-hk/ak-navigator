@@ -30,7 +30,13 @@ function Navbar({ children }: { children?: React.ReactNode }) {
         >
           Enemies
         </Link>
-
+        <Link
+          className={buttonVariants({ variant: "link" })}
+          prefetch={false}
+          href="/tags"
+        >
+          Recruitment
+        </Link>
         <div className="flex flex-1 justify-end">{children}</div>
       </div>
     </header>
