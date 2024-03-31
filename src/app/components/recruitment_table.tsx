@@ -27,11 +27,11 @@ function RecruitmentTable({ operators }: recruitmentTableProps) {
     )
     .map((ops, i) => {
       return {
-        names: ops.map((op) => op.name).join(" "),
+      names: ops.map((op) => <span key={op.id} style={{color : op.rarity[5] === "6" ? "orange" : op.rarity[5] === "5" ? "yellow" : op.rarity[5] === "4" ? "aqua" : ""}}>{op.name}{" "}</span>),
         tag: allTags[i].map(tag => positionsAndProfessions[tag] ?? tag).join(" "),
       };
     })
-    .filter((t) => t.names !== "");
+    .filter((t) => t.names.length > 0);
 
   return (
     <div>
