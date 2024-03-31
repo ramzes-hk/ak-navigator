@@ -44,6 +44,13 @@ function Navbar({ children }: { children?: React.ReactNode }) {
         >
           About
         </Link>
+        <Link
+          className={buttonVariants({ variant: "link" })}
+          prefetch={false}
+          href="/stages"
+        >
+          Stages
+        </Link>
         <div className="flex flex-1 justify-end">{children}</div>
       </div>
     </header>
