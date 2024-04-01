@@ -37,7 +37,7 @@ export function getMenuEnemies(): enemyMenuProps {
           name: val.name.m_value,
           levelType: val.levelType.m_value,
           motion: val.motion.m_value,
-          enemyTags: val.enemyTags.m_defined ? val.enemyTags.m_value : [],
+          enemyTags: val.enemyTags.m_value ? val.enemyTags.m_value : [],
           applyWay: val.applyWay.m_value,
           damageType: hb[enemy.Key].damageType,
         };
