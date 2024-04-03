@@ -7,7 +7,11 @@ export async function getOpName(id: string): Promise<string> {
     .select({ name: operators.name })
     .from(operators)
     .where(eq(operators.id, id));
-  return result[0].name;
+  const firstResult = result[0]?.name;
+  if (!firstResult) {
+    throw "No results";
+  }
+  return firstResult;
 }
 
 export async function getMenuData() {

@@ -38,22 +38,43 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
   }
 
   function calculateAttributes(lvl: number) {
-    const phase = phases[elite].attributesKeyFrames;
-    const baseData = phase[0].data;
-    const nextData = phase[1].data;
+    const phase = phases[elite];
+    if (!phase) {
+      throw "No phases corresponding to elite";
+    }
+    const attrKeyFrames = phase.attributesKeyFrames;
+    const base = attrKeyFrames[0];
+    if (!base) {
+      throw "No base AttrKey frame";
+    }
+    const baseData = base.data;
+    const next = attrKeyFrames[1];
+    if (!next) {
+      throw "No next AttrKey frame";
+    }
+    const nextData = next.data;
 
     return {
       MaxHP: calculateAttribute(baseData.maxHp, nextData.maxHp, lvl),
       ATK: calculateAttribute(baseData.atk, nextData.atk, lvl),
       DEF: calculateAttribute(baseData.def, nextData.def, lvl),
-      RES: phase[0].data.magicResistance,
+      RES: base.data.magicResistance,
     };
   }
 
   const [elite, setElite] = useState<number>(0);
-  const maxLvl = phases[elite].attributesKeyFrames[1].level;
-  const def = phases[elite].attributesKeyFrames[0].data;
-  const minLvl = phases[elite].attributesKeyFrames[0].level;
+  const phase = phases[elite];
+  if (!phase) {
+    throw "No phase corresponding to elite";
+  }
+  const phaseMax = phase.attributesKeyFrames[1];
+  const phaseMin = phase.attributesKeyFrames[0];
+  if (!phaseMin || !phaseMax) {
+    throw "No corresponding max or min phase";
+  }
+  const maxLvl = phaseMax.level;
+  const def = phaseMin.data;
+  const minLvl = phaseMin.level;
   const [lvl, setLvl] = useState<number>(1);
   const [attributes, setAttributes] = useState<Attributes>({
     MaxHP: def.maxHp,
@@ -70,12 +91,27 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
             id="radio-e"
             onValueChange={(e) => {
               const val = parseInt(e.slice(1));
-              const phase = phases[val].attributesKeyFrames[0].data;
+              const phase = phases[val];
+              if (!phase) {
+                throw "No corresponding phase";
+              }
+              const attrKeyFrames = phase.attributesKeyFrames;
+              if (!attrKeyFrames) {
+                throw "No Attribute Key Frames";
+              }
+              const minAttr = attrKeyFrames[0];
+              if (!minAttr) {
+                throw "No min attr";
+              }
+              const minAttrData = minAttr.data;
+              if (!minAttrData) {
+                throw "No data in min attr";
+              }
               setAttributes({
-                MaxHP: phase.maxHp,
-                ATK: phase.atk,
-                DEF: phase.def,
-                RES: phase.magicResistance,
+                MaxHP: minAttrData.maxHp,
+                ATK: minAttrData.atk,
+                DEF: minAttrData.def,
+                RES: minAttrData.magicResistance,
               });
               setElite(parseInt(e.slice(1)));
               setLvl(1);
@@ -110,8 +146,12 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
           <Slider
             value={[lvl]}
             onValueChange={(val) => {
-              setLvl(val[0]);
-              setAttributes(calculateAttributes(val[0]));
+              const firstThumb = val[0];
+              if (!firstThumb) {
+                throw "NO THUMBS!";
+              }
+              setLvl(firstThumb);
+              setAttributes(calculateAttributes(firstThumb));
             }}
             defaultValue={[1]}
             min={minLvl}

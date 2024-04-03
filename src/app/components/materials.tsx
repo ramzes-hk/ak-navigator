@@ -45,17 +45,17 @@ async function PromotionMaterial({ operator }: materialsProps) {
             <TableRow key={i}>
               <TableHead>E{i + 1}</TableHead>
               <TableCell>
-                {prom.map(
-                  (cost, j) =>
-                    `${cost.name}x${operator.phases[i + 1].evolveCost?.at(j)
-                      ?.count}, `,
-                )}
+                {prom.map((cost, j) => {
+                  const phase = operator.phases[i + 1];
+                  if (!phase) {
+                    throw "Operator has no Phase";
+                  }
+                  return `${cost.name}x${phase.evolveCost?.at(j)?.count}, `;
+                })}
                 LMDx
-                {
-                  evolveGoldCost[
-                    parseInt(operator.rarity.replace(/TIER_/, "")) - 1
-                  ][i]
-                }
+                {evolveGoldCost[
+                  parseInt(operator.rarity.replace(/TIER_/, "")) - 1
+                ]?.at(i)}
               </TableCell>
             </TableRow>
           ))}
@@ -89,8 +89,9 @@ async function SkillMaterials({ operator }: materialsProps) {
                 {lvl
                   .map(
                     (cost, j) =>
-                      `${cost.name}x${operator.allSkillLvlup[i].lvlUpCost?.at(j)
-                        ?.count}, `,
+                      `${cost.name}x${operator.allSkillLvlup[i]?.lvlUpCost?.at(
+                        j,
+                      )?.count}, `,
                   )
                   .join("")
                   .slice(0, -2)}
@@ -128,8 +129,9 @@ async function MasteryMaterials({ operator }: materialsProps) {
                     <span key={`mat-${k}`}>
                       {mats.name}x
                       {
-                        operator.skills[i].levelUpCostCond[j].levelUpCost?.at(k)
-                          ?.count
+                        operator.skills[i]?.levelUpCostCond[j]?.levelUpCost?.at(
+                          k,
+                        )?.count
                       }
                       <br />
                     </span>

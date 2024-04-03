@@ -10,6 +10,22 @@ interface enemyProps {
 
 function Enemy({ id }: enemyProps) {
   const { handbook, enemy } = getEnemy(id);
+  const val = enemy.Value;
+  if (!val) {
+    throw "Enemy has no Value";
+  }
+  const firstVal = val[0];
+  if (!firstVal) {
+    throw "Enemy has no first Value";
+  }
+  const enemyData = firstVal.enemyData;
+  if (!enemyData) {
+    throw "First value has no enemyData";
+  }
+  const enemyTags = enemyData.enemyTags;
+  if (!enemyTags) {
+    throw "Enemy Data has no enemyTags";
+  }
   return (
     <div className="sm:container flex flex-col flex-initial gap-6 mb-8">
       <div className="flex flex-row space-x-4 pt-4">
@@ -19,7 +35,7 @@ function Enemy({ id }: enemyProps) {
       </div>
       <h2 className="text-xl">Description</h2>
       <p>{handbook.description}</p>
-      <EnemyTags tags={enemy.Value[0].enemyData.enemyTags.m_value} />
+      <EnemyTags tags={enemyTags.m_value} />
       {handbook.abilityList.length > 0 && (
         <div>
           <h2 className="text-xl">Traits</h2>

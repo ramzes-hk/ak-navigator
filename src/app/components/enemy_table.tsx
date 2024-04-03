@@ -20,8 +20,19 @@ interface enemyTableProps {
 }
 
 function EnemyTable({ enemy, hb }: enemyTableProps) {
-  const enemyData = enemy.Value[0].enemyData;
-  const levels = findLevel(enemy.Value[0].enemyData.attributes);
+  const enemyValue = enemy.Value;
+  if (!enemyValue) {
+    throw "Enemy has no Value";
+  }
+  const firstValue = enemyValue[0];
+  if (!firstValue) {
+    throw "Enemy has no first Value";
+  }
+  const enemyData = firstValue.enemyData;
+  if (!enemyData) {
+    throw "First Value has not enemyData";
+  }
+  const levels = findLevel(enemyData.attributes);
   const firstRow = levels.slice(0, 4);
   const secondRow = levels.slice(4);
   return (
@@ -35,7 +46,7 @@ function EnemyTable({ enemy, hb }: enemyTableProps) {
         </TableRow>
         <TableRow className="border-b-4">
           <TableCell>
-            {(enemy.Value[0].enemyData.enemyTags.m_value ?? []).map(
+            {(enemyData.enemyTags.m_value ?? []).map(
               (tag) => raceData[tag as Race].raceName,
             )}
           </TableCell>
@@ -128,9 +139,15 @@ function findLevel(
           ].m_value,
       );
     }
-    return idx !== -1
-      ? levelInfoList[idx].classLevel
-      : levelInfoList[levelInfoList.length - 1].classLevel;
+    const currentLevelInfoList = levelInfoList[idx];
+    const lastLevelInfoList = levelInfoList.at(-1);
+    if (currentLevelInfoList) {
+      return currentLevelInfoList.classLevel;
+    } 
+    if (!lastLevelInfoList) {
+      throw "No LevelInfoList"
+    }
+    return lastLevelInfoList?.classLevel;
   });
 }
 

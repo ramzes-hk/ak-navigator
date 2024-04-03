@@ -109,17 +109,28 @@ export async function getModules(id: string): Promise<Module[]> {
       continue;
     }
     const uniEquip = uniEquipTable.equipDict[moduleId];
+    if (!uniEquip) {
+      throw "No uniEquip found"
+    }
     if (i === 1) {
       modules.push({ equipDict: uniEquip, phases: null, missions: null });
       continue;
     }
-    const phases = battleEquipTable[moduleId].phases.map((phase) => ({
+    const mod = battleEquipTable[moduleId]
+    if (!mod) {
+      throw "No module found"
+    }
+    const phases = mod.phases.map((phase) => ({
       ...phase,
       parts: phase.parts.filter((part) => !part.isToken),
     }));
-    const missions: Mission[] = uniEquipTable.equipDict[
-      moduleId
-    ].missionList.map((missionId) => uniEquipTable.missionList[missionId]);
+    const missions: Mission[] = uniEquip.missionList.map((missionId) => {
+      const mission = uniEquipTable.missionList[missionId];
+      if (!mission) {
+        throw "No mission found"
+      }
+      return mission
+    });
     modules.push({ phases: phases, equipDict: uniEquip, missions: missions });
   }
   return modules;

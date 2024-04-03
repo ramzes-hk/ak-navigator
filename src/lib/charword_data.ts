@@ -58,9 +58,19 @@ export async function getCharword(charId: string): Promise<Charwords | null> {
     key.includes(charId),
   );
   if (lineKeys.length === 0) return null;
+  const voiceLang = content.voiceLangDict[charId];
+  if (!voiceLang) {
+    throw "No voicelang found";
+  }
   return {
-    charwordCharArr: lineKeys.map((key) => content.charWords[key]),
-    voiceLang: content.voiceLangDict[charId],
+    charwordCharArr: lineKeys.map((key) => {
+      const charWords = content.charWords[key];
+      if (!charWords) {
+        throw "No charWords found";
+      }
+      return charWords;
+    }),
+    voiceLang: voiceLang,
     voiceLangTypeDict: content.voiceLangTypeDict,
   };
 }

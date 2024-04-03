@@ -1,5 +1,5 @@
 import { parseDescription } from "@/lib/operators";
-import { Trait } from "@/lib/operators_types";
+import { Trait  } from "@/lib/operators_types";
 import {
   Table,
   TableBody,
@@ -14,10 +14,10 @@ interface traitProps {
   traits: Trait | null;
 }
 
-function Trait({ description, traits }: traitProps) {
+function TraitDisplay({ description, traits }: traitProps) {
   const trait = parseDescription(
     description,
-    traits?.candidates[0].blackboard ?? [],
+    traits?.candidates[0]?.blackboard ?? [],
   );
   return <p dangerouslySetInnerHTML={{ __html: trait }}></p>;
 }
@@ -51,13 +51,13 @@ function TraitTable({ traits }: traitProps) {
 
 interface traitsProps {
   description: string;
-  traits: Trait | null;
+  traits: Trait| null;
   isSingleTrait: boolean;
 }
 
 function Traits({ description, traits, isSingleTrait }: traitsProps) {
   return isSingleTrait ? (
-    <Trait description={description} traits={traits} />
+    <TraitDisplay description={description} traits={traits} />
   ) : (
     <TraitTable description={description} traits={traits} />
   );

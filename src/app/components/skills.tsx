@@ -28,24 +28,27 @@ interface skillProps {
 }
 
 async function Skill({ levels }: skillProps) {
-  const rangeData = levels[0].rangeId
-    ? await getRange(levels[0].rangeId)
-    : null;
+  const baseLevel = levels[0];
+  if (!baseLevel) {
+    throw "Skill has no level 0";
+  }
+  const rangeId = baseLevel.rangeId;
+  const rangeData = rangeId ? await getRange(rangeId) : null;
   return (
     <div className="w-full">
       <Table className="border border-b-4">
         <TableHeader>
           <TableRow className="divide-x">
             <TableHead className="text-base text-foreground text-center">
-              {levels[0].name}
+              {baseLevel.name}
             </TableHead>
-            {levels[0].spData.spType !== 8 && (
+            {baseLevel.spData.spType !== 8 && (
               <TableHead className="text-base text-foreground text-center">
-                {spRecovery[levels[0].spData.spType]}
+                {spRecovery[baseLevel.spData.spType]}
               </TableHead>
             )}
             <TableHead className="text-base text-foreground text-center">
-              {skillType[levels[0].skillType]}
+              {skillType[baseLevel.skillType]}
             </TableHead>
             {rangeData && (
               <TableHead className="flex-auto justify-center items-center">
@@ -60,7 +63,7 @@ async function Skill({ levels }: skillProps) {
           <TableRow className="divide-x">
             <TableHead className="text-center w-8 sm:w-12">Lvl</TableHead>
             <TableHead className="text-center">Description</TableHead>
-            {(levels.at(0) ?? { duration: 0 }).duration > 1 && (
+            {baseLevel.duration > 1 && (
               <TableHead className="w-20 text-center">Duration</TableHead>
             )}
             <TableHead className="w-8 sm:w-12 text-center">Init SP</TableHead>
@@ -109,7 +112,7 @@ function SkillTables({ skills }: skillTablesProps) {
   return (
     <div className="w-full sm:w-3/4">
       {skills
-        .filter((skill) => skill[0].description !== null)
+        .filter((skill) => skill[0]?.description !== null)
         .map((skill, i) => {
           return (
             <div key={`skill-${i}`}>

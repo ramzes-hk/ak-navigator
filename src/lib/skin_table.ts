@@ -25,5 +25,10 @@ export async function getPortraitId(charId: string): Promise<CharSkin[]> {
   const ids = Object.keys(content.charSkins).filter((key) =>
     key.includes(charId),
   );
-  return ids.map((id) => content.charSkins[id]);
+  return ids.map((id) => {
+    const skin = content.charSkins[id]
+    if (!skin) {
+      throw "No skin found"
+    }
+    return skin});
 }

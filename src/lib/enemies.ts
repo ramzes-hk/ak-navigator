@@ -30,16 +30,23 @@ export function getMenuEnemies(): enemyMenuProps {
     ids: db
       .filter((enemy) => hb[enemy.Key])
       .map((enemy) => {
-        const val = enemy.Value[0].enemyData;
+        const val = enemy.Value[0]?.enemyData;
+        if (!val) {
+          throw "No enemyData";
+        }
+      const handbook = hb[enemy.Key];
+      if (!handbook) {
+        throw "No handbook enemy"
+      }
         return {
           enemyId: enemy.Key,
-          enemyIndex: hb[enemy.Key].enemyIndex,
+          enemyIndex: handbook.enemyIndex,
           name: val.name.m_value,
           levelType: val.levelType.m_value,
           motion: val.motion.m_value,
           enemyTags: val.enemyTags.m_value ? val.enemyTags.m_value : [],
           applyWay: val.applyWay.m_value,
-          damageType: hb[enemy.Key].damageType,
+          damageType: handbook.damageType,
         };
       }),
     route: "enemies",

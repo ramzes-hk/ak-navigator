@@ -30,35 +30,38 @@ async function Profile({ id }: profileProps) {
         </Link>
       </div>
       {hbData ? (
-        hbData.storyTextAudio.map((story, i) => (
-          <div key={`story-${i}`}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{story.storyTitle}</CardTitle>
-                {story.stories[0].unLockType !== "DIRECT" &&
-                  (story.stories[0].unLockType === "FAVOR" ? (
-                    <CardDescription>
-                      Trust {story.stories[0].unLockParam}
-                    </CardDescription>
-                  ) : (
-                    <CardDescription>
-                      E{story.stories[0].unLockParam.split(";")[0]}
-                    </CardDescription>
-                  ))}
-              </CardHeader>
-              <CardContent>
-                <p>
-                  {story.stories[0].storyText.split("\n").map((line, i) => (
-                    <span key={`line-${i}`}>
-                      {line}
-                      <br />
-                    </span>
-                  ))}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        ))
+        hbData.storyTextAudio.map((story, i) => {
+          const stories = story.stories?.at(0);
+          return (
+            <div key={`story-${i}`}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{story.storyTitle}</CardTitle>
+                  {stories?.unLockType !== "DIRECT" &&
+                    (stories?.unLockType === "FAVOR" ? (
+                      <CardDescription>
+                        Trust {stories.unLockParam}
+                      </CardDescription>
+                    ) : (
+                      <CardDescription>
+                        E{stories?.unLockParam.split(";")[0]}
+                      </CardDescription>
+                    ))}
+                </CardHeader>
+                <CardContent>
+                  <p>
+                    {stories?.storyText.split("\n").map((line, i) => (
+                      <span key={`line-${i}`}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          );
+        })
       ) : (
         <p>No Data</p>
       )}

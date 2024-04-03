@@ -35,12 +35,8 @@ export type CharWithBuff = Char & {
 };
 
 interface BuildingData {
-  chars: {
-    [charId: string]: Char;
-  };
-  buffs: {
-    [buffId: string]: Buff;
-  };
+  chars: Record<string, Char>;
+  buffs: Record<string, Buff>;
 }
 
 export async function getBaseSkills(id: string): Promise<CharWithBuff | null> {
@@ -54,10 +50,16 @@ export async function getBaseSkills(id: string): Promise<CharWithBuff | null> {
   const out: CharWithBuff = {
     ...charData,
     buffChar: charData.buffChar.map((bc) => ({
-      buffData: bc.buffData.map((b) => ({
-        ...b,
-        buff: buffData[b.buffId],
-      })),
+      buffData: bc.buffData.map((b) => {
+        const buff = buffData[b.buffId];
+        if (!buff) {
+          throw "No buff found";
+        }
+        return {
+          ...b,
+          buff: buff,
+        };
+      }),
     })),
   };
   return out;

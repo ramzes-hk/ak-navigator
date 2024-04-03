@@ -25,7 +25,7 @@ interface HandbookInfo {
 
 export async function getHandbook(
   charID: string,
-): Promise<HandbookChar | null> {
+): Promise<HandbookChar | undefined> {
   const fileName = path.join(
     process.cwd(),
     "operators",
@@ -33,6 +33,6 @@ export async function getHandbook(
   );
   const raw = fs.readFileSync(fileName, "utf8");
   const handbook = JSON.parse(raw) as HandbookInfo;
-
-  return handbook.handbookDict[charID];
+  const handbookDict = handbook.handbookDict[charID];
+  return handbookDict;
 }

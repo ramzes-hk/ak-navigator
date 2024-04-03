@@ -26,7 +26,7 @@ async function populate_enemies() {
   for (const e of es) {
     await db.insert(enemies).values({
       id: e.Key,
-      name: e.Value[0].enemyData.name.m_value,
+      name: e.Value[0]?.enemyData.name.m_value ?? e.Key,
       values: e.Value,
       handbook: hand[e.Key],
     });

@@ -25,7 +25,11 @@ const tierAllies = new Array(6)
   .map((_, i) => "\u2606".repeat(i + 1));
 export const mappedTiers = tiers.reduce(
   (obj: { [key: string]: string }, key, i) => {
-    obj[key] = tierAllies[i];
+    const tier = tierAllies[i];
+    if (!tier) {
+      throw "No tier";
+    }
+    obj[key] = tier;
     return obj;
   },
   {},

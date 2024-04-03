@@ -53,28 +53,35 @@ interface baseStatsProps {
 function BaseStats({ phases }: baseStatsProps) {
   function checkIfEquals(keyAttr: keyAttr): boolean {
     const values = phases.map(
-      (phase) => phase.attributesKeyFrames[0].data[keyAttr],
+      (phase) => phase.attributesKeyFrames[0]?.data[keyAttr],
     );
-    let temp: number = values[0];
+    const firstVal = values[0];
+    if (firstVal === undefined) {
+      throw `No first value ${keyAttr} - ${firstVal}`;
+    }
     for (let value of values) {
-      if (value !== temp) {
+      if (value !== firstVal) {
         return false;
       }
     }
     return true;
   }
 
+  const firstAttrKeyFrame = phases[0]?.attributesKeyFrames[0];
+  if (!firstAttrKeyFrame) {
+    throw "No first Attribute Key Frame";
+  }
   function getChangingStat(keyAttr: keyAttr): string {
     if (checkIfEquals(keyAttr)) {
-      return String(phases[0].attributesKeyFrames[0].data[keyAttr]);
+      return String(firstAttrKeyFrame?.data[keyAttr]);
     }
     const result = phases.reduce((accumulator, phase) => {
-      return accumulator + `${phase.attributesKeyFrames[0].data[keyAttr]}->`;
+      return accumulator + `${phase.attributesKeyFrames[0]?.data[keyAttr]}->`;
     }, "");
     return result.slice(0, -2);
   }
 
-  const data = phases[0].attributesKeyFrames[0].data;
+  const data = firstAttrKeyFrame.data;
   return (
     <Table className="w-full table-fixed border-b-4">
       <TableHeader>

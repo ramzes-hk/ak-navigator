@@ -162,7 +162,7 @@ async function Materials({
               {stage
                 .map(
                   (mat, j) =>
-                    `${mat.name}x${itemCost[(i + 1).toString()].at(j)
+                    `${mat.name}x${itemCost[(i + 1).toString()]?.at(j)
                       ?.count}, `,
                 )
                 .join("")

@@ -12,16 +12,29 @@ function Activites() {
   const stages = getStages();
   const activities = getActivities();
   const zoneToActivity = getZoneToActivity();
-  const stageids = Object.keys(stages).filter(
-    (id) =>
-      stages[id].difficulty !== "FOUR_STAR" &&
-      stages[id].diffGroup !== "TOUGH" &&
-      stages[id].diffGroup !== "EASY",
-  );
+  const mainStory = getMainStory();
+  const stageids = Object.values(stages)
+    .filter(
+      (stage) =>
+        stage.difficulty !== "FOUR_STAR" &&
+        stage.diffGroup !== "TOUGH" &&
+        stage.diffGroup !== "EASY",
+    )
+    .map((stage) => stage.stageId);
   const actToStage: Record<string, Stage[]> = {};
   stageids
-    .filter((id) => stages[id].stageType === "ACTIVITY")
+    .filter((id) => {
+      const stage = stages[id];
+      if (stage === undefined) {
+        return false;
+      }
+      return stage.stageType === "ACTIVITY";
+    })
     .forEach((id) => {
+      const stage = stages[id];
+      if (!stage) {
+        return false;
+      }
       const strippedStageId = id.replace(/_.*/, "");
       const actId =
         zoneToActivity[
@@ -29,43 +42,67 @@ function Activites() {
             z.toLowerCase().includes(strippedStageId),
           ) ?? ""
         ] ?? strippedStageId;
-      if (!actToStage[actId]) {
-        actToStage[actId] = [stages[id]];
+      const act = actToStage[actId];
+      if (!act) {
+        actToStage[actId] = [stage];
       } else {
-        actToStage[actId] = [...actToStage[actId], stages[id]];
+        act.push(stage);
       }
     });
   return (
     <div className="container">
       <Accordion type="multiple">
-        {getMainStory().map((a) => (
-          <AccordionItem key={a.id} value={a.id}>
-            <AccordionTrigger>{a.name}</AccordionTrigger>
-            <AccordionContent>
-              {stageids
-                .filter((id) => stages[id].zoneId === a.id)
-                .map((id) => (
-                  <p key={id}>
-                    {stages[id].code} - {stages[id].name}
+        {mainStory.map((a) => {
+          if (!a) {
+            return;
+          }
+          return (
+            <AccordionItem key={a.id} value={a.id}>
+              <AccordionTrigger>{a.name}</AccordionTrigger>
+              <AccordionContent>
+                {stageids
+                  .filter((id) => {
+                    const stage = stages[id];
+                    if (!stage) {
+                      return;
+                    }
+                    return stage.zoneId === a.id;
+                  })
+                  .map((id) => {
+                    const stage = stages[id];
+                    if (!stage) {
+                      return;
+                    }
+                    return (
+                      <p key={id}>
+                        {stage.code} - {stage.name}
+                      </p>
+                    );
+                  })}
+              </AccordionContent>
+            </AccordionItem>
+          );
+        })}
+        {Object.keys(actToStage).map((a) => {
+          const act = actToStage[a];
+          if (!act) {
+            return;
+          }
+          return (
+            <AccordionItem key={a} value={a}>
+              <AccordionTrigger>
+                {activities.find((id) => id.id === a)?.name ?? a}
+              </AccordionTrigger>
+              <AccordionContent>
+                {act.map((s) => (
+                  <p key={s.code}>
+                    {s.code} - {s.name}
                   </p>
                 ))}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-        {Object.keys(actToStage).map((a) => (
-          <AccordionItem key={a} value={a}>
-            <AccordionTrigger>
-              {activities.find((id) => id.id === a)?.name ?? a}
-            </AccordionTrigger>
-            <AccordionContent>
-              {actToStage[a].map((s) => (
-                <p key={s.code}>
-                  {s.code} - {s.name}
-                </p>
-              ))}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+              </AccordionContent>
+            </AccordionItem>
+          );
+        })}
       </Accordion>
     </div>
   );

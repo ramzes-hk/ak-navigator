@@ -20,7 +20,7 @@ function Talents({ talents }: talentsProps) {
 
   function isSameName(talent: Talent): boolean {
     if (!talent.candidates || talent.candidates.length === 0) return true;
-    const firstName = talent.candidates[0].name;
+    const firstName = talent.candidates[0]?.name;
     return talent.candidates.slice(1).every((c) => c.name === firstName);
   }
 

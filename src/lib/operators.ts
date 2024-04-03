@@ -60,11 +60,24 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
   const skillIds: Set<string> = new Set<string>();
   const skillDescription: Level[][] = [];
   const opReader = operators[opId];
-  opReader.skills.forEach((skill) => {
+  const skills = opReader?.skills; 
+  if (!skills) {
+    throw "No skills found"
+  }
+  skills.forEach((skill) => {
     if (!skill.skillId) return;
     skillIds.add(skill.skillId);
   });
-  skillIds.forEach((sId) => skillDescription.push(skillsContent[sId].levels));
+  skillIds.forEach((sId) => { 
+    const skillLvls = skillsContent[sId]?.levels;
+    if (!skillLvls) {
+      throw "No skill levels"
+    }
+    return skillDescription.push(skillLvls)});
+  const subProf = getUniequip().subProfDict[opReader.subProfessionId];
+  if (!subProf) {
+    throw "No subprofession"
+  }
   return {
     operator: {
       ...opReader,
@@ -72,7 +85,7 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
     },
     skills: skillDescription,
     subProfession:
-      getUniequip().subProfDict[opReader.subProfessionId].subProfessionName,
+      subProf.subProfessionName,
   };
 }
 
@@ -91,11 +104,21 @@ export async function getAllOpData(
         filter === "char" ? id.includes("char") : !id.includes("char"),
       )
       .filter((id) => !id.includes("512"))
-      .map((id) => ({ ...operators[id], id: id }));
+      .map((id) => {
+        const operator = operators[id]
+        if (!operator) {
+          throw "No operator found"
+        }
+        return { ...operator, id: id}});
   }
   return Object.keys(operators)
     .filter((id) => !id.includes("512"))
-    .map((id) => ({ ...operators[id], id: id }));
+    .map((id) => {
+      const operator = operators[id]
+        if (!operator) {
+          throw "No operator found"
+        }
+      return { ...operator, id: id }});
 }
 
 function escapeRegExp(input: string) {
@@ -112,9 +135,13 @@ export function parseDescription(
   description = duration
     ? description.replace(/{duration}/, String(duration))
     : description;
-  const style = getStyle();
-  for (const key in style) {
-    description = description.replace(RegExp(key, "g"), style[key]);
+  const styles = getStyle();
+  for (const key in styles) {
+    const style = styles[key] 
+    if (style === undefined) {
+      throw `No style found ${key}` 
+    }
+    description = description.replace(RegExp(key, "g"), style);
   }
   for (const key in getTerms()) {
     description = description.replace(RegExp(key, "g"), " ");
