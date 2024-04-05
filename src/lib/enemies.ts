@@ -34,10 +34,10 @@ export function getMenuEnemies(): enemyMenuProps {
         if (!val) {
           throw "No enemyData";
         }
-      const handbook = hb[enemy.Key];
-      if (!handbook) {
-        throw "No handbook enemy"
-      }
+        const handbook = hb[enemy.Key];
+        if (!handbook) {
+          throw "No handbook enemy";
+        }
         return {
           enemyId: enemy.Key,
           enemyIndex: handbook.enemyIndex,

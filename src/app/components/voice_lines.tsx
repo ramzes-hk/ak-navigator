@@ -47,33 +47,34 @@ async function VoiceLines({ id }: voiceLinesProps) {
       </div>
       {split && <h2 className="text-3xl py-2">Original Lines</h2>}
       {charword.charwordCharArr.map((word, i) => {
-        const firstWordParam = word.unlockParam[0]
-        const directType = word.unlockType === "DIRECT"
-        if (!directType && !firstWordParam) { 
-          throw "No first word param"
+        const firstWordParam = word.unlockParam[0];
+        const directType = word.unlockType === "DIRECT";
+        if (!directType && !firstWordParam) {
+          throw "No first word param";
         }
         return (
-        <div key={word.voiceId}>
-          {split && i === charword.charwordCharArr.length / 2 && (
-            <h2 className="text-3xl py-2">Skin Lines</h2>
-          )}
-          <Card key={word.voiceId}>
-            <CardHeader>
-              <CardTitle>{word.voiceTitle}</CardTitle>
-              {!directType && (
-                <CardDescription>
-                  {word.unlockType === "FAVOR"
-                    ? `Trust ${firstWordParam?.valueInt}`
-                    : `E${firstWordParam?.valueInt}`}
-                </CardDescription>
-              )}
-            </CardHeader>
-            <CardContent>
-              <p>{word.voiceText}</p>
-            </CardContent>
-          </Card>
-        </div>
-      )})}
+          <div key={word.voiceId}>
+            {split && i === charword.charwordCharArr.length / 2 && (
+              <h2 className="text-3xl py-2">Skin Lines</h2>
+            )}
+            <Card key={word.voiceId}>
+              <CardHeader>
+                <CardTitle>{word.voiceTitle}</CardTitle>
+                {!directType && (
+                  <CardDescription>
+                    {word.unlockType === "FAVOR"
+                      ? `Trust ${firstWordParam?.valueInt}`
+                      : `E${firstWordParam?.valueInt}`}
+                  </CardDescription>
+                )}
+              </CardHeader>
+              <CardContent>
+                <p>{word.voiceText}</p>
+              </CardContent>
+            </Card>
+          </div>
+        );
+      })}
     </div>
   );
 }

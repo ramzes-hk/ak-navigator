@@ -143,9 +143,9 @@ function findLevel(
     const lastLevelInfoList = levelInfoList.at(-1);
     if (currentLevelInfoList) {
       return currentLevelInfoList.classLevel;
-    } 
+    }
     if (!lastLevelInfoList) {
-      throw "No LevelInfoList"
+      throw "No LevelInfoList";
     }
     return lastLevelInfoList?.classLevel;
   });

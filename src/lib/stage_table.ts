@@ -7,3 +7,27 @@ export function getStages(): Record<string, Stage> {
   const data = JSON.parse(raw) as StageTable;
   return data.stages;
 }
+
+export function getNormalStages(): Record<string, Stage> {
+  const stages = getStages();
+  Object.keys(stages).forEach((key) => {
+    const stage = stages[key] as Stage;
+    if (
+      stage.difficulty === "FOUR_STAR" ||
+      stage.diffGroup === "TOUGH" ||
+      stage.diffGroup === "EASY"
+    ) {
+      delete stages[key];
+    }
+  });
+  return stages;
+}
+
+export function getStage(id: string): Stage {
+  const stages = getStages();
+  const stage = stages[id];
+  if (!stage) {
+    throw `No stage found ${id}`;
+  }
+  return stage;
+}

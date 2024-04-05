@@ -1,5 +1,5 @@
 import { parseDescription } from "@/lib/operators";
-import { Trait  } from "@/lib/operators_types";
+import { Trait } from "@/lib/operators_types";
 import {
   Table,
   TableBody,
@@ -51,7 +51,7 @@ function TraitTable({ traits }: traitProps) {
 
 interface traitsProps {
   description: string;
-  traits: Trait| null;
+  traits: Trait | null;
   isSingleTrait: boolean;
 }
 

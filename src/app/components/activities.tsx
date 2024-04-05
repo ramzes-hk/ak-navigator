@@ -7,6 +7,8 @@ import {
   AccordionTrigger,
 } from "./accordion";
 import { getStages } from "@/lib/stage_table";
+import Link from "next/link";
+import { buttonVariants } from "./button";
 
 function Activites() {
   const stages = getStages();
@@ -59,7 +61,7 @@ function Activites() {
           return (
             <AccordionItem key={a.id} value={a.id}>
               <AccordionTrigger>{a.name}</AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="flex flex-col items-start">
                 {stageids
                   .filter((id) => {
                     const stage = stages[id];
@@ -74,9 +76,13 @@ function Activites() {
                       return;
                     }
                     return (
-                      <p key={id}>
+                      <Link
+                        className={buttonVariants({ variant: "link" })}
+                        key={id}
+                        href={`/stages/${id}`}
+                      >
                         {stage.code} - {stage.name}
-                      </p>
+                      </Link>
                     );
                   })}
               </AccordionContent>
@@ -93,11 +99,15 @@ function Activites() {
               <AccordionTrigger>
                 {activities.find((id) => id.id === a)?.name ?? a}
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="flex flex-col items-start">
                 {act.map((s) => (
-                  <p key={s.code}>
+                  <Link
+                    key={s.code}
+                    href={`stages/${s.stageId}`}
+                    className={buttonVariants({ variant: "link" })}
+                  >
                     {s.code} - {s.name}
-                  </p>
+                  </Link>
                 ))}
               </AccordionContent>
             </AccordionItem>

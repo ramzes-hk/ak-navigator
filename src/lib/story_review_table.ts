@@ -12,10 +12,11 @@ export function getMainStory() {
   const data = JSON.parse(raw) as StoryReviewTable;
   return Object.keys(data)
     .filter((k) => {
-      const act = data[k]
+      const act = data[k];
       if (!act) {
-        throw "No act found"
+        throw "No act found";
       }
-      return act.actType === "MAIN_STORY"})
+      return act.actType === "MAIN_STORY";
+    })
     .map((k) => data[k]);
 }

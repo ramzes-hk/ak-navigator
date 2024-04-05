@@ -44,7 +44,7 @@ export async function getItem(itemId: string): Promise<Item> {
   const content = await getItemTable();
   const item = content.items[itemId];
   if (!item) {
-    throw "No item found"
+    throw "No item found";
   }
   return item;
 }
@@ -54,8 +54,9 @@ export async function getItemBatch(cost: LvlUpCost[]): Promise<Item[]> {
   const mats = cost.map((mat) => {
     const material = content.items[mat.id];
     if (!material) {
-      throw "Not materiral found"
+      throw "Not materiral found";
     }
-    return material});
+    return material;
+  });
   return mats;
 }

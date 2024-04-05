@@ -110,15 +110,15 @@ export async function getModules(id: string): Promise<Module[]> {
     }
     const uniEquip = uniEquipTable.equipDict[moduleId];
     if (!uniEquip) {
-      throw "No uniEquip found"
+      throw "No uniEquip found";
     }
     if (i === 1) {
       modules.push({ equipDict: uniEquip, phases: null, missions: null });
       continue;
     }
-    const mod = battleEquipTable[moduleId]
+    const mod = battleEquipTable[moduleId];
     if (!mod) {
-      throw "No module found"
+      throw "No module found";
     }
     const phases = mod.phases.map((phase) => ({
       ...phase,
@@ -127,9 +127,9 @@ export async function getModules(id: string): Promise<Module[]> {
     const missions: Mission[] = uniEquip.missionList.map((missionId) => {
       const mission = uniEquipTable.missionList[missionId];
       if (!mission) {
-        throw "No mission found"
+        throw "No mission found";
       }
-      return mission
+      return mission;
     });
     modules.push({ phases: phases, equipDict: uniEquip, missions: missions });
   }

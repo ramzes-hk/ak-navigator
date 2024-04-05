@@ -60,23 +60,24 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
   const skillIds: Set<string> = new Set<string>();
   const skillDescription: Level[][] = [];
   const opReader = operators[opId];
-  const skills = opReader?.skills; 
+  const skills = opReader?.skills;
   if (!skills) {
-    throw "No skills found"
+    throw "No skills found";
   }
   skills.forEach((skill) => {
     if (!skill.skillId) return;
     skillIds.add(skill.skillId);
   });
-  skillIds.forEach((sId) => { 
+  skillIds.forEach((sId) => {
     const skillLvls = skillsContent[sId]?.levels;
     if (!skillLvls) {
-      throw "No skill levels"
+      throw "No skill levels";
     }
-    return skillDescription.push(skillLvls)});
+    return skillDescription.push(skillLvls);
+  });
   const subProf = getUniequip().subProfDict[opReader.subProfessionId];
   if (!subProf) {
-    throw "No subprofession"
+    throw "No subprofession";
   }
   return {
     operator: {
@@ -84,8 +85,7 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
       id: opId,
     },
     skills: skillDescription,
-    subProfession:
-      subProf.subProfessionName,
+    subProfession: subProf.subProfessionName,
   };
 }
 
@@ -105,20 +105,22 @@ export async function getAllOpData(
       )
       .filter((id) => !id.includes("512"))
       .map((id) => {
-        const operator = operators[id]
+        const operator = operators[id];
         if (!operator) {
-          throw "No operator found"
+          throw "No operator found";
         }
-        return { ...operator, id: id}});
+        return { ...operator, id: id };
+      });
   }
   return Object.keys(operators)
     .filter((id) => !id.includes("512"))
     .map((id) => {
-      const operator = operators[id]
-        if (!operator) {
-          throw "No operator found"
-        }
-      return { ...operator, id: id }});
+      const operator = operators[id];
+      if (!operator) {
+        throw "No operator found";
+      }
+      return { ...operator, id: id };
+    });
 }
 
 function escapeRegExp(input: string) {
@@ -137,9 +139,9 @@ export function parseDescription(
     : description;
   const styles = getStyle();
   for (const key in styles) {
-    const style = styles[key] 
+    const style = styles[key];
     if (style === undefined) {
-      throw `No style found ${key}` 
+      throw `No style found ${key}`;
     }
     description = description.replace(RegExp(key, "g"), style);
   }

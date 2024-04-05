@@ -1,5 +1,9 @@
+import Stage from "@/components/stage";
+import { getNormalStages } from "@/lib/stage_table";
+
 export async function generateStaticParams(): Promise<{ id: string }[]> {
-  return [];
+  const stage = getNormalStages();
+  return Object.keys(stage).map((key) => ({ id: key }));
 }
 
 interface pageProps {
@@ -9,5 +13,5 @@ interface pageProps {
 }
 
 export default async function Page({ params }: pageProps) {
-  return;
+  return <Stage id={params.id} />;
 }
