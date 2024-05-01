@@ -54,16 +54,14 @@ export function getMenuEnemies(): enemyMenuProps {
 }
 
 export function getEnemy(id: string): {
-  enemy: Enemy;
-  handbook: HandbookEnemy;
+  enemy: Enemy | undefined;
+  handbook: HandbookEnemy | undefined;
 } {
   const db = getAllEnemies();
   const hb = getAllHandbookEnemies();
   const enemy = db.find((enemy) => enemy.Key === id);
-  const handbook = hb[id];
-  if (!enemy || !handbook) {
-    throw "Enemy Data not found";
-  }
+  const prefabKey = enemy?.Value[0]?.enemyData.prefabKey.m_value ?? "";
+  const handbook = hb[prefabKey];
   return {
     enemy: enemy,
     handbook: handbook,

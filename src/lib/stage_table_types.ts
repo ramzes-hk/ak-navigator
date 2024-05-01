@@ -1,8 +1,8 @@
-interface StageTable {
+export interface StageTable {
   stages: Record<string, Stage>;
 }
 
-interface Stage {
+export interface Stage {
   stageType: string;
   difficulty: string;
   performanceStageFlag: string;
@@ -12,12 +12,12 @@ interface Stage {
     completeState: string;
   }[];
   stageId: string;
-  levelId: string;
+  levelId: string | null;
   zoneId: string;
   code: string;
   name: string;
-  description: string;
-  hardStagedId: string;
+  description: string | null;
+  hardStagedId: string | null;
   dangerLevel: string;
   dangerPoint: number;
   loadingPicId: string;

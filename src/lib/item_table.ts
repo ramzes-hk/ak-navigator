@@ -1,38 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { LvlUpCost } from "./operators_types";
-
-interface ItemTable {
-  items: Record<string, Item>;
-}
-
-export interface Item {
-  itemId: string;
-  name: string;
-  description: string;
-  rarity: string;
-  iconId: string;
-  overrideBkg: any;
-  stackIconId: string | null;
-  sortId: number;
-  usage: string;
-  obtainApproach: string;
-  hideInItemGet: boolean;
-  classifyType: string;
-  itemType: string;
-  stageDropList: Stage[];
-  buildingProductList: BuildingProduct[];
-}
-
-interface Stage {
-  stageId: string;
-  occPer: string;
-}
-
-interface BuildingProduct {
-  roomType: string;
-  formulaId: string;
-}
+import { ItemTable, Item } from "./item_table_types";
 
 async function getItemTable() {
   const fileName = path.join(process.cwd(), "operators", "item_table.json");
@@ -44,7 +13,7 @@ export async function getItem(itemId: string): Promise<Item> {
   const content = await getItemTable();
   const item = content.items[itemId];
   if (!item) {
-    throw "No item found";
+    throw `No item found ${itemId}`;
   }
   return item;
 }

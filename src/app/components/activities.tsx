@@ -1,28 +1,22 @@
 import { getActivities, getZoneToActivity } from "@/lib/activity_table";
 import { getMainStory } from "@/lib/story_review_table";
+import { Stage } from "@/lib/stage_table_types";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "./accordion";
-import { getStages } from "@/lib/stage_table";
+import { getNormalStages } from "@/lib/stage_table";
 import Link from "next/link";
 import { buttonVariants } from "./button";
 
 function Activites() {
-  const stages = getStages();
+  const stages = getNormalStages();
   const activities = getActivities();
   const zoneToActivity = getZoneToActivity();
   const mainStory = getMainStory();
-  const stageids = Object.values(stages)
-    .filter(
-      (stage) =>
-        stage.difficulty !== "FOUR_STAR" &&
-        stage.diffGroup !== "TOUGH" &&
-        stage.diffGroup !== "EASY",
-    )
-    .map((stage) => stage.stageId);
+  const stageids = Object.values(stages).map((stage) => stage.stageId);
   const actToStage: Record<string, Stage[]> = {};
   stageids
     .filter((id) => {
@@ -68,7 +62,10 @@ function Activites() {
                     if (!stage) {
                       return;
                     }
-                    return stage.zoneId === a.id;
+                    return (
+                      stage.zoneId === a.id &&
+                      (stage.stageType === "MAIN" || stage.stageType === "SUB")
+                    );
                   })
                   .map((id) => {
                     const stage = stages[id];
@@ -98,6 +95,8 @@ function Activites() {
             <AccordionItem key={a} value={a}>
               <AccordionTrigger>
                 {activities.find((id) => id.id === a)?.name ?? a}
+                {" - "}
+                {act[0]?.code.split("-")[0]}
               </AccordionTrigger>
               <AccordionContent className="flex flex-col items-start">
                 {act.map((s) => (

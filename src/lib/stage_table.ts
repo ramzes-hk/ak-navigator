@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { Stage, StageTable } from "./stage_table_types";
 
 export function getStages(): Record<string, Stage> {
   const fileName = path.join(process.cwd(), "operators", "stage_table.json");
@@ -23,11 +24,8 @@ export function getNormalStages(): Record<string, Stage> {
   return stages;
 }
 
-export function getStage(id: string): Stage {
+export function getStage(id: string): Stage | undefined {
   const stages = getStages();
   const stage = stages[id];
-  if (!stage) {
-    throw `No stage found ${id}`;
-  }
   return stage;
 }

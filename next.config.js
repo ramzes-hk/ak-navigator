@@ -6,7 +6,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "raw.githubusercontent.com",
         port: "",
-        pathname: "/Aceship/Arknight-Images/main/characters/**",
+        pathname: "/Aceship/Arknight-Images/main/**",
       },
     ],
   },
