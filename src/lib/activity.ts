@@ -12,7 +12,6 @@ export async function getActivity(id: string): Promise<ActivityFile | null> {
     const data = (await res.json()) as ActivityFile;
     return data;
   } catch (error) {
-    console.log(`error ${url}`);
     return null;
   }
 }

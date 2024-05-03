@@ -6,9 +6,10 @@ import {
   TableHead,
   TableRow,
 } from "@/components/table";
-import { getOpName } from "@/lib/db_queries";
 import { getItem } from "@/lib/item_table";
 import { getFurniture } from "@/lib/building_data";
+import { getOpData } from "@/lib/operators";
+import { getCharm } from "@/lib/charm_table";
 
 interface StageDropsProps {
   stage: Stage;
@@ -50,16 +51,18 @@ function StageDrops({ stage }: StageDropsProps) {
   );
 }
 
-async function getRewardList(
+export async function getRewardList(
   rewards: { type: string; id: string }[],
 ): Promise<string[]> {
   return Promise.all(
     rewards.map(async (reward) => {
       let name = reward.id;
       if (reward.type === "CHAR") {
-        name = await getOpName(reward.id);
+        name = await getOpData(reward.id).then(res => res.operator.name);
       } else if (reward.type === "FURN") {
         name = getFurniture(reward.id).name;
+      } else if (reward.type === "CHARM") {
+        name = getCharm(reward.id)?.name ?? "";
       } else {
         name = (await getItem(reward.id)).name;
       }
