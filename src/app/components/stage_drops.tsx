@@ -15,7 +15,7 @@ interface StageDropsProps {
   stage: Stage;
 }
 
-function StageDrops({ stage }: StageDropsProps) {
+async function StageDrops({ stage }: StageDropsProps) {
   const firstClear = stage.stageDropInfo.displayRewards.filter(
     (reward) => reward.dropType === "ONCE" || reward.dropType === "COMPLETE",
   );
@@ -31,19 +31,19 @@ function StageDrops({ stage }: StageDropsProps) {
         <TableRow>
           <TableHead className="w-min">First Clear</TableHead>
           <TableCell>
-            {getRewardList(firstClear).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
+            {await getRewardList(firstClear).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableHead>Regular</TableHead>
           <TableCell>
-            {getRewardList(regular).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
+            {await getRewardList(regular).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableHead>Additional</TableHead>
           <TableCell>
-            {getRewardList(additional).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
+            {await getRewardList(additional).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
           </TableCell>
         </TableRow>
       </TableBody>

@@ -50,7 +50,7 @@ async function StagePage({ id }: stageProps) {
               dangerouslySetInnerHTML={{
                 __html: parseDescription(st.description, []),
               }}
-            ></p> : "No Description"}
+            ></p> : <p>No Description</p>}
             <StageTable stage={st} />
             <h3 className="text-lg">Enemies</h3>
             {level && <StageEnemies activity={level} />}
