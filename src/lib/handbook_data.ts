@@ -1,27 +1,6 @@
 import path from "path";
 import fs from "fs";
-
-export interface HandbookChar {
-  charID: string;
-  infoName: string;
-  isLimited: boolean;
-  storyTextAudio: {
-    stories: {
-      storyText: string;
-      unLockType: string;
-      unLockParam: string;
-      unLockString: string;
-    }[];
-    storyTitle: string;
-    unLockorNot: boolean;
-  }[];
-}
-
-interface HandbookInfo {
-  handbookDict: {
-    [charID: string]: HandbookChar;
-  };
-}
+import { HandbookChar, HandbookInfo } from "./handbook_data_types";
 
 export async function getHandbook(
   charID: string,

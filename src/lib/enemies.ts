@@ -7,7 +7,8 @@ import {
   Race,
 } from "./enemy_database_types";
 import { getAllEnemies } from "./enemy_database";
-import { HandbookEnemy, getAllHandbookEnemies } from "./enemy_handbook_table";
+import { getAllHandbookEnemies } from "./enemy_handbook_table";
+import { HandbookEnemy } from "./enemy_handbook_table_types";
 
 export interface enemyMenuProps {
   ids: {

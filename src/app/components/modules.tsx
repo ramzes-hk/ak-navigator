@@ -1,5 +1,5 @@
 import { Module } from "@/lib/modules_data";
-import { Phase } from "@/lib/modules_data";
+import { Phase } from "@/lib/modules_data_types";
 import { parseDescription } from "@/lib/operators";
 import {
   Card,

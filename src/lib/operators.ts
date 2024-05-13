@@ -33,18 +33,13 @@ interface getOpDataReturn {
   skills: Level[][];
   subProfession: string;
 }
-const fileCache = new Map();
 
 export async function readFileAs<T>(
   location: [string, ...string[]],
 ): Promise<T> {
   const fileName = path.join(process.cwd(), ...location);
-  if (fileCache.has(fileName)) {
-    return fileCache.get(fileName) as T;
-  }
   const fileContent = await fsPromise.readFile(fileName, "utf8");
   const parsedContent = JSON.parse(fileContent) as T;
-  fileCache.set(fileName, parsedContent);
   return parsedContent;
 }
 
@@ -99,28 +94,17 @@ export async function getAllOpData(
     "character_table.json",
   ]);
   if (filter !== undefined) {
-    return Object.keys(operators)
-      .filter((id) =>
-        filter === "char" ? id.includes("char") : !id.includes("char"),
+    return Object.entries(operators)
+      .filter(([id, _]) =>
+        filter === "char"
+          ? id.includes("char")
+          : !id.includes("char") && !id.includes("512"),
       )
-      .filter((id) => !id.includes("512"))
-      .map((id) => {
-        const operator = operators[id];
-        if (!operator) {
-          throw "No operator found";
-        }
-        return { ...operator, id: id };
-      });
+      .map(([id, op]) => ({ ...op, id: id }));
   }
-  return Object.keys(operators)
-    .filter((id) => !id.includes("512"))
-    .map((id) => {
-      const operator = operators[id];
-      if (!operator) {
-        throw "No operator found";
-      }
-      return { ...operator, id: id };
-    });
+  return Object.entries(operators)
+    .filter((entry) => !entry[0].includes("512"))
+    .map((entry) => ({ ...entry[1], id: entry[0] }));
 }
 
 function escapeRegExp(input: string) {

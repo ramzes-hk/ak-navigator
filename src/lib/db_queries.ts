@@ -1,5 +1,5 @@
 import { db } from "@/db/db";
-import { operators } from "@/db/schema";
+import { operators, stages } from "@/db/schema";
 import { eq, like, notLike } from "drizzle-orm";
 
 export async function getOpName(id: string): Promise<string> {
@@ -39,5 +39,15 @@ export async function getEntitiesMenuData() {
     })
     .from(operators)
     .where(notLike(operators.id, "%char%"));
+  return result;
+}
+
+export async function getStageName(stageId: string) {
+  const result = await db
+    .select({
+      name: stages.name,
+    })
+    .from(stages)
+    .where(eq(stages.id, stageId));
   return result;
 }

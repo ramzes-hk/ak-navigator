@@ -8,8 +8,8 @@ import {
 } from "@/components/table";
 import { getItem } from "@/lib/item_table";
 import { getFurniture } from "@/lib/building_data";
-import { getOpData } from "@/lib/operators";
 import { getCharm } from "@/lib/charm_table";
+import { getOpName } from "@/lib/db_queries";
 
 interface StageDropsProps {
   stage: Stage;
@@ -31,19 +31,25 @@ async function StageDrops({ stage }: StageDropsProps) {
         <TableRow>
           <TableHead className="w-min">First Clear</TableHead>
           <TableCell>
-            {await getRewardList(firstClear).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
+            {await getRewardList(firstClear).then((all) =>
+              all.length > 0 ? all.join(", ") : "-",
+            )}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableHead>Regular</TableHead>
           <TableCell>
-            {await getRewardList(regular).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
+            {await getRewardList(regular).then((all) =>
+              all.length > 0 ? all.join(", ") : "-",
+            )}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableHead>Additional</TableHead>
           <TableCell>
-            {await getRewardList(additional).then((all) => (all.length > 0 ? all.join(", ") : "-"))}
+            {await getRewardList(additional).then((all) =>
+              all.length > 0 ? all.join(", ") : "-",
+            )}
           </TableCell>
         </TableRow>
       </TableBody>
@@ -58,7 +64,7 @@ export async function getRewardList(
     rewards.map(async (reward) => {
       let name = reward.id;
       if (reward.type === "CHAR") {
-        name = await getOpData(reward.id).then(res => res.operator.name);
+        name = await getOpName(reward.id)
       } else if (reward.type === "FURN") {
         name = getFurniture(reward.id).name;
       } else if (reward.type === "CHARM") {

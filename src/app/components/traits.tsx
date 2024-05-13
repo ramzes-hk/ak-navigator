@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@/components/table";
-import { HandbookEnemy } from "@/lib/enemy_handbook_table";
+import { HandbookEnemy } from "@/lib/enemy_handbook_table_types";
 
 interface traitProps {
   description: string;

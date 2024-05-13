@@ -5,7 +5,7 @@ export const professions: Record<string, string> = {
   CASTER: "Caster",
   PIONEER: "Vanguard",
   SNIPER: "Sniper",
-  SUPPORT: "Support",
+  SUPPORT: "Supporter",
   SPECIAL: "Specialist",
   TOKEN: "Token",
   TRAP: "Trap",

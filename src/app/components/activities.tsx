@@ -1,6 +1,5 @@
-import { getActivities, getZoneToActivity } from "@/lib/activity_table";
+import { getActivities } from "@/lib/activity_table";
 import { getMainStory } from "@/lib/story_review_table";
-import { Stage } from "@/lib/stage_table_types";
 import {
   Accordion,
   AccordionContent,
@@ -10,73 +9,33 @@ import {
 import { getNormalStages } from "@/lib/stage_table";
 import Link from "next/link";
 import { buttonVariants } from "./button";
+import { getStagesByActivities } from "@/lib/stage_by_activity";
 
 function Activites() {
+  const stagesByActivity = getStagesByActivities();
   const stages = getNormalStages();
   const activities = getActivities();
-  const zoneToActivity = getZoneToActivity();
   const mainStory = getMainStory();
-  const stageids = Object.values(stages).map((stage) => stage.stageId);
-  const actToStage: Record<string, Stage[]> = {};
-  stageids
-    .filter((id) => {
-      const stage = stages[id];
-      if (stage === undefined) {
-        return false;
-      }
-      return stage.stageType === "ACTIVITY";
-    })
-    .forEach((id) => {
-      const stage = stages[id];
-      if (!stage) {
-        return false;
-      }
-      const strippedStageId = id.replace(/_.*/, "");
-      const actId =
-        zoneToActivity[
-          Object.keys(zoneToActivity).find((z) =>
-            z.toLowerCase().includes(strippedStageId),
-          ) ?? ""
-        ] ?? strippedStageId;
-      const act = actToStage[actId];
-      if (!act) {
-        actToStage[actId] = [stage];
-      } else {
-        act.push(stage);
-      }
-    });
   return (
     <div className="container">
       <Accordion type="multiple">
         {mainStory.map((a) => {
-          if (!a) {
-            return;
-          }
           return (
             <AccordionItem key={a.id} value={a.id}>
               <AccordionTrigger>{a.name}</AccordionTrigger>
               <AccordionContent className="flex flex-col items-start">
-                {stageids
-                  .filter((id) => {
-                    const stage = stages[id];
-                    if (!stage) {
-                      return;
-                    }
-                    return (
-                      stage.zoneId === a.id &&
-                      (stage.stageType === "MAIN" || stage.stageType === "SUB")
-                    );
-                  })
-                  .map((id) => {
-                    const stage = stages[id];
+                {Object.entries(stagesByActivity)
+                  .find((entry) => entry.includes(a.id))![1]
+                  .map((s) => {
+                    const stage = stages[s];
                     if (!stage) {
                       return;
                     }
                     return (
                       <Link
                         className={buttonVariants({ variant: "link" })}
-                        key={id}
-                        href={`/stages/${id}`}
+                        key={s}
+                        href={`/stages/${s}`}
                       >
                         {stage.code} - {stage.name}
                       </Link>
@@ -86,32 +45,36 @@ function Activites() {
             </AccordionItem>
           );
         })}
-        {Object.keys(actToStage).map((a) => {
-          const act = actToStage[a];
-          if (!act) {
-            return;
-          }
-          return (
-            <AccordionItem key={a} value={a}>
-              <AccordionTrigger>
-                {activities.find((id) => id.id === a)?.name ?? a}
-                {" - "}
-                {act[0]?.code.split("-")[0]}
-              </AccordionTrigger>
-              <AccordionContent className="flex flex-col items-start">
-                {act.map((s) => (
-                  <Link
-                    key={s.code}
-                    href={`stages/${s.stageId}`}
-                    className={buttonVariants({ variant: "link" })}
-                  >
-                    {s.code} - {s.name}
-                  </Link>
-                ))}
-              </AccordionContent>
-            </AccordionItem>
-          );
-        })}
+        {Object.entries(stagesByActivity)
+          .filter((entry) => !entry[0].includes("main"))
+          .map(([id, sts]) => {
+            const act = activities.find((a) => a.id === id)!;
+            if (!act) {
+              return;
+            }
+            return (
+              <AccordionItem key={id} value={id}>
+                <AccordionTrigger>{act.name}</AccordionTrigger>
+                <AccordionContent className="flex flex-col items-start">
+                  {sts.map((s) => {
+                    const stage = stages[s];
+                    if (!stage) {
+                      return;
+                    }
+                    return (
+                      <Link
+                        className={buttonVariants({ variant: "link" })}
+                        key={s}
+                        href={`/stages/${s}`}
+                      >
+                        {stage.code} - {stage.name}
+                      </Link>
+                    );
+                  })}
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
       </Accordion>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Enemy, Race, raceData } from "@/lib/enemy_database_types";
-import { HandbookEnemy } from "@/lib/enemy_handbook_table";
+import { HandbookEnemy } from "@/lib/enemy_handbook_table_types";
 import {
   damageTypes,
   motionTypes,

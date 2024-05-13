@@ -5,12 +5,15 @@ import { Stage } from "@/lib/stage_table_types";
 import StageEnemies from "./stage_enemies";
 import { getActivity } from "@/lib/activity";
 import StageDrops from "./stage_drops";
+import StageSelector from "./stage_selector";
 
 interface stageProps {
   id: string;
+  stageToActivity: Record<string, string[]>;
+  activities: Record<string, { id: string; name: string }>;
 }
 
-async function StagePage({ id }: stageProps) {
+async function StagePage({ id, stageToActivity, activities }: stageProps) {
   const decodedId = decodeURIComponent(id);
   const stage = getStage(decodedId);
   if (!stage) {
@@ -31,8 +34,17 @@ async function StagePage({ id }: stageProps) {
   if (hard) {
     stageVars["Hard"] = hard;
   }
+  const activityId = Object.entries(stageToActivity).find(([_, s]) =>
+    s.includes(id),
+  );
   return (
     <div className="sm:container flex flex-col flex-initial gap-6 mb-8">
+      {activityId && <StageSelector
+        stageToActivity={stageToActivity}
+        activityId={activityId[0]}
+        stage={stage}
+        activities={activities}
+      />}
       <h1 className="text-2xl pt-4">
         {stage.code} - {stage.name}
       </h1>
@@ -45,12 +57,16 @@ async function StagePage({ id }: stageProps) {
         return (
           <div key={s} className="flex flex-col gap-4">
             <h2 className="text-xl">{s}</h2>
-            {st.description ? <p
-              className="w-full sm:w-3/4"
-              dangerouslySetInnerHTML={{
-                __html: parseDescription(st.description, []),
-              }}
-            ></p> : <p>No Description</p>}
+            {st.description ? (
+              <p
+                className="w-full sm:w-3/4"
+                dangerouslySetInnerHTML={{
+                  __html: parseDescription(st.description, []),
+                }}
+              ></p>
+            ) : (
+              <p>No Description</p>
+            )}
             <StageTable stage={st} />
             <h3 className="text-lg">Enemies</h3>
             {level && <StageEnemies activity={level} />}
