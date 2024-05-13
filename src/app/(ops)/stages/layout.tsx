@@ -18,14 +18,12 @@ export default function RootLayout({
 }) {
   let className = inter.className;
   className += " dark min-h-screen";
-  const names = getAllOpNames("char");
 
   return (
     <html lang="en">
       <body className={className}>
         <div className="relative min-h-screen flex flex-col">
           <Navbar>
-            <ComboboxDemo names={names} />
           </Navbar>
           <div className="flex-1">{children}</div>
         </div>

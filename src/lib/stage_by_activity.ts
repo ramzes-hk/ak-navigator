@@ -47,6 +47,51 @@ export function getStagesByActivities() {
   return stagesByActivities;
 }
 
+export function getStagesByActivitiesWName() {
+  const stages = getNormalStages();
+  const mainStory = getMainStory();
+  const zoneToActivity = getZoneToActivity();
+  const stagesByActivities: Record<string, {id: string, name: string}[]> = {};
+  //add mainstory stages
+  mainStory.forEach((m) =>
+    Object.values(stages)
+      .filter(
+        (s) =>
+          s.zoneId === m.id &&
+          (s.stageType === "MAIN" || s.stageType === "SUB"),
+      )
+      .forEach((s) => {
+        let act = stagesByActivities[m.id];
+        if (act) {
+          act.push({id: s.stageId, name: s.code});
+        } else {
+          act = [{id: s.stageId, name:s.code}];
+        }
+        stagesByActivities[m.id] = act;
+      }),
+  );
+  //add activities
+  Object.values(stages)
+    .filter((s) => s.stageType === "ACTIVITY")
+    .forEach((s) => {
+      const strippedStageId = s.stageId.replace(/_.*/, "");
+      const actId =
+        zoneToActivity[
+          Object.keys(zoneToActivity).find((z) =>
+            z.toLowerCase().includes(strippedStageId),
+          ) ?? ""
+        ] ?? "";
+      let act = stagesByActivities[actId];
+      if (act) {
+          act.push({id: s.stageId, name: s.code});
+      } else {
+          act = [{id: s.stageId, name:s.code}];
+      }
+      stagesByActivities[actId] = act;
+    });
+  return stagesByActivities;
+}
+
 export function getActivitiesNames() {
   const mainStory = getMainStory();
   const activities = getActivities();

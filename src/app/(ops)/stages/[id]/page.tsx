@@ -1,5 +1,5 @@
 import StagePage from "@/components/stage";
-import { getActivitiesNames, getStagesByActivities } from "@/lib/stage_by_activity";
+import { getActivitiesNames, getStagesByActivitiesWName } from "@/lib/stage_by_activity";
 import { getNormalStages } from "@/lib/stage_table";
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
@@ -14,7 +14,7 @@ interface pageProps {
 }
 
 export default async function Page({ params }: pageProps) {
-  const stageToActivity = getStagesByActivities();
+  const stageToActivity = getStagesByActivitiesWName();
   const activities = getActivitiesNames();
   return <StagePage id={params.id} stageToActivity={stageToActivity} activities={activities} />;
 }

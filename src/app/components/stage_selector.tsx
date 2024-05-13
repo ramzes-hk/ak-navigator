@@ -7,10 +7,11 @@ import {
   SelectValue,
 } from "@/components/select";
 import { Stage } from "@/lib/stage_table_types";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface StageSelectorProps {
-  stageToActivity: Record<string, string[]>;
+  stageToActivity: Record<string, { id: string; name: string }[]>;
   activityId: string;
   stage: Stage;
   activities: Record<string, { id: string; name: string }>;
@@ -22,13 +23,13 @@ function StageSelector({
   activityId,
   activities,
 }: StageSelectorProps) {
+  const router = useRouter();
   const [aId, setAId] = useState<string>(activityId);
-  const [sId, setSId] = useState<string>(stage.stageId);
   return (
-    <div>
-      <Select onValueChange={(val) => setAId(val)}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select Activity" />
+    <div className="flex flex-row flex-wrap pt-6">
+      <Select defaultValue={aId} onValueChange={(val) => setAId(val)}>
+        <SelectTrigger className="w-[300px]">
+          <SelectValue placeholder={aId} />
         </SelectTrigger>
         <SelectContent>
           {Object.values(activities).map((val) => (
@@ -38,14 +39,14 @@ function StageSelector({
           ))}
         </SelectContent>
       </Select>
-      <Select onValueChange={(val) => setSId(val)}>
-        <SelectTrigger>
+      <Select defaultValue={stage.stageId} onValueChange={(val) => router.push(`/stages/${val}`)}>
+        <SelectTrigger className="w-[300px]">
           <SelectValue placeholder="Select stage" />
         </SelectTrigger>
         <SelectContent>
           {stageToActivity[aId]?.map((s) => (
-            <SelectItem key={s} value={s}>
-              {s}
+            <SelectItem key={s.id} value={s.id}>
+              {s.name}
             </SelectItem>
           ))}
         </SelectContent>
