@@ -23,8 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={className}>
         <div className="relative min-h-screen flex flex-col">
-          <Navbar>
-          </Navbar>
+          <Navbar></Navbar>
           <div className="flex-1">{children}</div>
         </div>
       </body>

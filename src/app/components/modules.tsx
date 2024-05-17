@@ -1,6 +1,5 @@
 import { Module } from "@/lib/modules_data";
 import { Phase } from "@/lib/modules_data_types";
-import { parseDescription } from "@/lib/operators";
 import {
   Card,
   CardContent,
@@ -24,6 +23,8 @@ import {
   TableRow,
 } from "@/components/table";
 import { getItemBatch } from "@/lib/item_table";
+import { ParsedDescription } from "@/lib/parse_description";
+import { ReactElement } from "react";
 
 type modulesProps = Module;
 
@@ -38,7 +39,10 @@ const blackBoardMapping: Record<string, string> = {
   respawn_time: "Redeploy",
 };
 
-function getDescription(phase: Phase, index: number = -1): string {
+function getDescription(
+  phase: Phase,
+  index: number = -1,
+): ReactElement | string {
   if (phase.equipLevel === 1) {
     const firstCandidate = phase.parts
       .at(0)
@@ -46,7 +50,11 @@ function getDescription(phase: Phase, index: number = -1): string {
     const blackboard = firstCandidate?.blackboard;
     let desc = firstCandidate?.additionalDescription;
     desc = desc ? desc : firstCandidate?.overrideDescripton;
-    return desc ? parseDescription(desc, blackboard ? blackboard : []) : "";
+    return desc ? (
+      <ParsedDescription description={desc} blackboard={blackboard ?? []} />
+    ) : (
+      ""
+    );
   }
   if (Math.abs(index) === phase.parts.length) {
     return "";
@@ -60,9 +68,11 @@ function getDescription(phase: Phase, index: number = -1): string {
   const blackBoard = isTrait
     ? lastElem?.overrideTraitDataBundle.candidates?.at(0)?.blackboard
     : lastElem?.addOrOverrideTalentDataBundle.candidates?.at(0)?.blackboard;
-  return desc
-    ? parseDescription(desc, blackBoard ? blackBoard : [])
-    : getDescription(phase, index - 1);
+  return desc ? (
+    <ParsedDescription description={desc} blackboard={blackBoard ?? []} />
+  ) : (
+    getDescription(phase, index - 1)
+  );
 }
 
 function Modules({ phases, equipDict, missions }: modulesProps) {
@@ -111,11 +121,7 @@ function Modules({ phases, equipDict, missions }: modulesProps) {
                         ))}
                       </ul>
                     </TableCell>
-                    <TableCell
-                      dangerouslySetInnerHTML={{
-                        __html: getDescription(phase),
-                      }}
-                    ></TableCell>
+                    <TableCell>{getDescription(phase)}</TableCell>
                     {phase.equipLevel === 1 && (
                       <TableCell rowSpan={3}>
                         <ul className="list-disc px-2">

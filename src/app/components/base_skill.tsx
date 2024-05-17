@@ -1,6 +1,4 @@
 import { CharWithBuff, getBaseSkills } from "@/lib/base_skills";
-import { parseDescription } from "@/lib/operators";
-
 import {
   Table,
   TableBody,
@@ -9,6 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
+import { ParsedDescription } from "@/lib/parse_description";
+
 interface baseSkillsProps {
   charId: string;
 }
@@ -43,14 +43,12 @@ async function BaseSkills({ charId }: baseSkillsProps) {
                   </>
                 )}
               </TableCell>
-              <TableCell
-                dangerouslySetInnerHTML={{
-                  __html: parseDescription(
-                    (bd as BrokenBuff).buff.description,
-                    [],
-                  ),
-                }}
-              ></TableCell>
+              <TableCell>
+                <ParsedDescription
+                  description={(bd as BrokenBuff).buff.description}
+                  blackboard={[]}
+                />
+              </TableCell>
             </TableRow>
           )),
         )}

@@ -39,7 +39,10 @@ function StageSelector({
           ))}
         </SelectContent>
       </Select>
-      <Select defaultValue={stage.stageId} onValueChange={(val) => router.push(`/stages/${val}`)}>
+      <Select
+        defaultValue={stage.stageId}
+        onValueChange={(val) => router.push(`/stages/${val}`)}
+      >
         <SelectTrigger className="w-[300px]">
           <SelectValue placeholder="Select stage" />
         </SelectTrigger>

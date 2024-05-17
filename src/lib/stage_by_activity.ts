@@ -51,7 +51,7 @@ export function getStagesByActivitiesWName() {
   const stages = getNormalStages();
   const mainStory = getMainStory();
   const zoneToActivity = getZoneToActivity();
-  const stagesByActivities: Record<string, {id: string, name: string}[]> = {};
+  const stagesByActivities: Record<string, { id: string; name: string }[]> = {};
   //add mainstory stages
   mainStory.forEach((m) =>
     Object.values(stages)
@@ -63,9 +63,9 @@ export function getStagesByActivitiesWName() {
       .forEach((s) => {
         let act = stagesByActivities[m.id];
         if (act) {
-          act.push({id: s.stageId, name: s.code});
+          act.push({ id: s.stageId, name: s.code });
         } else {
-          act = [{id: s.stageId, name:s.code}];
+          act = [{ id: s.stageId, name: s.code }];
         }
         stagesByActivities[m.id] = act;
       }),
@@ -83,9 +83,9 @@ export function getStagesByActivitiesWName() {
         ] ?? "";
       let act = stagesByActivities[actId];
       if (act) {
-          act.push({id: s.stageId, name: s.code});
+        act.push({ id: s.stageId, name: s.code });
       } else {
-          act = [{id: s.stageId, name:s.code}];
+        act = [{ id: s.stageId, name: s.code }];
       }
       stagesByActivities[actId] = act;
     });
@@ -95,8 +95,8 @@ export function getStagesByActivitiesWName() {
 export function getActivitiesNames() {
   const mainStory = getMainStory();
   const activities = getActivities();
-  const names: Record<string, {id: string, name: string}> = {};
-  mainStory.forEach(m => names[m.id] = {id: m.id, name: m.name});
-  activities.forEach(a => names[a.id] = {id: a.id, name: a.name});
+  const names: Record<string, { id: string; name: string }> = {};
+  mainStory.forEach((m) => (names[m.id] = { id: m.id, name: m.name }));
+  activities.forEach((a) => (names[a.id] = { id: a.id, name: a.name }));
   return names;
 }

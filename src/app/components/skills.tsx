@@ -1,4 +1,3 @@
-import { parseDescription } from "@/lib/operators";
 import { Level } from "@/lib/operators_types";
 import { getRange } from "@/lib/ranges";
 import CanvasRange from "./range_canvas";
@@ -10,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
+import { ParsedDescription } from "@/lib/parse_description";
 
 const spRecovery: Record<string, string> = {
   INCREASE_WITH_TIME: "Auto Recovery",
@@ -75,15 +75,13 @@ async function Skill({ levels }: skillProps) {
             return (
               <TableRow className="divide-x" key={`level-${i}`}>
                 <TableCell className="text-center">{i + 1}</TableCell>
-                <TableCell
-                  dangerouslySetInnerHTML={{
-                    __html: parseDescription(
-                      level.description ?? "-",
-                      level.blackboard,
-                      level.duration,
-                    ),
-                  }}
-                ></TableCell>
+                <TableCell>
+                  <ParsedDescription
+                    description={level.description ?? "-"}
+                    blackboard={level.blackboard}
+                    duration={level.duration}
+                  />
+                </TableCell>
                 {level.duration > 1 && (
                   <TableCell className="text-center">
                     {level.duration}

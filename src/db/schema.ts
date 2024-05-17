@@ -54,6 +54,11 @@ export const enemies = sqliteTable("enemies", {
   handbook: text("handbook", { mode: "json" }).$type<HandbookEnemy>(),
 });
 
+export const activities = sqliteTable("activities", {
+  id: text("id", { length: 32 }).primaryKey(),
+  name: text("id", { length: 64 }).unique(),
+});
+
 export const stages = sqliteTable("stages", {
   id: text("id", { length: 32 }).primaryKey(),
   name: text("name", { length: 64 }),
@@ -70,8 +75,8 @@ export const stages = sqliteTable("stages", {
   stage: text("stage", { mode: "json" }).$type<Stage>(),
 });
 
-export const story = sqliteTable("story" , {
-  id: text("id", {length: 64}).primaryKey(),
-  triggerType: text("trigger_type", {length: 32}),
-  story: text("story", {mode: 'json'}).$type<StoryTableEntry>(),
-})
+export const story = sqliteTable("story", {
+  id: text("id", { length: 64 }).primaryKey(),
+  triggerType: text("trigger_type", { length: 32 }),
+  story: text("story", { mode: "json" }).$type<StoryTableEntry>(),
+});

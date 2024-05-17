@@ -64,7 +64,7 @@ export async function getRewardList(
     rewards.map(async (reward) => {
       let name = reward.id;
       if (reward.type === "CHAR") {
-        name = await getOpName(reward.id)
+        name = await getOpName(reward.id);
       } else if (reward.type === "FURN") {
         name = getFurniture(reward.id).name;
       } else if (reward.type === "CHARM") {

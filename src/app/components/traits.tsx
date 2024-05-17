@@ -1,4 +1,3 @@
-import { parseDescription } from "@/lib/operators";
 import { Trait } from "@/lib/operators_types";
 import {
   Table,
@@ -8,6 +7,7 @@ import {
   TableRow,
 } from "@/components/table";
 import { HandbookEnemy } from "@/lib/enemy_handbook_table_types";
+import { ParsedDescription } from "@/lib/parse_description";
 
 interface traitProps {
   description: string;
@@ -15,11 +15,14 @@ interface traitProps {
 }
 
 function TraitDisplay({ description, traits }: traitProps) {
-  const trait = parseDescription(
-    description,
-    traits?.candidates[0]?.blackboard ?? [],
+  return (
+    <p>
+      <ParsedDescription
+        description={description}
+        blackboard={traits?.candidates[0]?.blackboard ?? []}
+      />
+    </p>
   );
-  return <p dangerouslySetInnerHTML={{ __html: trait }}></p>;
 }
 
 function TraitTable({ traits }: traitProps) {
@@ -33,14 +36,12 @@ function TraitTable({ traits }: traitProps) {
                 /PHASE_/,
                 "",
               )}`}</TableHead>
-              <TableCell
-                dangerouslySetInnerHTML={{
-                  __html: parseDescription(
-                    candidate.overrideDescripton,
-                    candidate.blackboard,
-                  ),
-                }}
-              ></TableCell>
+              <TableCell>
+                <ParsedDescription
+                  description={candidate.overrideDescripton}
+                  blackboard={candidate.blackboard}
+                />
+              </TableCell>
             </TableRow>
           );
         })}
@@ -75,12 +76,7 @@ export function EnemyTraits({ traits }: enemyTraitsProps) {
           return (
             <p key={trait.text}>
               {" "}
-              -{" "}
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: parseDescription(trait.text, []),
-                }}
-              ></span>
+              - <ParsedDescription description={trait.text} blackboard={[]} />
             </p>
           );
         } else if (trait.textFormat === "TITLE") {
@@ -93,12 +89,7 @@ export function EnemyTraits({ traits }: enemyTraitsProps) {
           return (
             <p key={trait.text}>
               {" "}
-              X{" "}
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: parseDescription(trait.text, []),
-                }}
-              ></span>
+              X <ParsedDescription description={trait.text} blackboard={[]} />
             </p>
           );
         }

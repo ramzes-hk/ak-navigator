@@ -1,4 +1,3 @@
-import { parseDescription } from "@/lib/operators";
 import { Talent } from "@/lib/operators_types";
 import {
   Table,
@@ -8,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table";
+import { ParsedDescription } from "@/lib/parse_description";
 
 interface talentsProps {
   talents: Talent[];
@@ -77,15 +77,12 @@ function Talents({ talents }: talentsProps) {
                     {candidate.unlockCondition.level !== 1 &&
                       " Lvl " + candidate.unlockCondition.level}
                   </TableCell>
-                  <TableCell
-                    className="hover:bg-muted/50"
-                    dangerouslySetInnerHTML={{
-                      __html: parseDescription(
-                        candidate.description ?? "",
-                        candidate.blackboard,
-                      ),
-                    }}
-                  ></TableCell>
+                  <TableCell className="hover:bg-muted/50">
+                    <ParsedDescription
+                      description={candidate.description ?? ""}
+                      blackboard={candidate.blackboard}
+                    />
+                  </TableCell>
                 </TableRow>
               );
             }),

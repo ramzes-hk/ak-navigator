@@ -122,13 +122,9 @@ export function parseDescription(
     ? description.replace(/{duration}/, String(duration))
     : description;
   const styles = getStyle();
-  for (const key in styles) {
-    const style = styles[key];
-    if (style === undefined) {
-      throw `No style found ${key}`;
-    }
+  Object.entries(styles).forEach(([key, style]) => {
     description = description.replace(RegExp(key, "g"), style);
-  }
+  });
   for (const key in getTerms()) {
     description = description.replace(RegExp(key, "g"), " ");
   }

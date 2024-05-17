@@ -1,7 +1,7 @@
-import { getStory } from "@/lib/story_parser"
-import { test, expect } from "vitest"
+import { getStory } from "@/lib/story_parser";
+import { test, expect } from "vitest";
 
-const url = "obt/main/level_main_06-02_beg.txt"
+const url = "obt/main/level_main_06-02_beg.txt";
 const exp = `Oh... Rosmontis, what are you doing?
 [name="Rosmontis"]  I... I wanna fix this terminal.
 [name="Rosmontis"]  Six years of memories up to last year... I saved them all in here...
@@ -102,14 +102,12 @@ Relax. I can control my own Arts.
 [name="Blaze"]  The fastest, of course!
 [name="Blaze"]  Don't give me that look. It's not like I've never carried you before.
 [name="Blaze"]  Here we go! Smash Reunion and save the Lungmenites!
-`
+`;
 
-test.skip("story parser", async ()=>{
-  const story = await getStory(url)
+test.skip("story parser", async () => {
+  const story = await getStory(url);
   if (!story) {
-    throw new Error("no story")
+    throw new Error("no story");
   }
-  expect(story.join("\n")).toBe(exp)
-})
-
-
+  expect(story.join("\n")).toBe(exp);
+});

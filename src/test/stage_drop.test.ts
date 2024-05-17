@@ -34,5 +34,5 @@ const exp = [
 ];
 
 test("stage drop list", () => {
-  getRewardList(...rewards).then(res => expect(res).toStrictEqual(exp));
+  getRewardList(...rewards).then((res) => expect(res).toStrictEqual(exp));
 });
