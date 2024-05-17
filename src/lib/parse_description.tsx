@@ -1,4 +1,3 @@
-"use client";
 import { Blackboard } from "./operators_types";
 import { getStyle } from "./rich_text_styles";
 import {
