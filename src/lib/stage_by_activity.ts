@@ -47,7 +47,16 @@ export function getStagesByActivities() {
   return stagesByActivities;
 }
 
-export function getStagesByActivitiesWName() {
+let stagesCache: ReturnType<typeof getStagesByActivitiesWName> | undefined =
+  undefined;
+
+export function getStagesByActivitiesWName(): Record<
+  string,
+  { id: string; name: string }[]
+> {
+  if (stagesCache) {
+    return stagesCache;
+  }
   const stages = getNormalStages();
   const mainStory = getMainStory();
   const zoneToActivity = getZoneToActivity();
@@ -89,14 +98,23 @@ export function getStagesByActivitiesWName() {
       }
       stagesByActivities[actId] = act;
     });
+  stagesCache = stagesByActivities;
   return stagesByActivities;
 }
 
+let activitiesNameCache:
+  | Record<string, { id: string; name: string }>
+  | undefined = undefined;
+
 export function getActivitiesNames() {
+  if (activitiesNameCache) {
+    return activitiesNameCache;
+  }
   const mainStory = getMainStory();
   const activities = getActivities();
   const names: Record<string, { id: string; name: string }> = {};
   mainStory.forEach((m) => (names[m.id] = { id: m.id, name: m.name }));
   activities.forEach((a) => (names[a.id] = { id: a.id, name: a.name }));
+  activitiesNameCache = names;
   return names;
 }

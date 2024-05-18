@@ -17,19 +17,7 @@ function Enemy({ id }: enemyProps) {
   if (!enemy) {
     return <p>No Enemy</p>;
   }
-  const val = enemy.Value;
-  if (!val) {
-    throw "Enemy has no Value";
-  }
-  const firstVal = val[0];
-  if (!firstVal) {
-    throw "Enemy has no first Value";
-  }
-  const enemyData = firstVal.enemyData;
-  if (!enemyData) {
-    throw "First value has no enemyData";
-  }
-  const enemyTags = enemyData.enemyTags;
+  const enemyTags = enemy.Value[0]?.enemyData.enemyTags;
   if (!enemyTags) {
     throw "Enemy Data has no enemyTags";
   }

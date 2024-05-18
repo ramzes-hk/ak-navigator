@@ -1,11 +1,11 @@
 import { getStage } from "@/lib/stage_table";
 import StageTable from "./stage_table";
-import { parseDescription } from "@/lib/operators";
 import { Stage } from "@/lib/stage_table_types";
 import StageEnemies from "./stage_enemies";
 import { getActivity } from "@/lib/activity";
 import StageDrops from "./stage_drops";
 import StageSelector from "./stage_selector";
+import { ParsedDescription } from "@/lib/parse_description";
 
 interface stageProps {
   id: string;
@@ -50,9 +50,7 @@ async function StagePage({ id, stageToActivity, activities }: stageProps) {
       <h1 className="text-2xl pt-4">
         {stage.code} - {stage.name}
       </h1>
-      {Object.keys(stageVars).map(async (s) => {
-        const st = stageVars[s];
-        if (!st) return;
+      {Object.entries(stageVars).map(async ([s, st]) => {
         const level = st.levelId
           ? await getActivity(st.levelId.replace("easy", "main"))
           : undefined;
@@ -60,12 +58,12 @@ async function StagePage({ id, stageToActivity, activities }: stageProps) {
           <div key={s} className="flex flex-col gap-4">
             <h2 className="text-xl">{s}</h2>
             {st.description ? (
-              <p
-                className="w-full sm:w-3/4"
-                dangerouslySetInnerHTML={{
-                  __html: parseDescription(st.description, []),
-                }}
-              ></p>
+              <p className="w-full sm:w-3/4">
+                <ParsedDescription
+                  description={st.description}
+                  blackboard={[]}
+                />
+              </p>
             ) : (
               <p>No Description</p>
             )}

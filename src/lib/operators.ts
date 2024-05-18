@@ -1,10 +1,8 @@
 import path from "path";
 import fs from "fs";
 import fsPromise from "fs/promises";
-import { getStyle } from "./rich_text_styles";
-import { getTerms } from "./term_description";
 import { getUniequip } from "./modules_data";
-import { OpName, Operator, Level, Skills, Blackboard } from "./operators_types";
+import { OpName, Operator, Level, Skills } from "./operators_types";
 import { TaggedOperator, recruitIds } from "./recruitment_list";
 
 export function getAllOpNames(filter?: "char" | "token&trap"): OpName[] {
@@ -105,59 +103,6 @@ export async function getAllOpData(
   return Object.entries(operators)
     .filter((entry) => !entry[0].includes("512"))
     .map((entry) => ({ ...entry[1], id: entry[0] }));
-}
-
-function escapeRegExp(input: string) {
-  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-export function parseDescription(
-  description: string,
-  blackboard: Blackboard[],
-  duration?: number,
-): string {
-  description = description.replaceAll("\n", "<br />");
-  description = replaceValues(description, blackboard);
-  description = duration
-    ? description.replace(/{duration}/, String(duration))
-    : description;
-  const styles = getStyle();
-  Object.entries(styles).forEach(([key, style]) => {
-    description = description.replace(RegExp(key, "g"), style);
-  });
-  for (const key in getTerms()) {
-    description = description.replace(RegExp(key, "g"), " ");
-  }
-  return description;
-}
-
-export function replaceValues(
-  description: string,
-  blackboard: Blackboard[],
-): string {
-  let desc = description;
-  blackboard.forEach((placeholder) => {
-    let value = Math.abs(placeholder.value);
-    let pattern = RegExp(
-      `\{-*${escapeRegExp(placeholder.key)}(?::0%)?\}`,
-      "gi",
-    );
-    let match = pattern.exec(desc);
-    if (match === null) {
-      pattern = RegExp(`\{${placeholder.key}\}`, "gi");
-      desc = desc.replaceAll(pattern, String(value));
-    } else {
-      if (match[0].includes("%")) {
-        desc = desc.replaceAll(
-          match[0],
-          Math.round(value * 100).toString() + "%",
-        );
-      } else {
-        desc = desc.replaceAll(match[0], String(value));
-      }
-    }
-  });
-  return desc;
 }
 
 export async function tagOperators(): Promise<TaggedOperator[]> {

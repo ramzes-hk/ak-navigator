@@ -12,12 +12,14 @@ interface ParsedDescriptionProps {
   description: string;
   blackboard: Blackboard[];
   duration?: number;
+  depth?: number;
 }
 
 export function ParsedDescription({
   description,
   blackboard,
   duration,
+  depth = 0,
 }: ParsedDescriptionProps) {
   const out = [];
   const char_buffer = [];
@@ -75,7 +77,7 @@ export function ParsedDescription({
       }
 
       const content = content_buffer.join("");
-      if (!styleKey.includes("$")) {
+      if (!styleKey.includes("$") || depth > 0) {
         out.push(
           <span
             key={styleKey + i}
@@ -100,11 +102,10 @@ export function ParsedDescription({
         );
       } else {
         out.push(
-          <TooltipProvider>
+          <TooltipProvider key={styleKey + i}>
             <Tooltip>
               <TooltipTrigger>
                 <span
-                  key={styleKey + i}
                   style={{
                     textDecorationLine: "underline",
                     textUnderlineOffset: 2,
@@ -130,6 +131,7 @@ export function ParsedDescription({
                 <ParsedDescription
                   description={terms[styleKey]?.description ?? ""}
                   blackboard={[]}
+                  depth={1}
                 />
               </TooltipContent>
             </Tooltip>

@@ -20,15 +20,7 @@ interface enemyTableProps {
 }
 
 function EnemyTable({ enemy, hb }: enemyTableProps) {
-  const enemyValue = enemy.Value;
-  if (!enemyValue) {
-    throw "Enemy has no Value";
-  }
-  const firstValue = enemyValue[0];
-  if (!firstValue) {
-    throw "Enemy has no first Value";
-  }
-  const enemyData = firstValue.enemyData;
+  const enemyData = enemy.Value[0]?.enemyData;
   if (!enemyData) {
     throw "First Value has not enemyData";
   }

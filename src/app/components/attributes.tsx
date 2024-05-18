@@ -38,22 +38,19 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
   }
 
   function calculateAttributes(lvl: number) {
-    const phase = phases[elite];
-    if (!phase) {
+    const attrKeyFrames = phases[elite]?.attributesKeyFrames;
+    if (!attrKeyFrames) {
       throw "No phases corresponding to elite";
     }
-    const attrKeyFrames = phase.attributesKeyFrames;
     const base = attrKeyFrames[0];
     if (!base) {
       throw "No base AttrKey frame";
     }
     const baseData = base.data;
-    const next = attrKeyFrames[1];
-    if (!next) {
+    const nextData = attrKeyFrames[1]?.data;
+    if (!nextData) {
       throw "No next AttrKey frame";
     }
-    const nextData = next.data;
-
     return {
       MaxHP: calculateAttribute(baseData.maxHp, nextData.maxHp, lvl),
       ATK: calculateAttribute(baseData.atk, nextData.atk, lvl),
@@ -91,19 +88,7 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
             id="radio-e"
             onValueChange={(e) => {
               const val = parseInt(e.slice(1));
-              const phase = phases[val];
-              if (!phase) {
-                throw "No corresponding phase";
-              }
-              const attrKeyFrames = phase.attributesKeyFrames;
-              if (!attrKeyFrames) {
-                throw "No Attribute Key Frames";
-              }
-              const minAttr = attrKeyFrames[0];
-              if (!minAttr) {
-                throw "No min attr";
-              }
-              const minAttrData = minAttr.data;
+              const minAttrData = phases[val]?.attributesKeyFrames[0]?.data;
               if (!minAttrData) {
                 throw "No data in min attr";
               }
