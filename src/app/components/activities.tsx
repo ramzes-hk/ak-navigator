@@ -22,7 +22,9 @@ function Activites() {
         {mainStory.map((a, i) => {
           return (
             <AccordionItem key={a.id} value={a.id}>
-              <AccordionTrigger>Ch. {i} - {a.name}</AccordionTrigger>
+              <AccordionTrigger>
+                Ch. {i} - {a.name}
+              </AccordionTrigger>
               <AccordionContent className="flex flex-col items-start">
                 {Object.entries(stagesByActivity)
                   .find((entry) => entry.includes(a.id))![1]
@@ -54,7 +56,9 @@ function Activites() {
             }
             return (
               <AccordionItem key={id} value={id}>
-                <AccordionTrigger>{stages[sts[0]!]?.code.split("-")[0]} - {act.name}</AccordionTrigger>
+                <AccordionTrigger>
+                  {stages[sts[0]!]?.code.split("-")[0]} - {act.name}
+                </AccordionTrigger>
                 <AccordionContent className="flex flex-col items-start">
                   {sts.map((s) => {
                     const stage = stages[s];

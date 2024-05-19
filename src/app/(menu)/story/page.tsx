@@ -1,5 +1,6 @@
-function StoryMenu(){
-
+import StoryMenu from "@/components/story_menu";
+function StoryMenuPage() {
+  return <StoryMenu />;
 }
 
-export default StoryMenu;
+export default StoryMenuPage;

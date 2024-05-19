@@ -47,6 +47,13 @@ function Navbar({ children }: { children?: React.ReactNode }) {
         <Link
           className={buttonVariants({ variant: "link" })}
           prefetch={false}
+          href="/story"
+        >
+          Story
+        </Link>
+        <Link
+          className={buttonVariants({ variant: "link" })}
+          prefetch={false}
           href="/about"
         >
           About

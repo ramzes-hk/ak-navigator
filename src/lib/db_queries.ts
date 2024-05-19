@@ -6,7 +6,7 @@ export async function getOpName(id: string): Promise<string> {
   const result = await db
     .select({ name: operators.name })
     .from(operators)
-    .where(eq(operators.id, id));
+    .where(like(operators.id, `%${id}`));
   const firstResult = result[0]?.name;
   if (!firstResult) {
     throw "No results";
