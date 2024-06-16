@@ -9,6 +9,7 @@ import {
   Level,
 } from "@/lib/operators_types";
 import { Stage } from "@/lib/stage_table_types";
+import { StoryReviewTable } from "@/lib/story_review_table_types";
 import { StoryTableEntry } from "@/lib/story_table_types";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
@@ -57,6 +58,8 @@ export const enemies = sqliteTable("enemies", {
 export const activities = sqliteTable("activities", {
   id: text("id", { length: 32 }).primaryKey(),
   name: text("id", { length: 64 }).unique(),
+  entryType: text("entry_type", { length: 32 }),
+  actType: text("act_type", { length: 32 }),
 });
 
 export const stages = sqliteTable("stages", {
@@ -79,4 +82,12 @@ export const story = sqliteTable("story", {
   id: text("id", { length: 64 }).primaryKey(),
   triggerType: text("trigger_type", { length: 32 }),
   story: text("story", { mode: "json" }).$type<StoryTableEntry>(),
+});
+
+export const storyReview = sqliteTable("story_review", {
+  id: text("id", { length: 64 }).primaryKey(),
+  storyReviewData: text("story_review_data", { mode: "json" }).$type<
+    StoryReviewTable[string]["infoUnlockDatas"][number]
+  >(),
+  actId: text("act_id", { length: 32 }).references(() => activities.id),
 });

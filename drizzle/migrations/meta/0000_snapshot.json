@@ -1,9 +1,47 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "ef63ce33-4e82-4f17-a78e-a8a5e44c5094",
+  "id": "598fbbc6-5112-4565-a267-fbe9ba2bf4ef",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "activities": {
+      "name": "activities",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "entry_type": {
+          "name": "entry_type",
+          "type": "text(32)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "act_type": {
+          "name": "act_type",
+          "type": "text(32)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "activities_id_unique": {
+          "name": "activities_id_unique",
+          "columns": [
+            "id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "enemies": {
       "name": "enemies",
       "columns": {
@@ -355,6 +393,50 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "story_review": {
+      "name": "story_review",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text(64)",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "story_review_data": {
+          "name": "story_review_data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "act_id": {
+          "name": "act_id",
+          "type": "text(32)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "story_review_act_id_activities_id_fk": {
+          "name": "story_review_act_id_activities_id_fk",
+          "tableFrom": "story_review",
+          "tableTo": "activities",
+          "columnsFrom": [
+            "act_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },

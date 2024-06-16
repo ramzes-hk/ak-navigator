@@ -71,7 +71,7 @@ interface EnemySpData {
   increment: number;
 }
 
-export const levelTypes = { NORMAL: "Normal", Elite: "Elite", BOSS: "Boss" };
+export const levelTypes = { NORMAL: "Normal", ELITE: "Elite", BOSS: "Boss" };
 export type LevelType = keyof typeof levelTypes;
 
 export const motionTypes = { WALK: "Ground", FLY: "Flying" };
