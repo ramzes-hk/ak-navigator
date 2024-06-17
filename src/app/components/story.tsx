@@ -18,7 +18,9 @@ async function StoryPage({ id, name }: StoryPageProps): Promise<ReactElement> {
           {parseStory(story).map((line, i) => (
             <tr key={i}>
               <td className="text-right pr-2 align-top">{line.name}</td>
-              <td>{line.content}</td>
+              <td className={line.type === "i" ? "italic" : ""}>
+                {line.content}
+              </td>
             </tr>
           ))}
         </tbody>
