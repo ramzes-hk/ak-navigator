@@ -11,34 +11,56 @@ function parseStory(lines: string[]) {
     let name: string | undefined = undefined;
     let type: (typeof out)[number]["type"] = undefined;
     if (line.includes("[name")) {
-      content = line.split("]")[1]!;
-      name = line.match(/name="([^"]*)"/)![1]!;
+      try {
+        content = line.split("]")[1]!;
+        name = line.match(/name=["']([^"]*)["']/)![1]!;
+      } catch (e) {
+        console.log("error on line [name]", lines[i]);
+      }
     } else if (line.includes("[Sticker")) {
-      const text = line.match(/text="([^"]*)"/);
+      const text = line.match(/text=["']([^"]*)["']/);
       if (!text) {
         continue;
       }
-      content = text[1]!.replace("\\n", "");
+      try {
+        content = text[1]!.replace("\\n", "");
+      } catch (e) {
+        console.log("error on [sticker]", lines[i]);
+      }
     } else if (line.includes("[Decision")) {
-      const options = line.match(/options="([^"]*)"/)![1]!.split(";");
-      const values = line.match(/values="([^"]*)"/)![1]!.split(";");
-      for (let j = 0; j < options.length; j++) {
-        const value = values[j]!;
-        if (decisions.has(value)) {
-          decisions.clear();
+      try {
+        const options = line.match(/options=["']([^"]*)["']/)![1]!.split(";");
+        const values = line.match(/values=["']([^"]*)["']/)![1]!.split(";");
+        for (let j = 0; j < options.length; j++) {
+          const value = values[j]!;
+          if (decisions.has(value)) {
+            decisions.clear();
+            out.push({
+              name: undefined,
+              content: "Choise " + values.join(", "),
+              type: type,
+            });
+          }
+          decisions.set(value, options[j]!);
           out.push({
-            name: undefined,
-            content: "Choise " + values.join(", "),
+            name: "Choise " + value,
+            content: options[j]!,
             type: type,
           });
         }
-        decisions.set(value, options[j]!);
-        out.push({ name: "Choise " + value, content: options[j]!, type: type });
+        continue;
+      } catch {
+        console.log("error on [decision]", lines[i]);
       }
-      continue;
     } else if (line.includes("[Predicate")) {
-      const references = line.match(/references="([^"]*)"/)![1]!.split(";");
-      content = "Choise " + references.join(", ");
+      try {
+        const references = line
+          .match(/references=["']([^"]*)["']/)![1]!
+          .split(";");
+        content = "Choise " + references.join(", ");
+      } catch {
+        console.log("error on [predicate]", lines[i]);
+      }
     } else if (line.includes("[")) {
       continue;
     }

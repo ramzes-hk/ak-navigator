@@ -1,5 +1,4 @@
 export async function getStory(levelId: string): Promise<string[] | undefined> {
-  console.log(decodeURIComponent(levelId));
   const baseUrl =
     "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData_YoStar/main/en_US/gamedata/story/";
   try {
