@@ -13,5 +13,5 @@ interface pageProps {
 }
 
 export default async function Page({ params }: pageProps) {
-  return <StoryPage id={params.id} name=""/>;
+  return <StoryPage id={params.id} name="" />;
 }

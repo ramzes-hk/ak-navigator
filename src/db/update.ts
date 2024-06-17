@@ -1,6 +1,13 @@
 import { getAllOpData } from "@/lib/operators";
 import { db } from "./db";
-import { operators, enemies, stages, story, activities, storyReview } from "./schema";
+import {
+  operators,
+  enemies,
+  stages,
+  story,
+  activities,
+  storyReview,
+} from "./schema";
 import { getAllEnemies } from "@/lib/enemy_database";
 import { getAllHandbookEnemies } from "@/lib/enemy_handbook_table";
 import { getStages } from "@/lib/stage_table";
@@ -99,24 +106,30 @@ async function updateStory() {
 async function updateActivities() {
   const acts = getStoryReviewTable();
   for (const act of Object.values(acts)) {
-    await db.insert(activities).values({
-      id: act.id,
-      name: act.name,
-      entryType: act.entryType,
-      actType: act.actType,
-    }).onConflictDoNothing();
-  } 
+    await db
+      .insert(activities)
+      .values({
+        id: act.id,
+        name: act.name,
+        entryType: act.entryType,
+        actType: act.actType,
+      })
+      .onConflictDoNothing();
+  }
 }
 
 async function updateStoryReview() {
   const acts = getStoryReviewTable();
   for (const act of Object.values(acts)) {
     for (const sr of act.infoUnlockDatas) {
-      await db.insert(storyReview).values({
-        id: sr.storyTxt,
-        actId: act.id,
-        storyReviewData: sr,
-      }).onConflictDoNothing();
+      await db
+        .insert(storyReview)
+        .values({
+          id: sr.storyTxt,
+          actId: act.id,
+          storyReviewData: sr,
+        })
+        .onConflictDoNothing();
     }
   }
 }

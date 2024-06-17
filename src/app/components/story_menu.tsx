@@ -29,11 +29,8 @@ function StoryMenu() {
                   href={`story/${encodeURIComponent(unlock.storyTxt)}`}
                   className={buttonVariants({ variant: "link" })}
                 >
-                  {unlock.storyCode}
-                  {unlock.avgTag.includes("Operation")
-                    ? " - " + unlock.avgTag.split(" ")[0] + " "
-                    : ""}{" "}
-                  - {unlock.storyName}
+                  {unlock.storyCode ? unlock.storyCode + " - " : ""}
+                  {unlock.storyName}
                 </Link>
               ))}
             </AccordionContent>
