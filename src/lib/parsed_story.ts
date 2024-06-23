@@ -13,7 +13,7 @@ function parseStory(lines: string[]) {
     if (line.includes("[name")) {
       try {
         content = line.split("]")[1]!;
-        name = line.match(/name=["']([^"]*)["']/)![1]!;
+        name = line.match(/name=\s*["']([^"]*)["']/)![1]!;
       } catch (e) {
         console.log("error on line [name]", lines[i]);
       }
@@ -54,9 +54,11 @@ function parseStory(lines: string[]) {
       }
     } else if (line.includes("[Predicate")) {
       try {
-        const references = line
-          .match(/references=["']([^"]*)["']/)![1]!
-          .split(";");
+        const ref = line.match(/references=["']([^"]*)["']/);
+        if (!ref) {
+          continue;
+        }
+        const references = line.split(";");
         content = "Choise " + references.join(", ");
       } catch {
         console.log("error on [predicate]", lines[i]);

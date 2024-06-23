@@ -30,7 +30,7 @@ function StoryMenu() {
                   className={buttonVariants({ variant: "link" })}
                 >
                   {unlock.storyCode ? unlock.storyCode + " - " : ""}
-                  {unlock.storyName}
+                  {unlock.storyName} - {unlock.avgTag}
                 </Link>
               ))}
             </AccordionContent>
@@ -51,6 +51,7 @@ function StoryMenu() {
               >
                 {getOpName(act.id.split("_")[1]!).then((name) => name)} -{" "}
                 {act.name}
+                {}
               </Link>
             ))}
         </AccordionContent>

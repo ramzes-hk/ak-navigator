@@ -52,15 +52,19 @@ let stagesCache: ReturnType<typeof getStagesByActivitiesWName> | undefined =
 
 export function getStagesByActivitiesWName(): Record<
   string,
-  { id: string; name: string }[]
+  { name: string; id: string; stages: { id: string; name: string }[] }
 > {
   if (stagesCache) {
     return stagesCache;
   }
+  const activities = getActivities();
   const stages = getNormalStages();
   const mainStory = getMainStory();
   const zoneToActivity = getZoneToActivity();
-  const stagesByActivities: Record<string, { id: string; name: string }[]> = {};
+  const stagesByActivities: Record<
+    string,
+    { name: string; id: string; stages: { id: string; name: string }[] }
+  > = {};
   //add mainstory stages
   mainStory.forEach((m) =>
     Object.values(stages)
@@ -72,9 +76,13 @@ export function getStagesByActivitiesWName(): Record<
       .forEach((s) => {
         let act = stagesByActivities[m.id];
         if (act) {
-          act.push({ id: s.stageId, name: s.code });
+          act.stages.push({ id: s.stageId, name: s.code });
         } else {
-          act = [{ id: s.stageId, name: s.code }];
+          act = {
+            name: m.name,
+            id: m.id,
+            stages: [{ id: s.stageId, name: s.code }],
+          };
         }
         stagesByActivities[m.id] = act;
       }),
@@ -92,9 +100,17 @@ export function getStagesByActivitiesWName(): Record<
         ] ?? "";
       let act = stagesByActivities[actId];
       if (act) {
-        act.push({ id: s.stageId, name: s.code });
+        act.stages.push({ id: s.stageId, name: s.code });
       } else {
-        act = [{ id: s.stageId, name: s.code }];
+        const activity = activities.find((a) => a.id === actId);
+        if (!activity) {
+          return;
+        }
+        act = {
+          name: activity.name,
+          id: activity.id,
+          stages: [{ id: s.stageId, name: s.code }],
+        };
       }
       stagesByActivities[actId] = act;
     });

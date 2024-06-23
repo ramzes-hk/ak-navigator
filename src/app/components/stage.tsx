@@ -9,11 +9,14 @@ import { ParsedDescription } from "@/lib/parse_description";
 
 interface stageProps {
   id: string;
-  stageToActivity: Record<string, { id: string; name: string }[]>;
+  stageToActivity: Record<
+    string,
+    { name: string; id: string; stages: { id: string; name: string }[] }
+  >;
   activities: Record<string, { id: string; name: string }>;
 }
 
-async function StagePage({ id, stageToActivity, activities }: stageProps) {
+async function StagePage({ id, stageToActivity }: stageProps) {
   const decodedId = decodeURIComponent(id);
   const stage = getStage(decodedId);
   if (!stage) {
@@ -35,7 +38,7 @@ async function StagePage({ id, stageToActivity, activities }: stageProps) {
     stageVars["Hard"] = hard;
   }
   const activityId = Object.entries(stageToActivity).find(([_, s]) =>
-    s.find((sub) => sub.id === id),
+    s.stages.find((sub) => sub.id === id),
   );
   return (
     <div className="sm:container flex flex-col flex-initial gap-6 mb-8">
@@ -43,8 +46,8 @@ async function StagePage({ id, stageToActivity, activities }: stageProps) {
         <StageSelector
           stageToActivity={stageToActivity}
           activityId={activityId[0]}
-          stage={stage}
-          activities={activities}
+          url={id}
+          type="stages"
         />
       )}
       <h1 className="text-2xl pt-4">

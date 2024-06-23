@@ -1,9 +1,9 @@
 export type StoryReviewTable = Record<string, Act>;
 
-interface Act {
+export interface Act {
   id: string;
   name: string;
-  entryType: string;
+  entryType: "NONE" | "MINI_ACTIVITY" | "MAINLINE" | "ACTIVITY";
   actType: string;
   startTime: Date;
   endTime: Date;

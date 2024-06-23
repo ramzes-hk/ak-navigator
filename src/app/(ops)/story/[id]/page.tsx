@@ -1,4 +1,5 @@
 import StoryPage from "@/components/story";
+import { getActivityToStory } from "@/lib/story_review_table";
 import { getStoryTable } from "@/lib/story_table";
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
@@ -13,5 +14,7 @@ interface pageProps {
 }
 
 export default async function Page({ params }: pageProps) {
-  return <StoryPage id={params.id} name="" />;
+  return (
+    <StoryPage activityToStory={getActivityToStory()} id={params.id} name="" />
+  );
 }

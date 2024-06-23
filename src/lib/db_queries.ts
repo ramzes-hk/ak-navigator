@@ -1,5 +1,5 @@
 import { db } from "@/db/db";
-import { operators, stages } from "@/db/schema";
+import { activities, operators, stages, storyReview } from "@/db/schema";
 import { eq, like, notLike } from "drizzle-orm";
 
 export async function getOpName(id: string): Promise<string> {
@@ -50,4 +50,22 @@ export async function getStageName(stageId: string) {
     .from(stages)
     .where(eq(stages.id, stageId));
   return result;
+}
+
+export async function getStoryReview(id: string) {
+  const result = await db
+    .select()
+    .from(storyReview)
+    .where(eq(storyReview.id, id))
+    .limit(1);
+  return result[0];
+}
+
+export async function getActivityDB(id: string) {
+  const result = await db
+    .select()
+    .from(activities)
+    .where(eq(activities.id, id))
+    .limit(1);
+  return result[0];
 }

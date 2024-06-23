@@ -19,3 +19,32 @@ export function getStoryReviewTable(): StoryReviewTable {
   const data = JSON.parse(raw) as StoryReviewTable;
   return data;
 }
+
+export type ActivityToStory = {
+  id: string;
+  name: string;
+  entryType: string;
+  stories: {
+    id: string;
+    name: string;
+    code: string;
+  }[];
+}[];
+
+export function getActivityToStory(): ActivityToStory {
+  const storyReview = getStoryReviewTable();
+  const ats: ActivityToStory = [];
+  Object.values(storyReview).forEach((act) =>
+    ats.push({
+      id: act.id,
+      name: act.name,
+      entryType: act.entryType,
+      stories: act.infoUnlockDatas.map((story) => ({
+        id: story.storyTxt,
+        name: story.storyName,
+        code: story.storyCode,
+      })),
+    }),
+  );
+  return ats;
+}
