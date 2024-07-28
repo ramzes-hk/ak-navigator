@@ -5,6 +5,7 @@ import { getStoryReview } from "@/lib/db_queries";
 import StorySelector from "./story_selector";
 import { getActivityDB } from "@/lib/db_queries";
 import { ActivityToStory } from "@/lib/story_review_table";
+import { StoryContent } from "./story_content";
 
 interface StoryPageProps {
   id: string;
@@ -32,14 +33,7 @@ async function StoryPage({
       />
       <table className="table-fixed lg:w-3/4">
         <tbody>
-          {parseStory(story).map((line, i) => (
-            <tr key={i}>
-              <td className="text-right pr-2 align-top">{line.name}</td>
-              <td className={line.type === "i" ? "italic" : ""}>
-                {line.content}
-              </td>
-            </tr>
-          ))}
+          <StoryContent lines={story} start={0} end={story.length} />
         </tbody>
       </table>
     </div>

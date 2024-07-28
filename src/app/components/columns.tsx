@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { menuProps, mappedTiers } from "./menu";
 import { professions } from "@/lib/professions";
 import { enemyMenuProps } from "@/lib/enemies";
+import { subProfDict } from "@/lib/subProfDict";
 
 export function getOpColumns(route: string) {
   const columns: ColumnDef<menuProps["ids"][number]>[] = [
@@ -26,6 +27,12 @@ export function getOpColumns(route: string) {
       accessorKey: "profession",
       header: "Class",
       cell: (props) => professions[props.row.original.profession],
+    },
+    {
+      accessorKey: "subProfessionId",
+      header: "Subclass",
+      cell: (props) =>
+        subProfDict[props.row.original.subProfessionId]?.subProfessionName,
     },
     {
       accessorKey: "rarity",

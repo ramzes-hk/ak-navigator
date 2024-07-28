@@ -29,8 +29,13 @@ export interface Module {
   missions: Mission[] | null;
 }
 
+let uniequip: UniEquipTable | undefined = undefined;
 export function getUniequip(): UniEquipTable {
-  return getParsedJSON<UniEquipTable>("uniequip_table.json");
+  if (uniequip) {
+    return uniequip;
+  }
+  uniequip = getParsedJSON<UniEquipTable>("uniequip_table.json");
+  return uniequip;
 }
 
 export async function getModules(id: string): Promise<Module[]> {

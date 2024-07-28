@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { buttonVariants } from "./button";
+import Image from "next/image";
 
 function Navbar({ children }: { children?: React.ReactNode }) {
   return (
@@ -59,6 +60,14 @@ function Navbar({ children }: { children?: React.ReactNode }) {
           About
         </Link>
         <div className="flex flex-1 justify-end">{children}</div>
+        <Link prefetch={false} href="https://github.com/ramzes-hk/ak-navigator">
+          <Image
+            src="/github-mark-white.png"
+            width={30}
+            height={30}
+            alt="github"
+          />
+        </Link>
       </div>
     </header>
   );

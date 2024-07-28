@@ -4,6 +4,7 @@ import fsPromise from "fs/promises";
 import { getUniequip } from "./modules_data";
 import { OpName, Operator, Level, Skills } from "./operators_types";
 import { TaggedOperator, recruitIds } from "./recruitment_list";
+import { subProfDict } from "./subProfDict";
 
 export function getAllOpNames(filter?: "char" | "token&trap"): OpName[] {
   const fileName = path.join(
@@ -68,10 +69,7 @@ export async function getOpData(opId: string): Promise<getOpDataReturn> {
     }
     return skillDescription.push(skillLvls);
   });
-  const subProf = getUniequip().subProfDict[opReader.subProfessionId];
-  if (!subProf) {
-    throw "No subprofession";
-  }
+  const subProf = subProfDict[opReader.subProfessionId]!;
   return {
     operator: {
       ...opReader,
