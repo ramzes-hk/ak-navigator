@@ -14,6 +14,7 @@ export function StoryContent({ lines }: StoryContentProps) {
   const [decisions, setDecisions] = useState<Map<number, string>>(new Map());
   useEffect(() => {
     const st: ReactElement[] = [];
+    let lastIdx = -1;
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]!;
       let content: ReactElement | string = line;
@@ -40,6 +41,7 @@ export function StoryContent({ lines }: StoryContentProps) {
         } else {
           decisions.set(i, decision);
         }
+        lastIdx = i;
         content = (
           <RadioGroup
             onValueChange={(val) =>
@@ -57,13 +59,6 @@ export function StoryContent({ lines }: StoryContentProps) {
         );
       } else if (line.includes("[Predicate")) {
         const refs = getStoryContentValues(line, "references");
-        let lastIdx = -1;
-        for (const n of decisions.keys()) {
-          if (n >= i) {
-            break;
-          }
-          lastIdx = n;
-        }
         const last = decisions.get(lastIdx);
         if (last && !refs.includes(last)) {
           while (i < lines.length - 1) {
@@ -87,7 +82,6 @@ export function StoryContent({ lines }: StoryContentProps) {
     }
     setRenderedContent(st);
   }, [lines, decisions]);
-  console.log(decisions);
   return renderedContent;
 }
 
