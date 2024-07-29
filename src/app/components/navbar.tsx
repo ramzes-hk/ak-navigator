@@ -60,7 +60,11 @@ function Navbar({ children }: { children?: React.ReactNode }) {
           About
         </Link>
         <div className="flex flex-1 justify-end">{children}</div>
-        <Link prefetch={false} href="https://github.com/ramzes-hk/ak-navigator">
+        <Link
+          prefetch={false}
+          href="https://github.com/ramzes-hk/ak-navigator"
+          className="pl-2"
+        >
           <Image
             src="/github-mark-white.png"
             width={30}

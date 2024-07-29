@@ -48,11 +48,14 @@ export function StoryContent({ lines }: StoryContentProps) {
               setDecisions(new Map(decisions).set(i, val))
             }
             defaultValue={decision}
+            className="py-2"
           >
             {options.map((option, i) => (
-              <div key={i}>
+              <div key={i} className="flex items-center space-x-2">
                 <RadioGroupItem value={values[i]!} id={option} />
-                <Label htmlFor={option}>{option}</Label>
+                <Label className="align-middle text-base" htmlFor={option}>
+                  {option}
+                </Label>
               </div>
             ))}
           </RadioGroup>
@@ -75,7 +78,7 @@ export function StoryContent({ lines }: StoryContentProps) {
       }
       st.push(
         <tr key={i}>
-          <td>{name}</td>
+          <td className="text-right px-6">{name}</td>
           <td>{content}</td>
         </tr>,
       );

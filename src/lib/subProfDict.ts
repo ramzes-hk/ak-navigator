@@ -1,4 +1,11 @@
-export const subProfDict: Record<string, {subProfessionId: string; subProfessionName: string, subProfessionCatagory: number}> = {
+export const subProfDict: Record<
+  string,
+  {
+    subProfessionId: string;
+    subProfessionName: string;
+    subProfessionCatagory: number;
+  }
+> = {
   notchar1: {
     subProfessionId: "notchar1",
     subProfessionName: "Operator attached unit",
