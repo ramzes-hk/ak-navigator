@@ -1,5 +1,4 @@
 import { getStory } from "@/lib/story_parser";
-import parseStory from "@/lib/parsed_story";
 import { ReactElement } from "react";
 import { getStoryReview } from "@/lib/db_queries";
 import StorySelector from "./story_selector";
@@ -33,7 +32,7 @@ async function StoryPage({
       />
       <table className="table-fixed lg:w-3/4">
         <tbody>
-          <StoryContent lines={story} start={0} end={story.length} />
+          <StoryContent lines={story} />
         </tbody>
       </table>
     </div>
