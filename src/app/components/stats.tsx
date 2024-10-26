@@ -9,19 +9,19 @@ import {
 } from "@/components/table";
 import DynamicAttributes from "./attributes";
 
-interface statsProps {
+interface StatsProps {
   phases: Operator["phases"];
   favorKeyFrames: Operator["favorKeyFrames"];
 }
 
 type keyAttr = keyof Data;
 
-interface statsRowProps extends statsProps {
+interface StatsRowProps extends StatsProps {
   name: Operator["name"];
   keyAttr: keyAttr;
 }
 
-function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
+function StatsRow({ phases, name, keyAttr, favorKeyFrames }: StatsRowProps) {
   const lastKeyFrame = favorKeyFrames ? favorKeyFrames.at(-1) : null;
   return (
     <TableRow key={name} className="divide-x">
@@ -46,11 +46,11 @@ function StatsRow({ phases, name, keyAttr, favorKeyFrames }: statsRowProps) {
   );
 }
 
-interface baseStatsProps {
+interface BaseStatsProps {
   phases: Phase[];
 }
 
-function BaseStats({ phases }: baseStatsProps) {
+function BaseStats({ phases }: BaseStatsProps) {
   function checkIfEquals(keyAttr: keyAttr): boolean {
     const values = phases.map(
       (phase) => phase.attributesKeyFrames[0]?.data[keyAttr],
@@ -111,7 +111,7 @@ const StatsMapping: { [key: string]: keyof Data } = {
   RES: "magicResistance",
 };
 
-function Stats({ phases, favorKeyFrames }: statsProps) {
+function Stats({ phases, favorKeyFrames }: StatsProps) {
   return (
     <div className="sm:w-1/2">
       <div className="border">
@@ -153,7 +153,7 @@ function Stats({ phases, favorKeyFrames }: statsProps) {
           </TableBody>
         </Table>
       </div>
-      <DynamicAttributes phases={phases} />
+      <DynamicAttributes phases={phases} id={}/>
     </div>
   );
 }

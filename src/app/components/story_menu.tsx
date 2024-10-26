@@ -11,6 +11,7 @@ import { getOpName } from "@/lib/db_queries";
 
 function StoryMenu() {
   const storyReview = getStoryReviewTable();
+  let mainIdx = 0;
   return (
     <Accordion className="container" type="single" collapsible>
       {Object.values(storyReview)
@@ -21,7 +22,14 @@ function StoryMenu() {
         )
         .map((act) => (
           <AccordionItem key={act.id} value={act.id}>
-            <AccordionTrigger>{act.name}</AccordionTrigger>
+            <AccordionTrigger>
+              {act.entryType.includes("MAINLINE")
+                ? mainIdx++ + " -"
+                : act.infoUnlockDatas[1]?.storyCode
+                ? act.infoUnlockDatas[1]!.storyCode.split("-")[0] + " -"
+                : ""}{" "}
+              {act.name}
+            </AccordionTrigger>
             <AccordionContent className="flex flex-col items-start">
               {act.infoUnlockDatas.map((unlock) => (
                 <Link

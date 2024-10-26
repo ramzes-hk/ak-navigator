@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Table,
   TableBody,
@@ -14,8 +15,9 @@ import { Label } from "@/components/label";
 import { RadioGroup, RadioGroupItem } from "@/components/radio_group";
 import { Input } from "./input";
 
-interface dynamicAttributesProps {
+interface DynamicAttributesProps {
   phases: Phase[];
+  id: string;
 }
 
 interface Attributes {
@@ -25,7 +27,7 @@ interface Attributes {
   RES: number;
 }
 
-function DynamicAttributes({ phases }: dynamicAttributesProps) {
+function DynamicAttributes({ phases, id }: DynamicAttributesProps) {
   function calculateAttribute(
     baseValue: number,
     nextValue: number,
@@ -83,9 +85,9 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
     <div className="flex flex-col space-y-6 border">
       <div className="flex flex-col space-y-6 p-4">
         <div className="flex space-x-4">
-          <Label htmlFor="radio-e">Promotion:</Label>
+          <Label htmlFor={"radio-e-"+id}>Promotion:</Label>
           <RadioGroup
-            id="radio-e"
+            id={"radio-e-"+id}
             onValueChange={(e) => {
               const val = parseInt(e.slice(1));
               const minAttrData = phases[val]?.attributesKeyFrames[0]?.data;
@@ -107,20 +109,20 @@ function DynamicAttributes({ phases }: dynamicAttributesProps) {
           >
             {phases.map((_, i) => (
               <div key={`E${i}`} className="flex">
-                <RadioGroupItem value={`E${i}`} id={`E${i}`} />
-                <Label htmlFor={`E${i}`}>E{i}</Label>
+                <RadioGroupItem value={`E${i}`} id={`E${i}-${id}`} />
+                <Label htmlFor={`E${i}-${id}`}>E{i}</Label>
               </div>
             ))}
           </RadioGroup>
         </div>
         <div className="flex items-center space-x-2">
-          <Label htmlFor="lvlText">Level</Label>
+          <Label htmlFor={"lvlText-"+id}>Level</Label>
           <Input
             className="w-16"
             type="number"
             min={minLvl}
             max={maxLvl}
-            id="lvlText"
+            id={"lvlText-"+id}
             value={lvl}
             onChange={(e) =>
               setLvl(

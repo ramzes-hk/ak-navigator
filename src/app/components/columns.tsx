@@ -6,12 +6,24 @@ import { menuProps, mappedTiers } from "./menu";
 import { professions } from "@/lib/professions";
 import { enemyMenuProps } from "@/lib/enemies";
 import { subProfDict } from "@/lib/subProfDict";
+import { Button } from "./button";
+import { ArrowUpDown } from "lucide-react";
 
 export function getOpColumns(route: string) {
   const columns: ColumnDef<menuProps["ids"][number]>[] = [
     {
-      accessorKey: "id",
-      header: "Name",
+      accessorKey: "name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Name
+            <ArrowUpDown className="h-4 w-4 ml-2" />
+          </Button>
+        );
+      },
       cell: (props) => (
         <Link
           className="hover:text-underline underline-offset-4"
@@ -36,7 +48,17 @@ export function getOpColumns(route: string) {
     },
     {
       accessorKey: "rarity",
-      header: "Rarity",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Rarity
+            <ArrowUpDown className="h-4 w-4 ml-2" />
+          </Button>
+        );
+      },
       cell: (props) => mappedTiers[props.row.original.rarity],
     },
   ];

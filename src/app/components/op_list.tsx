@@ -4,6 +4,8 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -15,7 +17,7 @@ import {
   TableRow,
 } from "@/components/table";
 import { Button } from "./button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface opTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -28,11 +30,17 @@ function OpTable<TData, TValue>({
   data,
   title,
 }: opTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
   });
   useEffect(() => {
     table.setPageSize(10);

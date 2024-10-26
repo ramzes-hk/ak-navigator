@@ -1,7 +1,6 @@
 import path from "path";
 import fs from "fs";
 import fsPromise from "fs/promises";
-import { getUniequip } from "./modules_data";
 import { OpName, Operator, Level, Skills } from "./operators_types";
 import { TaggedOperator, recruitIds } from "./recruitment_list";
 import { subProfDict } from "./subProfDict";

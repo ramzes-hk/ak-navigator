@@ -52,7 +52,6 @@ function Menu({ ids, route }: menuProps) {
       ? operators
       : operators.filter((op) => profession.includes(op.profession));
   const title = route.includes("operators") ? "Operator" : "Entity" + " List";
-
   return (
     <div className="px-4 sm:container w-full flex flex-col sm:flex-row item-start">
       <div className="sm:w-1/6">
