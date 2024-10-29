@@ -12,6 +12,7 @@ import DynamicAttributes from "./attributes";
 interface StatsProps {
   phases: Operator["phases"];
   favorKeyFrames: Operator["favorKeyFrames"];
+  id: string;
 }
 
 type keyAttr = keyof Data;
@@ -111,7 +112,7 @@ const StatsMapping: { [key: string]: keyof Data } = {
   RES: "magicResistance",
 };
 
-function Stats({ phases, favorKeyFrames }: StatsProps) {
+function Stats({ phases, favorKeyFrames, id }: StatsProps) {
   return (
     <div className="sm:w-1/2">
       <div className="border">
@@ -147,13 +148,14 @@ function Stats({ phases, favorKeyFrames }: StatsProps) {
                   name={key}
                   keyAttr={value}
                   favorKeyFrames={favorKeyFrames}
+                  id={id}
                 />
               );
             })}
           </TableBody>
         </Table>
       </div>
-      <DynamicAttributes phases={phases} id={}/>
+      <DynamicAttributes phases={phases} id={id}/>
     </div>
   );
 }

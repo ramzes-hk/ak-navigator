@@ -62,13 +62,14 @@ export interface Operator {
   }[];
 }
 
-interface SkillIds {
+export interface SkillIds {
   skillId: string | null;
   levelUpCostCond: {
     unlockCond: UnlockCond;
     lvlUpTime: number;
     levelUpCost: LvlUpCost[] | null;
   }[];
+overrideTokenKey: string | null;
 }
 
 export interface Skills {

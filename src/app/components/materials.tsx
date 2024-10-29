@@ -124,7 +124,7 @@ async function MasteryMaterials({ operator }: materialsProps) {
             <TableRow key={`skill-${i}`}>
               <TableCell>{i + 1}</TableCell>
               {lvl.map((mastery, j) => (
-                <TableCell key={`m-${i}`}>
+                <TableCell key={`m-${i}-${j}`}>
                   {mastery.map((mats, k) => (
                     <span key={`mat-${k}`}>
                       {mats.name}x

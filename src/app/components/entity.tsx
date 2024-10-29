@@ -48,6 +48,7 @@ async function Enitity({ id }: operatorProps) {
       <Tags position={operator.position} tagList={operator.tagList} />
       <h2 className="text-xl">Stats</h2>
       <Stats
+        id={id}
         phases={operator.phases}
         favorKeyFrames={operator.favorKeyFrames}
       />
@@ -57,7 +58,7 @@ async function Enitity({ id }: operatorProps) {
           <Talents talents={operator.talents} />
         </>
       )}
-      <SkillTables skills={skills} />
+      <SkillTables skills={skills} skillIds={operator.skills} />
     </div>
   );
 }

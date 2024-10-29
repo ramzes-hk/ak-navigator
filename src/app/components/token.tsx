@@ -33,6 +33,7 @@ async function Token({ tokenId }: tokenProps) {
           </div>
           <div className="py-4">
             <Stats
+              id={tokenId}
               phases={token.phases}
               favorKeyFrames={token.favorKeyFrames}
             />
@@ -41,7 +42,7 @@ async function Token({ tokenId }: tokenProps) {
             {token.talents && <Talents talents={token.talents} />}
           </div>
           <div className="py-4">
-            {token.skills && <SkillTables skills={skills} />}
+            {token.skills && <SkillTables skills={skills} skillIds={token.skills} />}
           </div>
         </CardContent>
       </CardHeader>

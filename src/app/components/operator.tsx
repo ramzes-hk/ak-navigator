@@ -75,6 +75,7 @@ async function Operator({ id }: operatorProps) {
       <Tags position={operator.position} tagList={operator.tagList} />
       <h2 className="text-xl">Stats</h2>
       <Stats
+        id={id}
         phases={operator.phases}
         favorKeyFrames={operator.favorKeyFrames}
       />
@@ -98,7 +99,7 @@ async function Operator({ id }: operatorProps) {
       )}
       <h2 className="text-xl">Base Skills</h2>
       <BaseSkills charId={id} />
-      <SkillTables skills={skills} />
+      <SkillTables skills={skills} skillIds={operator.skills}/>
       {modules.length > 0 && (
         <>
           <h2 className="text-xl">Modules</h2>

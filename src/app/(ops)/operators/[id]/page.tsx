@@ -12,6 +12,6 @@ interface pageProps {
   };
 }
 
-export default async function Page({ params }: pageProps) {
+export default function Page({ params }: pageProps) {
   return <Operator id={params.id} />;
 }
