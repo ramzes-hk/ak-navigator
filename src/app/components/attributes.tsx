@@ -85,9 +85,9 @@ function DynamicAttributes({ phases, id }: DynamicAttributesProps) {
     <div className="flex flex-col space-y-6 border">
       <div className="flex flex-col space-y-6 p-4">
         <div className="flex space-x-4">
-          <Label htmlFor={"radio-e-"+id}>Promotion:</Label>
+          <Label htmlFor={"radio-e-" + id}>Promotion:</Label>
           <RadioGroup
-            id={"radio-e-"+id}
+            id={"radio-e-" + id}
             onValueChange={(e) => {
               const val = parseInt(e.slice(1));
               const minAttrData = phases[val]?.attributesKeyFrames[0]?.data;
@@ -116,13 +116,13 @@ function DynamicAttributes({ phases, id }: DynamicAttributesProps) {
           </RadioGroup>
         </div>
         <div className="flex items-center space-x-2">
-          <Label htmlFor={"lvlText-"+id}>Level</Label>
+          <Label htmlFor={"lvlText-" + id}>Level</Label>
           <Input
             className="w-16"
             type="number"
             min={minLvl}
             max={maxLvl}
-            id={"lvlText-"+id}
+            id={"lvlText-" + id}
             value={lvl}
             onChange={(e) =>
               setLvl(

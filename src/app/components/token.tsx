@@ -42,7 +42,9 @@ async function Token({ tokenId }: tokenProps) {
             {token.talents && <Talents talents={token.talents} />}
           </div>
           <div className="py-4">
-            {token.skills && <SkillTables skills={skills} skillIds={token.skills} />}
+            {token.skills && (
+              <SkillTables skills={skills} skillIds={token.skills} />
+            )}
           </div>
         </CardContent>
       </CardHeader>

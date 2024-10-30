@@ -53,44 +53,50 @@ function RecruitmentTable({ operators }: recruitmentTableProps) {
       });
       if (matchingOps.length === 0) continue;
       validCombinations.push(combo);
-      newOpsByTags.push({ ops: matchingOps, tags: combo, weight: minOpWeight(matchingOps)});
+      newOpsByTags.push({
+        ops: matchingOps,
+        tags: combo,
+        weight: minOpWeight(matchingOps),
+      });
     }
     setOpsByTags(newOpsByTags);
     setTagCombos(validCombinations);
     setSelectedTags(newTags);
   };
 
-  const opList = opsByTags.toSorted((a, b) => b.weight - a.weight).map((t, i) => (
-    <div key={i} className="flex flex-row items-center gap-2 py-4">
-      <div className="flex-none">
-        {t.tags.map((tag) => (
-          <Badge key={tag}>{positionsAndProfessions[tag] ?? tag}</Badge>
-        ))}
+  const opList = opsByTags
+    .toSorted((a, b) => b.weight - a.weight)
+    .map((t, i) => (
+      <div key={i} className="flex flex-row items-center gap-2 py-4">
+        <div className="flex-none">
+          {t.tags.map((tag) => (
+            <Badge key={tag}>{positionsAndProfessions[tag] ?? tag}</Badge>
+          ))}
+        </div>
+        <div className="flex flex-row flex-wrap">
+          {t.ops.map((op) => (
+            <Link
+              key={op.id}
+              href={`operators/${op.id}`}
+              prefetch={false}
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+              style={{
+                color:
+                  op.rarity[5] === "6"
+                    ? "orange"
+                    : op.rarity[5] === "5"
+                    ? "yellow"
+                    : op.rarity[5] === "4"
+                    ? "aqua"
+                    : "",
+              }}
+            >
+              {op.name}
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className="flex flex-row flex-wrap">
-        {t.ops.map((op) => (
-          <Link
-            key={op.id}
-            href={`operators/${op.id}`}
-            prefetch={false}
-            className={buttonVariants({ variant: "outline", size: "sm" })}
-            style={{
-              color:
-                op.rarity[5] === "6"
-                  ? "orange"
-                  : op.rarity[5] === "5"
-                  ? "yellow"
-                  : op.rarity[5] === "4"
-                  ? "aqua"
-                  : "",
-            }}
-          >
-            {op.name}
-          </Link>
-        ))}
-      </div>
-    </div>
-  ));
+    ));
   return (
     <div className="container w-full">
       <ToggleGroup
@@ -150,17 +156,25 @@ function RecruitmentTable({ operators }: recruitmentTableProps) {
   );
 }
 
-function TagHeader({className, children}: {className?: string, children?: ReactElement | string}) {
-  return <span className={"font-bold px-2 border-r-4 " + className}>{children}</span>
+function TagHeader({
+  className,
+  children,
+}: {
+  className?: string;
+  children?: ReactElement | string;
+}) {
+  return (
+    <span className={"font-bold px-2 border-r-4 " + className}>{children}</span>
+  );
 }
 
 function minOpWeight(ops: TaggedOperator[]): number {
-  let l = 6
+  let l = 6;
   for (let i = 0; i < ops.length; i++) {
-    const w = parseInt(ops[i]!.rarity.split("_")[1]!)
+    const w = parseInt(ops[i]!.rarity.split("_")[1]!);
     if (w < l) l = w;
   }
-  return l
+  return l;
 }
 
 const positions: Record<string, string> = {

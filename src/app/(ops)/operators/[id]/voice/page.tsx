@@ -6,11 +6,12 @@ export async function generateStaticParams() {
 }
 
 interface pageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
-export default async function Page({ params }: pageProps) {
+export default async function Page(props: pageProps) {
+  const params = await props.params;
   return (
     <div className="mx-2 mb-2 sm:mx-16 sm:mb-16">
       <VoiceLines id={params.id} />

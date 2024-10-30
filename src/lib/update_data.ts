@@ -1,17 +1,18 @@
-import fs from "fs"
+import fs from "fs";
 
 async function updateData() {
   for (let file of githubFiles) {
-    const response = await fetch(root+file);
-    const data = await response.json()
-    fs.writeFileSync("operators/" + file.split("/")[1], JSON.stringify(data))
-  } 
+    const response = await fetch(root + file);
+    const data = await response.json();
+    fs.writeFileSync("operators/" + file.split("/")[1], JSON.stringify(data));
+  }
 }
 
-const root = "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData_YoStar/refs/heads/main/en_US/gamedata/"
+const root =
+  "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData_YoStar/refs/heads/main/en_US/gamedata/";
 
 const githubFiles = [
-"excel/activity_table.json",
+  "excel/activity_table.json",
   "excel/battle_equip_table.json",
   "excel/building_data.json",
   "excel/character_table.json",

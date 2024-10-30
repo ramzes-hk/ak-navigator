@@ -7,11 +7,12 @@ export async function generateStaticParams() {
 }
 
 interface pageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function Page({ params }: pageProps) {
+export default async function Page(props: pageProps) {
+  const params = await props.params;
   return <Operator id={params.id} />;
 }

@@ -69,7 +69,7 @@ export interface SkillIds {
     lvlUpTime: number;
     levelUpCost: LvlUpCost[] | null;
   }[];
-overrideTokenKey: string | null;
+  overrideTokenKey: string | null;
 }
 
 export interface Skills {

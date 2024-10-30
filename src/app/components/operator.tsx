@@ -32,7 +32,11 @@ async function Operator({ id }: operatorProps) {
   const isSingleTrait =
     !operator.trait ||
     (operator.trait && operator.trait.candidates.length === 1);
-
+  const displayTokenDict = operator.displayTokenDict ?? {};
+  operator.skills.forEach((s) => {
+    if (!s.overrideTokenKey) return;
+    displayTokenDict[s.overrideTokenKey] = true;
+  });
   return (
     <div className="sm:container flex flex-col flex-initial gap-6 mb-8">
       <div className="flex flex-row space-x-4 pt-4">
@@ -85,10 +89,10 @@ async function Operator({ id }: operatorProps) {
           <Talents talents={operator.talents} />
         </>
       )}
-      {operator.displayTokenDict && (
+      {Object.keys(displayTokenDict).length > 0 && (
         <>
           <h2 className="text-xl">Summons</h2>
-          <TokenDisplay tokenDisplay={operator.displayTokenDict} />
+          <TokenDisplay tokenDisplay={displayTokenDict} />
         </>
       )}
       {operator.potentialRanks && (
@@ -99,7 +103,7 @@ async function Operator({ id }: operatorProps) {
       )}
       <h2 className="text-xl">Base Skills</h2>
       <BaseSkills charId={id} />
-      <SkillTables skills={skills} skillIds={operator.skills}/>
+      <SkillTables skills={skills} skillIds={operator.skills} />
       {modules.length > 0 && (
         <>
           <h2 className="text-xl">Modules</h2>

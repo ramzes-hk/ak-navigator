@@ -8,12 +8,13 @@ export async function generateStaticParams(): Promise<{ id: string }[]> {
 }
 
 interface pageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default async function Page({ params }: pageProps) {
+export default async function Page(props: pageProps) {
+  const params = await props.params;
   return (
     <StoryPage activityToStory={getActivityToStory()} id={params.id} name="" />
   );

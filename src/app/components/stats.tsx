@@ -155,7 +155,7 @@ function Stats({ phases, favorKeyFrames, id }: StatsProps) {
           </TableBody>
         </Table>
       </div>
-      <DynamicAttributes phases={phases} id={id}/>
+      <DynamicAttributes phases={phases} id={id} />
     </div>
   );
 }

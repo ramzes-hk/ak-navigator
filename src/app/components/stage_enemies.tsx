@@ -32,7 +32,7 @@ function StageEnemies({ activity }: StageEnemiesProps) {
         if (action.actionType !== "SPAWN") {
           return;
         }
-        enemyCounter[action.key]++;
+        enemyCounter[action.key]!++;
       }),
     ),
   );

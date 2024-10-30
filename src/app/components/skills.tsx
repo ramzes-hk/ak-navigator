@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/table";
 import { ParsedDescription } from "@/lib/parse_description";
-import TokenDisplay from "./tokens_display";
 
 const spRecovery: Record<string, string> = {
   INCREASE_WITH_TIME: "Auto Recovery",
@@ -29,22 +28,15 @@ interface skillProps {
   skillsIds: SkillIds[];
 }
 
-async function Skill({ levels, skillsIds }: skillProps) {
+async function Skill({ levels }: skillProps) {
   const baseLevel = levels[0];
   if (!baseLevel) {
     throw "Skill has no level 0";
   }
   const rangeId = baseLevel.rangeId;
   const rangeData = rangeId ? await getRange(rangeId) : null;
-  const tokenKey = skillsIds[0]?.overrideTokenKey;
   return (
     <div className="w-full">
-      {tokenKey && (
-        <>
-          <h2 className="text-xl">Summons</h2>
-          <TokenDisplay tokenDisplay={{tokenKey:true}} />
-        </>
-      )}
       <Table className="border border-b-4">
         <TableHeader>
           <TableRow className="divide-x">
